@@ -1,0 +1,1216 @@
+/* =========================================================
+   GRUPO GUTIERREZ
+   BASE VISUAL DE MÓDULOS
+========================================================= */
+
+:root {
+
+    --module-bg:
+        #080b0f;
+
+    --module-bg-soft:
+        #0e1319;
+
+    --module-surface:
+        rgba(20,25,31,.73);
+
+    --module-surface-light:
+        rgba(255,255,255,.055);
+
+    --module-white:
+        #f0f3f6;
+
+    --module-text:
+        #d8dee4;
+
+    --module-muted:
+        #77828d;
+
+    --module-line:
+        rgba(255,255,255,.075);
+
+    --module-blue:
+        #245d8d;
+
+    --module-blue-bright:
+        #377caf;
+
+    --module-orange:
+        #c36336;
+
+    --module-steel:
+        #667482;
+
+    --module-danger:
+        #b95858;
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+
+    box-sizing:
+        border-box;
+
+}
+
+
+html,
+body {
+
+    margin:
+        0;
+
+    min-height:
+        100%;
+
+}
+
+
+body.module-page {
+
+    min-height:
+        100vh;
+
+    overflow-x:
+        hidden;
+
+    color:
+        var(--module-text);
+
+    background:
+
+        radial-gradient(
+            circle at 75% 5%,
+            rgba(35,77,111,.15),
+            transparent 34%
+        ),
+
+        radial-gradient(
+            circle at 15% 85%,
+            rgba(176,78,37,.08),
+            transparent 28%
+        ),
+
+        linear-gradient(
+            145deg,
+            #0a0e13,
+            #07090c
+        );
+
+    font-family:
+        "Inter",
+        sans-serif;
+
+    -webkit-font-smoothing:
+        antialiased;
+
+}
+
+
+button,
+input,
+select,
+textarea {
+
+    font:
+        inherit;
+
+}
+
+
+/* =========================================================
+   STATIC GRID
+========================================================= */
+
+.module-background {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        0;
+
+    pointer-events:
+        none;
+
+}
+
+
+.module-background::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    opacity:
+        .19;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        52px 52px;
+
+    mask-image:
+
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.9),
+            transparent 90%
+        );
+
+}
+
+
+/* =========================================================
+   SHELL
+========================================================= */
+
+.module-shell {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        min(
+            1540px,
+            calc(100% - 34px)
+        );
+
+    margin:
+        0 auto;
+
+    padding:
+        18px 0 35px;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.module-header {
+
+    min-height:
+        72px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        10px 6px 17px;
+
+}
+
+
+.module-brand {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+}
+
+
+.module-brand-mark {
+
+    width:
+        44px;
+
+    height:
+        44px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.095);
+
+    border-radius:
+        14px;
+
+    color:
+        #c2cbd3;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(33,42,51,.9),
+            rgba(13,17,22,.86)
+        );
+
+    box-shadow:
+
+        inset 0 1px 0
+        rgba(255,255,255,.055),
+
+        0 13px 30px
+        rgba(0,0,0,.18);
+
+    font-family:
+        "Manrope",
+        sans-serif;
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -.02em;
+
+}
+
+
+.module-brand-copy {
+
+    display:
+        grid;
+
+    gap:
+        2px;
+
+}
+
+
+.module-brand-copy span {
+
+    color:
+        #687580;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .16em;
+
+}
+
+
+.module-brand-copy strong {
+
+    color:
+        #e6eaed;
+
+    font-family:
+        "Manrope",
+        sans-serif;
+
+    font-size:
+        17px;
+
+}
+
+
+.module-header-actions {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.module-button {
+
+    min-height:
+        38px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+
+    padding:
+        0 13px;
+
+    border:
+        1px solid
+        var(--module-line);
+
+    border-radius:
+        11px;
+
+    color:
+        #aeb8c0;
+
+    background:
+        rgba(255,255,255,.035);
+
+    cursor:
+        pointer;
+
+    font-size:
+        9px;
+
+    font-weight:
+        800;
+
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        background .18s ease;
+
+}
+
+
+.module-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(255,255,255,.14);
+
+    background:
+        rgba(255,255,255,.065);
+
+}
+
+
+.module-button-primary {
+
+    color:
+        #f1f4f6;
+
+    border-color:
+        rgba(61,112,151,.42);
+
+    background:
+
+        linear-gradient(
+            125deg,
+            #183d5b,
+            #235b83
+        );
+
+}
+
+
+.module-button-orange {
+
+    color:
+        #f2ebe7;
+
+    border-color:
+        rgba(183,87,44,.34);
+
+    background:
+
+        linear-gradient(
+            125deg,
+            #62321e,
+            #8c4728
+        );
+
+}
+
+
+.module-button-danger {
+
+    color:
+        #dda5a5;
+
+    border-color:
+        rgba(185,88,88,.20);
+
+    background:
+        rgba(125,48,48,.10);
+
+}
+
+
+/* =========================================================
+   CHROME TAB SHELL
+========================================================= */
+
+.module-browser {
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(10,13,17,.60);
+
+    box-shadow:
+
+        0 30px 90px
+        rgba(0,0,0,.22),
+
+        inset 0 1px 0
+        rgba(255,255,255,.035);
+
+    backdrop-filter:
+        blur(18px);
+
+}
+
+
+.module-tabbar {
+
+    position:
+        relative;
+
+    min-height:
+        48px;
+
+    display:
+        flex;
+
+    align-items:
+        flex-end;
+
+    gap:
+        3px;
+
+    padding:
+        8px 10px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.055);
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.025),
+            rgba(255,255,255,.008)
+        );
+
+}
+
+
+.module-tab {
+
+    position:
+        relative;
+
+    min-width:
+        145px;
+
+    height:
+        39px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    padding:
+        0 16px;
+
+    border:
+        0;
+
+    border-radius:
+        12px 12px 0 0;
+
+    color:
+        #67737e;
+
+    background:
+        transparent;
+
+    cursor:
+        pointer;
+
+    font-size:
+        9px;
+
+    font-weight:
+        750;
+
+    transition:
+        color .18s ease,
+        background .18s ease;
+
+}
+
+
+.module-tab:hover {
+
+    color:
+        #adb7bf;
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.module-tab.active {
+
+    color:
+        #dde3e7;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(39,47,56,.95),
+            rgba(25,31,38,.94)
+        );
+
+    box-shadow:
+
+        inset 0 1px 0
+        rgba(255,255,255,.055);
+
+}
+
+
+.module-tab.active::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    right:
+        0;
+
+    bottom:
+        -1px;
+
+    height:
+        1px;
+
+    background:
+        #191f26;
+
+}
+
+
+.module-tab-dot {
+
+    width:
+        6px;
+
+    height:
+        6px;
+
+    border-radius:
+        50%;
+
+    background:
+        #566674;
+
+}
+
+
+.module-tab.active
+.module-tab-dot {
+
+    background:
+        #3777a5;
+
+    box-shadow:
+        0 0 9px
+        rgba(55,119,165,.7);
+
+}
+
+
+.module-tab-content {
+
+    min-height:
+        600px;
+
+}
+
+
+.module-tab-panel {
+
+    display:
+        none;
+
+}
+
+
+.module-tab-panel.active {
+
+    display:
+        block;
+
+    animation:
+        modulePanelIn
+        .32s
+        cubic-bezier(.2,.8,.2,1)
+        both;
+
+}
+
+
+@keyframes modulePanelIn {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            translateY(6px);
+
+    }
+
+
+    to {
+
+        opacity:
+            1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.module-modal {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        5000;
+
+    display:
+        none;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        22px;
+
+    background:
+        rgba(3,5,8,.70);
+
+    backdrop-filter:
+        blur(15px);
+
+}
+
+
+.module-modal.active {
+
+    display:
+        flex;
+
+}
+
+
+.module-modal-card {
+
+    width:
+        min(
+            760px,
+            100%
+        );
+
+    max-height:
+        calc(100vh - 44px);
+
+    overflow:
+        auto;
+
+    border:
+        1px solid
+        rgba(255,255,255,.085);
+
+    border-radius:
+        19px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(24,30,37,.985),
+            rgba(10,13,17,.985)
+        );
+
+    box-shadow:
+
+        0 35px 100px
+        rgba(0,0,0,.50),
+
+        inset 0 1px 0
+        rgba(255,255,255,.04);
+
+    animation:
+        moduleModalIn
+        .28s
+        cubic-bezier(.2,.8,.2,1);
+
+}
+
+
+.module-modal-wide {
+
+    width:
+        min(
+            1050px,
+            100%
+        );
+
+}
+
+
+@keyframes moduleModalIn {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            translateY(13px)
+            scale(.985);
+
+    }
+
+}
+
+
+.module-modal-header {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        22px 23px 18px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.055);
+
+}
+
+
+.module-modal-header span {
+
+    color:
+        #667580;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .16em;
+
+}
+
+
+.module-modal-header h2 {
+
+    margin:
+        5px 0 0;
+
+    color:
+        #e2e7ea;
+
+    font-family:
+        "Manrope",
+        sans-serif;
+
+    font-size:
+        19px;
+
+}
+
+
+.module-modal-close {
+
+    width:
+        35px;
+
+    height:
+        35px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+
+    border-radius:
+        10px;
+
+    color:
+        #85919b;
+
+    background:
+        rgba(255,255,255,.025);
+
+    cursor:
+        pointer;
+
+    font-size:
+        19px;
+
+}
+
+
+.module-modal-body {
+
+    padding:
+        22px 23px;
+
+}
+
+
+.module-modal-footer {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        8px;
+
+    padding:
+        16px 23px 22px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.055);
+
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.module-form-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+    gap:
+        15px;
+
+}
+
+
+.module-field {
+
+    display:
+        grid;
+
+    gap:
+        7px;
+
+}
+
+
+.module-field-full {
+
+    grid-column:
+        1 / -1;
+
+}
+
+
+.module-field label {
+
+    color:
+        #76848f;
+
+    font-size:
+        8px;
+
+    font-weight:
+        850;
+
+    letter-spacing:
+        .05em;
+
+}
+
+
+.module-field input,
+.module-field select,
+.module-field textarea {
+
+    width:
+        100%;
+
+    min-height:
+        43px;
+
+    padding:
+        0 12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        11px;
+
+    outline:
+        none;
+
+    color:
+        #dae0e5;
+
+    background:
+        rgba(255,255,255,.035);
+
+    transition:
+        border-color .17s ease,
+        background .17s ease,
+        box-shadow .17s ease;
+
+}
+
+
+.module-field textarea {
+
+    min-height:
+        90px;
+
+    padding:
+        11px 12px;
+
+    resize:
+        vertical;
+
+}
+
+
+.module-field input:focus,
+.module-field select:focus,
+.module-field textarea:focus {
+
+    border-color:
+        rgba(49,108,151,.58);
+
+    background:
+        rgba(255,255,255,.05);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(36,93,141,.10);
+
+}
+
+
+.module-field select {
+
+    appearance:
+        auto;
+
+}
+
+
+.module-form-message {
+
+    min-height:
+        18px;
+
+    margin-top:
+        14px;
+
+    color:
+        #ce8585;
+
+    font-size:
+        8px;
+
+    font-weight:
+        700;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (
+    max-width:
+    720px
+) {
+
+    .module-shell {
+
+        width:
+            calc(100% - 18px);
+
+    }
+
+
+    .module-header {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .module-header-actions {
+
+        width:
+            100%;
+
+    }
+
+
+    .module-header-actions
+    .module-button {
+
+        flex:
+            1;
+
+    }
+
+
+    .module-form-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .module-field-full {
+
+        grid-column:
+            auto;
+
+    }
+
+
+    .module-tab {
+
+        min-width:
+            120px;
+
+    }
+
+}

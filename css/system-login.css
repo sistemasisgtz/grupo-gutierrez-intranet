@@ -1,0 +1,869 @@
+/* =========================================================
+   GRUPO GUTIERREZ
+   LOGIN DEL SISTEMA
+========================================================= */
+
+
+.system-login-overlay {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        99999;
+
+    display:
+        none;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
+
+    background:
+        rgba(4,6,9,.72);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+}
+
+
+.system-login-overlay.active {
+
+    display:
+        flex;
+
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.system-login-card {
+
+    position:
+        relative;
+
+    width:
+        min(
+            460px,
+            calc(100vw - 30px)
+        );
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius:
+        25px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(24,29,36,.98),
+            rgba(9,12,16,.98)
+        );
+
+    box-shadow:
+
+        inset 0 1px 0
+        rgba(255,255,255,.05),
+
+        0 35px 100px
+        rgba(0,0,0,.55);
+
+    animation:
+        systemLoginIn
+        .3s
+        cubic-bezier(.2,.8,.2,1);
+
+}
+
+
+@keyframes systemLoginIn {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            translateY(14px)
+            scale(.975);
+
+    }
+
+}
+
+
+/* =========================================================
+   GLOW
+========================================================= */
+
+.system-login-card::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        260px;
+
+    height:
+        260px;
+
+    right:
+        -130px;
+
+    top:
+        -150px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(31,91,140,.22);
+
+    filter:
+        blur(55px);
+
+    pointer-events:
+        none;
+
+}
+
+
+.system-login-card::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        220px;
+
+    height:
+        220px;
+
+    left:
+        -140px;
+
+    bottom:
+        -150px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(204,89,39,.14);
+
+    filter:
+        blur(55px);
+
+    pointer-events:
+        none;
+
+}
+
+
+/* =========================================================
+   TOP LINE
+========================================================= */
+
+.system-login-line {
+
+    height:
+        3px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #1D4F75,
+            #5C6974,
+            #C16135
+        );
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.system-login-content {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    padding:
+        28px;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.system-login-header {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+}
+
+
+.system-login-heading {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+}
+
+
+.system-login-icon {
+
+    width:
+        49px;
+
+    height:
+        49px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    flex:
+        0 0 auto;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:
+        15px;
+
+    color:
+        #B8C6D2;
+
+    background:
+        rgba(255,255,255,.035);
+
+    font-size:
+        21px;
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.04);
+
+}
+
+
+.system-login-kicker {
+
+    display:
+        block;
+
+    margin-bottom:
+        4px;
+
+    color:
+        #617282;
+
+    font-size:
+        8px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .16em;
+
+}
+
+
+.system-login-header h2 {
+
+    margin:
+        0;
+
+    color:
+        #E2E7EB;
+
+    font-family:
+        "Manrope",
+        sans-serif;
+
+    font-size:
+        20px;
+
+    letter-spacing:
+        -.02em;
+
+}
+
+
+.system-login-header p {
+
+    margin:
+        5px 0 0;
+
+    color:
+        #707D89;
+
+    font-size:
+        9px;
+
+    line-height:
+        1.5;
+
+}
+
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+.system-login-close {
+
+    width:
+        35px;
+
+    height:
+        35px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    flex:
+        0 0 auto;
+
+    border:
+        1px solid
+        rgba(255,255,255,.055);
+
+    border-radius:
+        10px;
+
+    color:
+        #798590;
+
+    background:
+        rgba(255,255,255,.035);
+
+    cursor:
+        pointer;
+
+    font-size:
+        19px;
+
+    transition:
+        .16s ease;
+
+}
+
+
+.system-login-close:hover {
+
+    color:
+        #E3E7EA;
+
+    background:
+        rgba(255,255,255,.07);
+
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.system-login-divider {
+
+    height:
+        1px;
+
+    margin:
+        22px 0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.025)
+        );
+
+}
+
+
+/* =========================================================
+   FIELD
+========================================================= */
+
+.system-login-field {
+
+    display:
+        grid;
+
+    gap:
+        7px;
+
+}
+
+
+.system-login-field
++
+.system-login-field {
+
+    margin-top:
+        14px;
+
+}
+
+
+.system-login-field label {
+
+    color:
+        #697987;
+
+    font-size:
+        8px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .1em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.system-login-input-wrap {
+
+    position:
+        relative;
+
+}
+
+
+.system-login-input-wrap input {
+
+    width:
+        100%;
+
+    height:
+        47px;
+
+    box-sizing:
+        border-box;
+
+    padding:
+        0 45px 0 14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.075);
+
+    border-radius:
+        12px;
+
+    color:
+        #DCE3E8;
+
+    background:
+        rgba(255,255,255,.035);
+
+    outline:
+        none;
+
+    font-size:
+        11px;
+
+    transition:
+        border-color .17s ease,
+        background .17s ease,
+        box-shadow .17s ease;
+
+}
+
+
+.system-login-input-wrap input::placeholder {
+
+    color:
+        #4F5A65;
+
+}
+
+
+.system-login-input-wrap input:focus {
+
+    border-color:
+        rgba(64,121,164,.60);
+
+    background:
+        rgba(255,255,255,.05);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(40,103,155,.10);
+
+}
+
+
+/* =========================================================
+   PASSWORD BUTTON
+========================================================= */
+
+.system-password-toggle {
+
+    position:
+        absolute;
+
+    top:
+        50%;
+
+    right:
+        8px;
+
+    width:
+        32px;
+
+    height:
+        32px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        0;
+
+    border-radius:
+        9px;
+
+    color:
+        #667582;
+
+    background:
+        transparent;
+
+    cursor:
+        pointer;
+
+    transform:
+        translateY(-50%);
+
+    font-size:
+        12px;
+
+}
+
+
+.system-password-toggle:hover {
+
+    color:
+        #BAC4CD;
+
+    background:
+        rgba(255,255,255,.04);
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.system-login-message {
+
+    display:
+        none;
+
+    margin-top:
+        14px;
+
+    padding:
+        10px 11px;
+
+    border:
+        1px solid
+        rgba(195,85,85,.20);
+
+    border-radius:
+        10px;
+
+    color:
+        #D89797;
+
+    background:
+        rgba(153,62,62,.10);
+
+    font-size:
+        8px;
+
+    font-weight:
+        700;
+
+    line-height:
+        1.5;
+
+}
+
+
+.system-login-message.active {
+
+    display:
+        block;
+
+}
+
+
+/* =========================================================
+   ACCESS BUTTON
+========================================================= */
+
+.system-login-submit {
+
+    position:
+        relative;
+
+    width:
+        100%;
+
+    min-height:
+        48px;
+
+    overflow:
+        hidden;
+
+    margin-top:
+        19px;
+
+    border:
+        1px solid
+        rgba(69,122,164,.30);
+
+    border-radius:
+        13px;
+
+    color:
+        #F1F4F6;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            #183B58,
+            #214F72
+        );
+
+    box-shadow:
+        0 14px 30px
+        rgba(8,26,41,.30);
+
+    cursor:
+        pointer;
+
+    font-size:
+        10px;
+
+    font-weight:
+        850;
+
+    letter-spacing:
+        .025em;
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+
+}
+
+
+.system-login-submit::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        100px;
+
+    height:
+        100px;
+
+    right:
+        -45px;
+
+    top:
+        -55px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(255,255,255,.09);
+
+    filter:
+        blur(15px);
+
+}
+
+
+.system-login-submit:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 18px 35px
+        rgba(8,26,41,.40);
+
+}
+
+
+.system-login-submit:disabled {
+
+    opacity:
+        .58;
+
+    cursor:
+        wait;
+
+    transform:
+        none;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.system-login-footer {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        7px;
+
+    margin-top:
+        17px;
+
+    color:
+        #505B65;
+
+    font-size:
+        7px;
+
+    font-weight:
+        700;
+
+}
+
+
+.system-login-security-dot {
+
+    width:
+        5px;
+
+    height:
+        5px;
+
+    border-radius:
+        50%;
+
+    background:
+        #4B806C;
+
+    box-shadow:
+        0 0 8px
+        rgba(75,128,108,.45);
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (
+    max-width:
+    520px
+) {
+
+    .system-login-content {
+
+        padding:
+            23px 20px;
+
+    }
+
+
+    .system-login-header h2 {
+
+        font-size:
+            18px;
+
+    }
+
+}

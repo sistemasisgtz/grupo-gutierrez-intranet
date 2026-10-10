@@ -1,0 +1,646 @@
+/* =========================================================
+   GRUPO GUTIERREZ
+   LOGIN INTRANET PERSONAL
+========================================================= */
+
+.yo-login-overlay {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        15000;
+
+    display:
+        none;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
+
+    background:
+        rgba(4, 6, 8, .68);
+
+    backdrop-filter:
+        blur(18px);
+
+}
+
+
+.yo-login-overlay.active {
+
+    display:
+        flex;
+
+}
+
+
+.yo-login-card {
+
+    position:
+        relative;
+
+    width:
+        min(
+            430px,
+            100%
+        );
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius:
+        25px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(36,42,49,.96),
+            rgba(12,16,21,.97)
+        );
+
+    box-shadow:
+
+        0 40px 110px
+        rgba(0,0,0,.55),
+
+        inset 0 1px 0
+        rgba(255,255,255,.07);
+
+    animation:
+        yoLoginIn
+        .42s
+        cubic-bezier(.2,.8,.2,1)
+        both;
+
+}
+
+
+@keyframes yoLoginIn {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            translateY(18px)
+            scale(.975);
+
+        filter:
+            blur(7px);
+
+    }
+
+}
+
+
+.yo-login-card::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        240px;
+
+    height:
+        240px;
+
+    right:
+        -130px;
+
+    top:
+        -120px;
+
+    border-radius:
+        50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(41,105,151,.36),
+            rgba(41,105,151,.08) 42%,
+            transparent 68%
+        );
+
+    filter:
+        blur(15px);
+
+}
+
+
+.yo-login-card::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        180px;
+
+    height:
+        180px;
+
+    left:
+        -100px;
+
+    bottom:
+        -120px;
+
+    border-radius:
+        50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(193,87,40,.22),
+            transparent 68%
+        );
+
+    filter:
+        blur(18px);
+
+}
+
+
+.yo-login-content {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    padding:
+        28px;
+
+}
+
+
+.yo-login-close {
+
+    position:
+        absolute;
+
+    z-index:
+        3;
+
+    right:
+        17px;
+
+    top:
+        17px;
+
+    width:
+        35px;
+
+    height:
+        35px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:
+        11px;
+
+    color:
+        #8c98a2;
+
+    background:
+        rgba(255,255,255,.035);
+
+    cursor:
+        pointer;
+
+    font-size:
+        18px;
+
+}
+
+
+.yo-login-avatar {
+
+    position:
+        relative;
+
+    width:
+        72px;
+
+    height:
+        72px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    margin-bottom:
+        20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.11);
+
+    border-radius:
+        24px;
+
+    color:
+        #cdd6dc;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.10),
+            rgba(255,255,255,.035)
+        );
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.08);
+
+}
+
+
+.yo-login-avatar svg {
+
+    width:
+        31px;
+
+    height:
+        31px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.35;
+
+}
+
+
+.yo-login-kicker {
+
+    display:
+        block;
+
+    color:
+        #65737e;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .17em;
+
+}
+
+
+.yo-login-card h2 {
+
+    margin:
+        7px 0 7px;
+
+    color:
+        #f1f4f6;
+
+    font-family:
+        "Manrope",
+        sans-serif;
+
+    font-size:
+        27px;
+
+    letter-spacing:
+        -.045em;
+
+}
+
+
+.yo-login-description {
+
+    margin:
+        0 0 24px;
+
+    color:
+        #7f8c96;
+
+    font-size:
+        9px;
+
+    line-height:
+        1.65;
+
+}
+
+
+.yo-login-field {
+
+    display:
+        grid;
+
+    gap:
+        7px;
+
+    margin-bottom:
+        12px;
+
+}
+
+
+.yo-login-field label {
+
+    color:
+        #84939e;
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+}
+
+
+.yo-login-field input {
+
+    width:
+        100%;
+
+    min-height:
+        48px;
+
+    padding:
+        0 14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.085);
+
+    border-radius:
+        13px;
+
+    outline:
+        none;
+
+    color:
+        #edf1f4;
+
+    background:
+        rgba(255,255,255,.045);
+
+    transition:
+        border-color .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+
+}
+
+
+.yo-login-field input:focus {
+
+    border-color:
+        rgba(61,129,179,.55);
+
+    background:
+        rgba(255,255,255,.065);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(42,105,151,.11);
+
+}
+
+
+.yo-password-wrap {
+
+    position:
+        relative;
+
+}
+
+
+.yo-password-wrap input {
+
+    padding-right:
+        60px;
+
+}
+
+
+.yo-password-toggle {
+
+    position:
+        absolute;
+
+    right:
+        7px;
+
+    top:
+        7px;
+
+    bottom:
+        7px;
+
+    padding:
+        0 10px;
+
+    border:
+        0;
+
+    border-radius:
+        8px;
+
+    color:
+        #73828d;
+
+    background:
+        transparent;
+
+    cursor:
+        pointer;
+
+    font-size:
+        7px;
+
+    font-weight:
+        800;
+
+}
+
+
+.yo-login-submit {
+
+    width:
+        100%;
+
+    min-height:
+        50px;
+
+    margin-top:
+        7px;
+
+    border:
+        1px solid
+        rgba(60,127,174,.42);
+
+    border-radius:
+        14px;
+
+    color:
+        #f3f6f8;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #183e5c,
+            #276990
+        );
+
+    box-shadow:
+        0 15px 35px
+        rgba(20,67,101,.22);
+
+    cursor:
+        pointer;
+
+    font-weight:
+        800;
+
+    font-size:
+        9px;
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+
+}
+
+
+.yo-login-submit:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 20px 40px
+        rgba(20,67,101,.30);
+
+}
+
+
+.yo-login-submit:disabled {
+
+    opacity:
+        .55;
+
+    cursor:
+        wait;
+
+}
+
+
+.yo-login-message {
+
+    min-height:
+        18px;
+
+    margin-top:
+        13px;
+
+    color:
+        #cc8585;
+
+    font-size:
+        8px;
+
+    text-align:
+        center;
+
+}
+
+
+.yo-login-footer {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    margin-top:
+        17px;
+
+    padding-top:
+        16px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.055);
+
+    color:
+        #5f6d77;
+
+    font-size:
+        7px;
+
+}
+
+
+.yo-login-security-dot {
+
+    width:
+        6px;
+
+    height:
+        6px;
+
+    border-radius:
+        50%;
+
+    background:
+        #598e72;
+
+    box-shadow:
+        0 0 10px
+        rgba(89,142,114,.55);
+
+}

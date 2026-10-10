@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080b10">
+
+    <title>Grupo Gutierrez</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/system-login.css">
+    <link
+    rel="stylesheet"
+    href="css/yo-login.css"
+>
+
+</head>
+
+<body>
+
+    <!-- =====================================================
+         FONDO ESTÁTICO
+    ====================================================== -->
+    <div class="background-stage" aria-hidden="true">
+        <div class="background-grid"></div>
+        <div class="static-glow static-glow-blue"></div>
+        <div class="static-glow static-glow-orange"></div>
+        <div class="static-glow static-glow-center"></div>
+        <div class="noise-layer"></div>
+        <div class="background-vignette"></div>
+    </div>
+
+
+    <!-- =====================================================
+         APP
+    ====================================================== -->
+    <main class="home-shell">
+
+        <div class="company-badge entrance-item entrance-badge">
+            <span class="company-badge-dot"></span>
+            <span>Intranet de Grupo Gutierrez</span>
+        </div>
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+        <section class="hero">
+
+            <div class="hero-composition">
+
+                <!-- ISGTZ -->
+                <div class="logo-cloud logo-cloud-left entrance-item entrance-logo-left">
+                    <div class="logo-cloud-inner">
+                        <img
+                            src="assets/Logo ISGTZ.png"
+                            alt="ISGTZ"
+                            class="hero-company-logo hero-company-logo-isgtz"
+                        >
+                    </div>
+                    <span class="logo-cloud-label">ISGTZ</span>
+                </div>
+
+
+                <!-- TITULO -->
+                <div class="hero-center entrance-item entrance-title">
+
+                    <span class="hero-kicker">
+                        ECOSISTEMA EMPRESARIAL
+                    </span>
+
+                    <div class="hero-title-wrap">
+                        <div class="hero-title-glow" aria-hidden="true"></div>
+
+                        <h1 class="hero-title">
+                            <span class="hero-title-line">GRUPO</span>
+                            <span class="hero-title-line hero-title-main">GUTIERREZ</span>
+                        </h1>
+                    </div>
+
+                    <p class="hero-subtitle">
+                        Intranet para empleados de Grupo Gutierrez.
+                    </p>
+
+                </div>
+
+
+                <!-- LO -->
+                <div class="logo-cloud logo-cloud-right entrance-item entrance-logo-right">
+                    <div class="logo-cloud-inner">
+                        <img
+                            src="assets/logo lo.png"
+                            alt="Ingeniería y Proyectos LO"
+                            class="hero-company-logo hero-company-logo-lo"
+                        >
+                    </div>
+                    <span class="logo-cloud-label">LO</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ACCESS
+        ================================================== -->
+        <section class="access-section entrance-item entrance-access">
+
+            <div class="access-heading">
+                <span class="access-kicker">ACCESO</span>
+                <p>Selecciona cómo quieres ingresar.</p>
+            </div>
+
+            <div class="access-actions">
+
+                <!-- SISTEMA -->
+                <button
+                    type="button"
+                    class="access-button access-button-primary"
+                    data-entry="sistema"
+                >
+                    <span class="access-button-light" aria-hidden="true"></span>
+                    <span class="access-button-orbit" aria-hidden="true"></span>
+
+                    <span class="access-button-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 5.5h16v13H4z"></path>
+                            <path d="M8 9h8M8 13h5"></path>
+                        </svg>
+                    </span>
+
+                    <span class="access-button-copy">
+                        <small>PLATAFORMA</small>
+                        <strong>Sistema</strong>
+                        <span>Operación y administración</span>
+                    </span>
+
+                    <span class="access-button-arrow">↗</span>
+                </button>
+
+
+                <!-- YO -->
+                <button
+                    type="button"
+                    class="access-button access-button-secondary"
+                    data-entry="yo"
+                >
+                    <span class="access-button-light" aria-hidden="true"></span>
+                    <span class="access-button-orbit" aria-hidden="true"></span>
+
+                    <span class="access-button-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="8" r="3.5"></circle>
+                            <path d="M5.5 19c.7-3.6 3.1-5.5 6.5-5.5s5.8 1.9 6.5 5.5"></path>
+                        </svg>
+                    </span>
+
+                    <span class="access-button-copy">
+                        <small>PERSONAL</small>
+                        <strong>Yo</strong>
+                        <span>Mi espacio dentro del grupo</span>
+                    </span>
+
+                    <span class="access-button-arrow">↗</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+        <footer class="home-footer entrance-item entrance-footer">
+            <span>GRUPO GUTIERREZ</span>
+            <span class="footer-separator"></span>
+            <span>DEPARTAMENTO DE SISTEMAS</span>
+        </footer>
+
+    </main>
+
+
+    <!-- =====================================================
+         TRANSITION
+    ====================================================== -->
+    <div
+        id="pageTransition"
+        class="page-transition"
+        aria-hidden="true"
+    >
+        <div class="page-transition-orb"></div>
+
+        <div class="page-transition-copy">
+            <span>GRUPO GUTIERREZ</span>
+            <strong id="transitionTitle">Preparando acceso</strong>
+        </div>
+    </div>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+    <div id="homeToast" class="home-toast"></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/system-login.js"></script>
+    <script src="js/yo-login.js"></script>
+
+</body>
+</html>

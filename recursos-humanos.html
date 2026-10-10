@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#080b0f"
+    >
+
+    <title>
+        Recursos Humanos | Grupo Gutierrez
+    </title>
+
+
+    <!-- =====================================================
+         FUENTES
+    ====================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/modulo-shell.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/recursos-humanos.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/recursos-humanos-vacaciones.css"
+    >
+
+    <link
+    rel="stylesheet"
+    href="css/recursos-humanos-claro.css"
+>
+
+</head>
+
+
+<body class="module-page">
+
+
+    <!-- =====================================================
+         FONDO
+    ====================================================== -->
+
+    <div
+        class="module-background"
+        aria-hidden="true"
+    >
+    </div>
+
+
+    <!-- =====================================================
+         APP
+    ====================================================== -->
+
+    <main class="module-shell">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="module-header">
+
+
+            <div class="module-brand">
+
+
+                <div class="module-brand-mark">
+                    RH
+                </div>
+
+
+                <div class="module-brand-copy">
+
+                    <span>
+                        GRUPO GUTIERREZ · SISTEMA
+                    </span>
+
+                    <strong>
+                        Recursos Humanos
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="module-header-actions">
+
+
+                <div class="rh-user-chip">
+
+                    <span>
+                        SESIÓN
+                    </span>
+
+                    <strong id="rhCurrentUser">
+                        ...
+                    </strong>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="backToSystem"
+                    class="module-button"
+                >
+                    ← Sistema
+                </button>
+
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =================================================
+             BROWSER / PESTAÑAS
+        ================================================== -->
+
+        <section
+            class="module-browser"
+            data-module-tabs
+        >
+
+
+            <!-- =============================================
+                 PESTAÑAS
+            ============================================== -->
+
+            <nav
+                class="module-tabbar"
+                role="tablist"
+            >
+
+
+                <!-- PERSONAL -->
+
+                <button
+                    type="button"
+                    class="module-tab active"
+                    data-module-tab="personal"
+                    aria-selected="true"
+                >
+
+                    <span class="module-tab-dot">
+                    </span>
+
+                    Personal
+
+                </button>
+
+
+                <!-- VACACIONES -->
+
+                <button
+                    type="button"
+                    class="module-tab"
+                    data-module-tab="vacaciones"
+                    aria-selected="false"
+                >
+
+                    <span class="module-tab-dot">
+                    </span>
+
+                    Vacaciones
+
+                </button>
+
+
+                <!-- CALENDARIO -->
+
+                <button
+                    type="button"
+                    class="module-tab"
+                    data-module-tab="calendario"
+                    aria-selected="false"
+                >
+
+                    <span class="module-tab-dot">
+                    </span>
+
+                    Calendario
+
+                </button>
+
+
+            </nav>
+
+
+            <!-- =============================================
+                 CONTENIDO DE TODAS LAS PESTAÑAS
+
+                 MUY IMPORTANTE:
+                 PERSONAL, VACACIONES Y CALENDARIO
+                 DEBEN ESTAR DENTRO DE ESTE DIV.
+            ============================================== -->
+
+            <div class="module-tab-content">
+
+
+                <!-- =================================================
+                     PESTAÑA PERSONAL
+                ================================================== -->
+
+                <section
+                    class="
+                        module-tab-panel
+                        active
+                        rh-panel
+                    "
+                    data-module-panel="personal"
+                >
+
+
+                    <!-- =========================================
+                         HERO
+                    ========================================== -->
+
+                    <div class="rh-section-header">
+
+
+                        <div>
+
+                            <span class="rh-eyebrow">
+                                CAPITAL HUMANO
+                            </span>
+
+                            <h1>
+                                Personal
+                            </h1>
+
+                            <p>
+                                Administración central de empleados,
+                                puestos y seguimiento interno.
+                            </p>
+
+                        </div>
+
+
+                        <div class="rh-main-actions">
+
+
+                            <button
+                                type="button"
+                                id="positionsButton"
+                                class="module-button"
+                            >
+                                Puestos
+                            </button>
+
+
+                            <button
+                                type="button"
+                                id="employeesButton"
+                                class="
+                                    module-button
+                                    module-button-primary
+                                "
+                            >
+                                + Empleado
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =========================================
+                         MÉTRICAS
+                    ========================================== -->
+
+                    <section class="rh-metrics">
+
+
+                        <article class="rh-metric">
+
+                            <span>
+                                PERSONAL ACTIVO
+                            </span>
+
+                            <strong id="metricActive">
+                                0
+                            </strong>
+
+                            <small id="metricCompanies">
+                                JD 0 · ISGTZ 0 · LO 0
+                            </small>
+
+                        </article>
+
+
+                        <article class="rh-metric">
+
+                            <span>
+                                INGRESOS IMSS
+                            </span>
+
+                            <strong id="metricNew">
+                                0
+                            </strong>
+
+                            <small>
+                                Durante este mes
+                            </small>
+
+                        </article>
+
+
+                        <article class="rh-metric">
+
+                            <span>
+                                CUMPLEAÑOS
+                            </span>
+
+                            <strong id="metricBirthdays">
+                                0
+                            </strong>
+
+                            <small>
+                                Durante este mes
+                            </small>
+
+                        </article>
+
+
+                        <article class="rh-metric">
+
+                            <span>
+                                SIN CORREO SISTEMA
+                            </span>
+
+                            <strong id="metricUnlinked">
+                                0
+                            </strong>
+
+                            <small>
+                                Pendientes de vincular
+                            </small>
+
+                        </article>
+
+
+                    </section>
+
+
+                    <!-- =========================================
+                         BUSCADOR
+                    ========================================== -->
+
+                    <section class="rh-toolbar">
+
+
+                        <div class="rh-search-wrap">
+
+                            <span>
+                                ⌕
+                            </span>
+
+                            <input
+                                type="search"
+                                id="employeeSearch"
+                                placeholder="Buscar nombre, nómina, puesto, empresa, correo..."
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            id="filtersToggle"
+                            class="module-button"
+                        >
+                            Filtros
+
+                            <span id="activeFilterCount">
+                                0
+                            </span>
+                        </button>
+
+
+                    </section>
+
+
+                    <!-- =========================================
+                         FILTROS
+                    ========================================== -->
+
+                    <section
+                        id="employeeFilters"
+                        class="rh-filters"
+                    >
+
+
+                        <div class="rh-filter-grid">
+
+
+                            <!-- NÓMINA -->
+
+                            <label>
+
+                                <span>
+                                    No. nómina
+                                </span>
+
+                                <input
+                                    id="filterPayroll"
+                                    type="search"
+                                    placeholder="Nómina"
+                                >
+
+                            </label>
+
+
+                            <!-- NOMBRE -->
+
+                            <label>
+
+                                <span>
+                                    Nombre
+                                </span>
+
+                                <input
+                                    id="filterName"
+                                    type="search"
+                                    placeholder="Empleado"
+                                >
+
+                            </label>
+
+
+                            <!-- EMPRESA -->
+
+                            <label>
+
+                                <span>
+                                    Empresa
+                                </span>
+
+                                <select id="filterCompany">
+
+                                    <option value="">
+                                        Todas
+                                    </option>
+
+                                    <option value="JD">
+                                        JD
+                                    </option>
+
+                                    <option value="ISGTZ">
+                                        ISGTZ
+                                    </option>
+
+                                    <option value="LO">
+                                        LO
+                                    </option>
+
+                                </select>
+
+                            </label>
+
+
+                            <!-- PUESTO -->
+
+                            <label>
+
+                                <span>
+                                    Puesto
+                                </span>
+
+                                <select id="filterPosition">
+
+                                    <option value="">
+                                        Todos
+                                    </option>
+
+                                </select>
+
+                            </label>
+
+
+                            <!-- REPORTA A -->
+
+                            <label>
+
+                                <span>
+                                    Reporta a
+                                </span>
+
+                                <select id="filterReportsTo">
+
+                                    <option value="">
+                                        Todos
+                                    </option>
+
+                                </select>
+
+                            </label>
+
+
+                            <!-- IMSS -->
+
+                            <label>
+
+                                <span>
+                                    Ingreso IMSS
+                                </span>
+
+                                <input
+                                    id="filterImssMonth"
+                                    type="month"
+                                >
+
+                            </label>
+
+
+                            <!-- ANTIGÜEDAD -->
+
+                            <label>
+
+                                <span>
+                                    Antigüedad
+                                </span>
+
+                                <input
+                                    id="filterSeniorityMonth"
+                                    type="month"
+                                >
+
+                            </label>
+
+
+                            <!-- CARTA CONVENIO -->
+
+                            <label>
+
+                                <span>
+                                    Carta convenio
+                                </span>
+
+                                <input
+                                    id="filterAgreementMonth"
+                                    type="month"
+                                >
+
+                            </label>
+
+
+                            <!-- CUMPLEAÑOS -->
+
+                            <label>
+
+                                <span>
+                                    Cumpleaños
+                                </span>
+
+                                <input
+                                    id="filterBirthdayMonth"
+                                    type="month"
+                                >
+
+                            </label>
+
+
+                            <!-- CORREO SISTEMA -->
+
+                            <label>
+
+                                <span>
+                                    Correo sistema
+                                </span>
+
+                                <select id="filterSystemEmail">
+
+                                    <option value="">
+                                        Todos
+                                    </option>
+
+                                    <option value="linked">
+                                        Vinculados
+                                    </option>
+
+                                    <option value="unlinked">
+                                        Sin vincular
+                                    </option>
+
+                                </select>
+
+                            </label>
+
+
+                            <!-- ESTADO -->
+
+                            <label>
+
+                                <span>
+                                    Estado
+                                </span>
+
+                                <select id="filterActive">
+
+                                    <option value="">
+                                        Todos
+                                    </option>
+
+                                    <option value="true">
+                                        Activos
+                                    </option>
+
+                                    <option value="false">
+                                        Inactivos
+                                    </option>
+
+                                </select>
+
+                            </label>
+
+
+                        </div>
+
+
+                        <div class="rh-filter-footer">
+
+                            <button
+                                type="button"
+                                id="clearFilters"
+                                class="module-button"
+                            >
+                                Limpiar filtros
+                            </button>
+
+                        </div>
+
+
+                    </section>
+
+
+                    <!-- =========================================
+                         TABLA DE EMPLEADOS
+                    ========================================== -->
+
+                    <section class="rh-employee-surface">
+
+
+                        <div class="rh-table-meta">
+
+                            <span>
+                                DIRECTORIO
+                            </span>
+
+                            <strong id="employeeCountLabel">
+                                0 empleados
+                            </strong>
+
+                        </div>
+
+
+                        <div class="rh-table-scroll">
+
+
+                            <table class="rh-table">
+
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Empleado
+                                        </th>
+
+                                        <th>
+                                            Empresa
+                                        </th>
+
+                                        <th>
+                                            Puesto
+                                        </th>
+
+                                        <th>
+                                            Reporta a
+                                        </th>
+
+                                        <th>
+                                            IMSS
+                                        </th>
+
+                                        <th>
+                                            Antigüedad
+                                        </th>
+
+                                        <th>
+                                            Cumpleaños
+                                        </th>
+
+                                        <th>
+                                            Correo sistema
+                                        </th>
+
+                                        <th>
+                                            Estado
+                                        </th>
+
+                                        <th>
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody id="employeesTableBody">
+                                </tbody>
+
+
+                            </table>
+
+
+                        </div>
+
+
+                        <!-- EMPTY -->
+
+                        <div
+                            id="emptyEmployees"
+                            class="rh-empty"
+                        >
+
+                            <div>
+                                RH
+                            </div>
+
+                            <strong>
+                                No hay empleados
+                            </strong>
+
+                            <p>
+                                Da de alta el primer empleado
+                                para comenzar.
+                            </p>
+
+                        </div>
+
+
+                    </section>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     PESTAÑA VACACIONES
+
+                     ESTA SECCIÓN DEBE SEGUIR DENTRO DE
+                     .module-tab-content
+                ================================================== -->
+
+                <section
+                    class="module-tab-panel"
+                    data-module-panel="vacaciones"
+                >
+
+                    <div id="vacationsApp">
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     PESTAÑA CALENDARIO
+
+                     TAMBIÉN DEBE ESTAR DENTRO DE
+                     .module-tab-content
+                ================================================== -->
+
+                <section
+                    class="module-tab-panel"
+                    data-module-panel="calendario"
+                >
+
+                    <div id="vacationsCalendarApp">
+                    </div>
+
+                </section>
+
+
+            </div>
+            <!-- /module-tab-content -->
+
+
+        </section>
+        <!-- /module-browser -->
+
+
+    </main>
+
+
+    <!-- =====================================================
+         MODAL EMPLEADO
+    ====================================================== -->
+
+    <div
+        id="employeeModal"
+        class="module-modal"
+    >
+
+
+        <div
+            class="
+                module-modal-card
+                module-modal-wide
+            "
+        >
+
+
+            <!-- HEADER -->
+
+            <div class="module-modal-header">
+
+
+                <div>
+
+                    <span>
+                        RECURSOS HUMANOS
+                    </span>
+
+                    <h2 id="employeeModalTitle">
+                        Nuevo empleado
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="module-modal-close"
+                    data-close-modal="employeeModal"
+                >
+                    ×
+                </button>
+
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <form id="employeeForm">
+
+
+                <div class="module-modal-body">
+
+
+                    <div class="module-form-grid">
+
+
+                        <!-- NÓMINA -->
+
+                        <div class="module-field">
+
+                            <label for="employeePayroll">
+                                No. de nómina
+                            </label>
+
+                            <input
+                                id="employeePayroll"
+                                type="text"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- NOMBRE -->
+
+                        <div class="module-field">
+
+                            <label for="employeeName">
+                                Nombre completo
+                            </label>
+
+                            <input
+                                id="employeeName"
+                                type="text"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- EMPRESA -->
+
+                        <div class="module-field">
+
+                            <label for="employeeCompany">
+                                Empresa
+                            </label>
+
+                            <select
+                                id="employeeCompany"
+                                required
+                            >
+
+                                <option value="">
+                                    Seleccionar
+                                </option>
+
+                                <option value="JD">
+                                    JD
+                                </option>
+
+                                <option value="ISGTZ">
+                                    ISGTZ
+                                </option>
+
+                                <option value="LO">
+                                    LO
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- PUESTO -->
+
+                        <div class="module-field">
+
+                            <label for="employeePosition">
+                                Puesto
+                            </label>
+
+                            <select id="employeePosition">
+
+                                <option value="">
+                                    Sin puesto
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- REPORTA A -->
+
+                        <div class="module-field">
+
+                            <label for="employeeReportsTo">
+                                A quién reporta
+                            </label>
+
+                            <select id="employeeReportsTo">
+
+                                <option value="">
+                                    Sin asignar
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- IMSS -->
+
+                        <div class="module-field">
+
+                            <label for="employeeImssDate">
+                                Fecha de ingreso IMSS
+                            </label>
+
+                            <input
+                                id="employeeImssDate"
+                                type="date"
+                            >
+
+                        </div>
+
+
+                        <!-- ANTIGÜEDAD -->
+
+                        <div class="module-field">
+
+                            <label for="employeeSeniorityDate">
+                                Fecha de antigüedad
+                            </label>
+
+                            <input
+                                id="employeeSeniorityDate"
+                                type="date"
+                            >
+
+                        </div>
+
+
+                        <!-- CARTA CONVENIO -->
+
+                        <div class="module-field">
+
+                            <label for="employeeAgreementDate">
+                                Carta convenio
+                            </label>
+
+                            <input
+                                id="employeeAgreementDate"
+                                type="date"
+                            >
+
+                        </div>
+
+
+                        <!-- CUMPLEAÑOS -->
+
+                        <div class="module-field">
+
+                            <label for="employeeBirthday">
+                                Fecha de cumpleaños
+                            </label>
+
+                            <input
+                                id="employeeBirthday"
+                                type="date"
+                            >
+
+                        </div>
+
+
+                        <!-- =====================================
+                             ETIQUETA
+                        ====================================== -->
+
+                        <div
+                            class="
+                                module-field
+                                module-field-full
+                            "
+                        >
+
+                            <label>
+                                Etiqueta
+                            </label>
+
+
+                            <input
+                                id="employeeLabelColor"
+                                type="hidden"
+                                value="#5F87B8"
+                            >
+
+
+                            <div
+                                id="employeeColorPicker"
+                                class="rh-color-picker"
+                            >
+
+
+                                <button
+                                    type="button"
+                                    data-color="#5F87B8"
+                                    style="--color:#5F87B8"
+                                    title="Azul"
+                                >
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    data-color="#C76B3B"
+                                    style="--color:#C76B3B"
+                                    title="Naranja"
+                                >
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    data-color="#658E73"
+                                    style="--color:#658E73"
+                                    title="Verde"
+                                >
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    data-color="#8A73A6"
+                                    style="--color:#8A73A6"
+                                    title="Morado"
+                                >
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    data-color="#B78A43"
+                                    style="--color:#B78A43"
+                                    title="Dorado"
+                                >
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    data-color="#8B9299"
+                                    style="--color:#8B9299"
+                                    title="Gris"
+                                >
+                                </button>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- =====================================
+                             CREDENCIAL INTRANET
+                        ====================================== -->
+
+                        <div
+                            class="
+                                module-field-full
+                                rh-credentials-box
+                            "
+                        >
+
+
+                            <div class="rh-credentials-heading">
+
+
+                                <div>
+
+                                    <span>
+                                        CREDENCIAL INTERNA
+                                    </span>
+
+                                    <strong>
+                                        Intranet
+                                    </strong>
+
+                                </div>
+
+
+                                <small>
+                                    Independiente del acceso al Sistema
+                                </small>
+
+
+                            </div>
+
+
+                            <div class="rh-credentials-grid">
+
+
+                                <!-- USUARIO -->
+
+                                <div class="module-field">
+
+                                    <label for="employeeIntranetUsername">
+                                        Usuario intranet
+                                    </label>
+
+                                    <input
+                                        id="employeeIntranetUsername"
+                                        type="text"
+                                        autocomplete="off"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <!-- CONTRASEÑA -->
+
+                                <div class="module-field">
+
+                                    <label for="employeeIntranetPassword">
+                                        Contraseña intranet
+                                    </label>
+
+                                    <input
+                                        id="employeeIntranetPassword"
+                                        type="password"
+                                        autocomplete="new-password"
+                                        placeholder="Nueva contraseña"
+                                    >
+
+                                    <small class="rh-field-help">
+                                        Al editar, déjala vacía para conservar la actual.
+                                    </small>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- =====================================
+                             CORREO SISTEMA
+                        ====================================== -->
+
+                        <div
+                            class="
+                                module-field-full
+                                rh-system-link-box
+                            "
+                        >
+
+
+                            <div>
+
+                                <span>
+                                    CORREO SISTEMA
+                                </span>
+
+                                <strong id="selectedSystemEmail">
+                                    Sin correo vinculado
+                                </strong>
+
+
+                                <input
+                                    type="hidden"
+                                    id="employeeSystemAuthId"
+                                >
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                id="systemEmailButton"
+                                class="module-button"
+                            >
+                                Correo sistema
+                            </button>
+
+
+                            <button
+                                type="button"
+                                id="unlinkSystemEmail"
+                                class="module-button"
+                            >
+                                Desvincular
+                            </button>
+
+
+                        </div>
+
+
+                        <!-- =====================================
+                             ESTADO
+                        ====================================== -->
+
+                        <div class="module-field-full">
+
+
+                            <label class="rh-toggle">
+
+                                <input
+                                    id="employeeActive"
+                                    type="checkbox"
+                                    checked
+                                >
+
+                                <span>
+                                </span>
+
+                                Empleado activo
+
+                            </label>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- MENSAJE -->
+
+                    <div
+                        id="employeeFormMessage"
+                        class="module-form-message"
+                    >
+                    </div>
+
+
+                </div>
+
+
+                <!-- FOOTER -->
+
+                <div class="module-modal-footer">
+
+
+                    <button
+                        type="button"
+                        class="module-button"
+                        data-close-modal="employeeModal"
+                    >
+                        Cancelar
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        id="saveEmployeeButton"
+                        class="
+                            module-button
+                            module-button-primary
+                        "
+                    >
+                        Guardar empleado
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         MODAL PUESTOS
+    ====================================================== -->
+
+    <div
+        id="positionsModal"
+        class="module-modal"
+    >
+
+
+        <div
+            class="
+                module-modal-card
+                module-modal-wide
+            "
+        >
+
+
+            <!-- HEADER -->
+
+            <div class="module-modal-header">
+
+
+                <div>
+
+                    <span>
+                        ESTRUCTURA ORGANIZACIONAL
+                    </span>
+
+                    <h2>
+                        Puestos
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="module-modal-close"
+                    data-close-modal="positionsModal"
+                >
+                    ×
+                </button>
+
+
+            </div>
+
+
+            <!-- BODY -->
+
+            <div class="module-modal-body">
+
+
+                <form id="positionForm">
+
+
+                    <div class="rh-position-form">
+
+
+                        <!-- CLAVE -->
+
+                        <div class="module-field">
+
+                            <label for="positionKey">
+                                Clave
+                            </label>
+
+                            <input
+                                id="positionKey"
+                                type="text"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- PUESTO -->
+
+                        <div class="module-field">
+
+                            <label for="positionName">
+                                Puesto
+                            </label>
+
+                            <input
+                                id="positionName"
+                                type="text"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- REPORTA A -->
+
+                        <div class="module-field">
+
+                            <label for="positionReportsTo">
+                                Reporta a
+                            </label>
+
+                            <select id="positionReportsTo">
+
+                                <option value="">
+                                    Sin superior
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- BOTÓN -->
+
+                        <button
+                            type="submit"
+                            id="savePositionButton"
+                            class="
+                                module-button
+                                module-button-primary
+                            "
+                        >
+                            Agregar
+                        </button>
+
+
+                    </div>
+
+
+                    <div
+                        id="positionFormMessage"
+                        class="module-form-message"
+                    >
+                    </div>
+
+
+                </form>
+
+
+                <!-- =========================================
+                     LISTA DE PUESTOS
+                ========================================== -->
+
+                <div class="rh-position-list-header">
+
+                    <span>
+                        PUESTOS REGISTRADOS
+                    </span>
+
+                    <strong id="positionCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div id="positionsList">
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         MODAL CORREO SISTEMA
+    ====================================================== -->
+
+    <div
+        id="systemUsersModal"
+        class="module-modal"
+    >
+
+
+        <div class="module-modal-card">
+
+
+            <!-- HEADER -->
+
+            <div class="module-modal-header">
+
+
+                <div>
+
+                    <span>
+                        SUPABASE AUTH
+                    </span>
+
+                    <h2>
+                        Correo sistema
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="module-modal-close"
+                    data-close-modal="systemUsersModal"
+                >
+                    ×
+                </button>
+
+
+            </div>
+
+
+            <!-- BODY -->
+
+            <div class="module-modal-body">
+
+
+                <div class="rh-system-user-search">
+
+                    <input
+                        id="systemUserSearch"
+                        type="search"
+                        placeholder="Buscar correo..."
+                    >
+
+                </div>
+
+
+                <div id="systemUsersList">
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         CHAT / ACTUALIZACIONES
+    ====================================================== -->
+
+    <aside
+        id="employeeChat"
+        class="rh-chat"
+    >
+
+
+        <!-- HEADER -->
+
+        <div class="rh-chat-header">
+
+
+            <div>
+
+                <span>
+                    SEGUIMIENTO
+                </span>
+
+                <h2 id="chatEmployeeName">
+                    Empleado
+                </h2>
+
+                <small id="chatEmployeeMeta">
+                </small>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="closeEmployeeChat"
+            >
+                ×
+            </button>
+
+
+        </div>
+
+
+        <!-- MENSAJES -->
+
+        <div
+            id="employeeChatMessages"
+            class="rh-chat-messages"
+        >
+        </div>
+
+
+        <!-- COMPOSER -->
+
+        <div class="rh-chat-composer">
+
+
+            <textarea
+                id="employeeChatInput"
+                rows="2"
+                placeholder="Escribe una actualización... Enter para guardar."
+            ></textarea>
+
+
+            <button
+                type="button"
+                id="sendEmployeeUpdate"
+                class="
+                    module-button
+                    module-button-primary
+                "
+            >
+                Guardar
+            </button>
+
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- BACKDROP CHAT -->
+
+    <div
+        id="chatBackdrop"
+        class="rh-chat-backdrop"
+    >
+    </div>
+
+
+    <!-- =====================================================
+         SCRIPTS
+    ====================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <script
+        src="js/supabase-client.js"
+    ></script>
+
+
+    <!--
+        PRIMERO LAS PESTAÑAS.
+        ESTE SCRIPT ENCUENTRA LOS 3 PANELES
+        PORQUE AHORA TODOS ESTÁN DENTRO
+        DE .module-browser
+    -->
+
+    <script
+        src="js/modulo-tabs.js"
+    ></script>
+
+
+    <!-- PERSONAL -->
+
+    <script
+        src="js/recursos-humanos.js"
+    ></script>
+
+
+    <!-- VACACIONES + CALENDARIO -->
+
+    <script
+        src="js/recursos-humanos-vacaciones.js"
+    ></script>
+
+
+</body>
+
+</html>

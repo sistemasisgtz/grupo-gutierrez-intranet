@@ -1,0 +1,1642 @@
+/* =========================================================
+   GRUPO GUTIERREZ
+   RECURSOS HUMANOS
+   VISIBILIDAD / GLASS BRIGHT OVERRIDE
+   ========================================================= */
+
+
+/* =========================================================
+   FONDO GENERAL
+========================================================= */
+
+body.module-page {
+
+    color:
+        #e7edf2;
+
+    background:
+
+        radial-gradient(
+            circle at 78% 5%,
+            rgba(53, 105, 145, .20),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 12% 88%,
+            rgba(176, 82, 40, .11),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            145deg,
+            #131a21,
+            #0b1016 65%,
+            #080c11
+        );
+
+}
+
+
+/* =========================================================
+   GRID DE FONDO
+========================================================= */
+
+.module-background::before {
+
+    opacity:
+        .28;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        );
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.module-brand-copy span {
+
+    color:
+        #90a2b0;
+
+}
+
+
+.module-brand-copy strong {
+
+    color:
+        #f3f6f8;
+
+}
+
+
+.module-brand-mark {
+
+    color:
+        #edf3f7;
+
+    border-color:
+        rgba(255,255,255,.14);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(54, 69, 82, .96),
+            rgba(24, 32, 40, .95)
+        );
+
+    box-shadow:
+
+        inset 0 1px 0
+        rgba(255,255,255,.09),
+
+        0 15px 34px
+        rgba(0,0,0,.24);
+
+}
+
+
+/* =========================================================
+   USUARIO
+========================================================= */
+
+.rh-user-chip span {
+
+    color:
+        #8193a1;
+
+}
+
+
+.rh-user-chip strong {
+
+    color:
+        #c5d0d8;
+
+}
+
+
+/* =========================================================
+   BROWSER PRINCIPAL
+========================================================= */
+
+.module-browser {
+
+    border-color:
+        rgba(255,255,255,.11);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(31, 40, 49, .88),
+            rgba(17, 23, 30, .88)
+        );
+
+    box-shadow:
+
+        0 30px 90px
+        rgba(0,0,0,.28),
+
+        inset 0 1px 0
+        rgba(255,255,255,.07);
+
+}
+
+
+/* =========================================================
+   PESTAÑAS
+========================================================= */
+
+.module-tabbar {
+
+    border-bottom-color:
+        rgba(255,255,255,.09);
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018)
+        );
+
+}
+
+
+.module-tab {
+
+    color:
+        #9aa8b3;
+
+}
+
+
+.module-tab:hover {
+
+    color:
+        #e0e6ea;
+
+    background:
+        rgba(255,255,255,.055);
+
+}
+
+
+.module-tab.active {
+
+    color:
+        #ffffff;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(68, 82, 95, .96),
+            rgba(38, 48, 58, .96)
+        );
+
+}
+
+
+.module-tab.active::after {
+
+    background:
+        #26313b;
+
+}
+
+
+.module-tab-dot {
+
+    background:
+        #7b8c99;
+
+}
+
+
+.module-tab.active .module-tab-dot {
+
+    background:
+        #62a0d0;
+
+    box-shadow:
+        0 0 11px
+        rgba(98,160,208,.85);
+
+}
+
+
+/* =========================================================
+   PANEL RH
+========================================================= */
+
+.rh-panel {
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.018),
+            rgba(255,255,255,.006)
+        );
+
+}
+
+
+/* =========================================================
+   TITULOS
+========================================================= */
+
+.rh-eyebrow,
+.rv-eyebrow {
+
+    color:
+        #8ca0af;
+
+}
+
+
+.rh-section-header h1,
+.rv-hero h1,
+.rv-calendar-hero h1 {
+
+    color:
+        #f5f8fa;
+
+}
+
+
+.rh-section-header p,
+.rv-hero p,
+.rv-calendar-hero p {
+
+    color:
+        #9aa9b5;
+
+}
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+.module-button {
+
+    color:
+        #d2dbe1;
+
+    border-color:
+        rgba(255,255,255,.12);
+
+    background:
+        rgba(255,255,255,.07);
+
+}
+
+
+.module-button:hover {
+
+    color:
+        #ffffff;
+
+    border-color:
+        rgba(255,255,255,.22);
+
+    background:
+        rgba(255,255,255,.11);
+
+}
+
+
+.module-button-primary {
+
+    color:
+        #ffffff;
+
+    border-color:
+        rgba(76, 139, 185, .52);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #245a82,
+            #2e78a7
+        );
+
+    box-shadow:
+        0 10px 24px
+        rgba(31, 91, 135, .20);
+
+}
+
+
+.module-button-orange {
+
+    color:
+        #ffffff;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #784126,
+            #a95b31
+        );
+
+}
+
+
+/* =========================================================
+   METRICAS PERSONAL
+========================================================= */
+
+.rh-metric {
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.035)
+        );
+
+    box-shadow:
+
+        inset 0 1px 0
+        rgba(255,255,255,.06),
+
+        0 13px 30px
+        rgba(0,0,0,.10);
+
+}
+
+
+.rh-metric span {
+
+    color:
+        #91a3b0;
+
+}
+
+
+.rh-metric strong {
+
+    color:
+        #f4f7f9;
+
+}
+
+
+.rh-metric small {
+
+    color:
+        #8c9ba6;
+
+}
+
+
+/* =========================================================
+   BUSCADOR
+========================================================= */
+
+.rh-search-wrap {
+
+    border-color:
+        rgba(255,255,255,.11);
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+
+.rh-search-wrap span {
+
+    color:
+        #a4b3be;
+
+}
+
+
+.rh-search-wrap input {
+
+    color:
+        #edf2f5;
+
+}
+
+
+.rh-search-wrap input::placeholder {
+
+    color:
+        #8394a1;
+
+}
+
+
+/* =========================================================
+   FILTROS
+========================================================= */
+
+.rh-filter-grid {
+
+    border-color:
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.035);
+
+}
+
+
+.rh-filter-grid label span {
+
+    color:
+        #9aaab6;
+
+}
+
+
+.rh-filter-grid input,
+.rh-filter-grid select {
+
+    color:
+        #e1e7eb;
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+        #202a33;
+
+}
+
+
+.rh-filter-grid input:focus,
+.rh-filter-grid select:focus {
+
+    border-color:
+        rgba(92, 157, 204, .55);
+
+    background:
+        #25313b;
+
+}
+
+
+/* =========================================================
+   TABLA EMPLEADOS
+========================================================= */
+
+.rh-employee-surface {
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.035);
+
+}
+
+
+.rh-table-meta {
+
+    border-bottom-color:
+        rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.rh-table-meta span {
+
+    color:
+        #8da0ae;
+
+}
+
+
+.rh-table-meta strong {
+
+    color:
+        #b8c4cc;
+
+}
+
+
+.rh-table th {
+
+    color:
+        #9cacb7;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border-bottom-color:
+        rgba(255,255,255,.08);
+
+}
+
+
+.rh-table td {
+
+    color:
+        #c1cbd2;
+
+    border-bottom-color:
+        rgba(255,255,255,.06);
+
+}
+
+
+.rh-table tbody tr:hover {
+
+    background:
+        rgba(255,255,255,.055);
+
+}
+
+
+/* =========================================================
+   EMPLEADO
+========================================================= */
+
+.rh-employee-avatar {
+
+    color:
+        #f0f4f7;
+
+    border-color:
+        rgba(255,255,255,.12);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.10),
+            rgba(255,255,255,.045)
+        );
+
+}
+
+
+.rh-employee-copy strong {
+
+    color:
+        #f1f4f6;
+
+}
+
+
+.rh-employee-copy small {
+
+    color:
+        #93a3af;
+
+}
+
+
+/* =========================================================
+   PILLS
+========================================================= */
+
+.rh-company-pill,
+.rh-status-pill,
+.rh-system-pill {
+
+    color:
+        #b8c3cb;
+
+    border-color:
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.055);
+
+}
+
+
+.rh-status-pill.active {
+
+    color:
+        #9fd1b7;
+
+    border-color:
+        rgba(112,177,141,.27);
+
+    background:
+        rgba(74,136,104,.14);
+
+}
+
+
+.rh-status-pill.inactive {
+
+    color:
+        #d29a9a;
+
+}
+
+
+.rh-system-pill.linked {
+
+    color:
+        #9fc1d9;
+
+}
+
+
+/* =========================================================
+   ACCIONES EMPLEADO
+========================================================= */
+
+.rh-icon-button {
+
+    color:
+        #a8b5be;
+
+    border-color:
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.045);
+
+}
+
+
+.rh-icon-button:hover {
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(255,255,255,.10);
+
+}
+
+
+.rh-icon-button.chat {
+
+    color:
+        #8bbadd;
+
+}
+
+
+/* =========================================================
+   MODALES
+========================================================= */
+
+.module-modal-card {
+
+    border-color:
+        rgba(255,255,255,.12);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(44, 54, 64, .99),
+            rgba(24, 31, 38, .99)
+        );
+
+}
+
+
+.module-modal-header {
+
+    border-bottom-color:
+        rgba(255,255,255,.09);
+
+}
+
+
+.module-modal-header span {
+
+    color:
+        #91a4b2;
+
+}
+
+
+.module-modal-header h2 {
+
+    color:
+        #f3f6f8;
+
+}
+
+
+.module-modal-close {
+
+    color:
+        #c2ccd3;
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+
+/* =========================================================
+   FORMULARIOS
+========================================================= */
+
+.module-field label {
+
+    color:
+        #a5b3be;
+
+}
+
+
+.module-field input,
+.module-field select,
+.module-field textarea {
+
+    color:
+        #edf2f5;
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.065);
+
+}
+
+
+.module-field input::placeholder,
+.module-field textarea::placeholder {
+
+    color:
+        #7d8e9a;
+
+}
+
+
+.module-field input:focus,
+.module-field select:focus,
+.module-field textarea:focus {
+
+    border-color:
+        rgba(94, 161, 210, .62);
+
+    background:
+        rgba(255,255,255,.09);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(49, 117, 165, .14);
+
+}
+
+
+/* =========================================================
+   CREDENCIALES / CORREO
+========================================================= */
+
+.rh-credentials-box,
+.rh-system-link-box {
+
+    border-color:
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.035);
+
+}
+
+
+.rh-credentials-heading span,
+.rh-system-link-box span {
+
+    color:
+        #889aa7;
+
+}
+
+
+.rh-credentials-heading strong,
+.rh-system-link-box strong {
+
+    color:
+        #d9e0e5;
+
+}
+
+
+.rh-credentials-heading small,
+.rh-field-help {
+
+    color:
+        #82919c;
+
+}
+
+
+/* =========================================================
+   PUESTOS
+========================================================= */
+
+.rh-position-list-header {
+
+    border-bottom-color:
+        rgba(255,255,255,.08);
+
+}
+
+
+.rh-position-list-header span {
+
+    color:
+        #8fa1ae;
+
+}
+
+
+.rh-position-list-header strong {
+
+    color:
+        #b4c0c8;
+
+}
+
+
+.rh-position-item {
+
+    border-bottom-color:
+        rgba(255,255,255,.06);
+
+}
+
+
+.rh-position-key {
+
+    color:
+        #87a7bd;
+
+}
+
+
+.rh-position-item strong {
+
+    color:
+        #e0e5e8;
+
+}
+
+
+.rh-position-item small {
+
+    color:
+        #8d9ba6;
+
+}
+
+
+/* =========================================================
+   VACACIONES - HERO / POLITICA
+========================================================= */
+
+.rv-policy-chip {
+
+    color:
+        #9babb7;
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.055);
+
+}
+
+
+.rv-policy-chip strong {
+
+    color:
+        #e2e7ea;
+
+}
+
+
+/* =========================================================
+   VACACIONES - METRICAS
+========================================================= */
+
+.rv-global-metric {
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.032)
+        );
+
+}
+
+
+.rv-global-metric span {
+
+    color:
+        #91a3b0;
+
+}
+
+
+.rv-global-metric strong {
+
+    color:
+        #f2f5f7;
+
+}
+
+
+.rv-global-metric small {
+
+    color:
+        #8b9aa5;
+
+}
+
+
+/* =========================================================
+   VACACIONES - TITULOS
+========================================================= */
+
+.rv-section-title span {
+
+    color:
+        #91a2ae;
+
+}
+
+
+.rv-section-title small {
+
+    color:
+        #82919c;
+
+}
+
+
+/* =========================================================
+   PROXIMAS VACACIONES
+========================================================= */
+
+.rv-upcoming-card {
+
+    border-color:
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.055);
+
+}
+
+
+.rv-upcoming-card strong {
+
+    color:
+        #edf1f3;
+
+}
+
+
+.rv-upcoming-card p {
+
+    color:
+        #96a5b0;
+
+}
+
+
+.rv-upcoming-date {
+
+    color:
+        #a8bed0;
+
+}
+
+
+.rv-upcoming-days {
+
+    color:
+        #8596a2;
+
+}
+
+
+/* =========================================================
+   VACACIONES EMPLOYEE CARDS
+========================================================= */
+
+.rv-employee-card {
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.03)
+        );
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.035);
+
+}
+
+
+.rv-employee-card:hover {
+
+    border-color:
+        rgba(106,166,207,.28);
+
+    background:
+        rgba(255,255,255,.09);
+
+}
+
+
+.rv-employee-avatar {
+
+    color:
+        #eef3f6;
+
+    border-color:
+        rgba(255,255,255,.12);
+
+    background:
+        rgba(255,255,255,.07);
+
+}
+
+
+.rv-employee-main strong {
+
+    color:
+        #f1f4f6;
+
+}
+
+
+.rv-employee-main small {
+
+    color:
+        #96a5b0;
+
+}
+
+
+.rv-employee-company {
+
+    color:
+        #b1bec7;
+
+    border-color:
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.055);
+
+}
+
+
+/* =========================================================
+   ANTIGUEDAD
+========================================================= */
+
+.rv-seniority {
+
+    border-color:
+        rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.035);
+
+}
+
+
+.rv-seniority span {
+
+    color:
+        #8fa0ac;
+
+}
+
+
+.rv-seniority strong {
+
+    color:
+        #d7dfe4;
+
+}
+
+
+/* =========================================================
+   ESTADISTICAS VACACIONES
+========================================================= */
+
+.rv-card-stat {
+
+    border-color:
+        rgba(255,255,255,.075);
+
+    background:
+        rgba(255,255,255,.04);
+
+}
+
+
+.rv-card-stat span {
+
+    color:
+        #82929d;
+
+}
+
+
+.rv-card-stat strong {
+
+    color:
+        #e5eaed;
+
+}
+
+
+.rv-card-stat.available strong {
+
+    color:
+        #91c5e5;
+
+}
+
+
+.rv-card-stat.warning strong {
+
+    color:
+        #df9f7e;
+
+}
+
+
+/* =========================================================
+   FUTURO
+========================================================= */
+
+.rv-future-item {
+
+    border-color:
+        rgba(255,255,255,.07);
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.rv-future-item span {
+
+    color:
+        #80909c;
+
+}
+
+
+.rv-future-item strong {
+
+    color:
+        #c1ccd3;
+
+}
+
+
+.rv-card-footer {
+
+    color:
+        #78acd0;
+
+}
+
+
+/* =========================================================
+   VACACIONES TOOLBAR
+========================================================= */
+
+.rv-toolbar input,
+.rv-toolbar select {
+
+    color:
+        #dce3e8;
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+
+.rv-toolbar input::placeholder {
+
+    color:
+        #81919d;
+
+}
+
+
+/* =========================================================
+   CALENDARIO
+========================================================= */
+
+.rv-calendar-shell {
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.035);
+
+}
+
+
+.rv-calendar-header {
+
+    border-bottom-color:
+        rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.03);
+
+}
+
+
+.rv-calendar-header strong {
+
+    color:
+        #e0e5e8;
+
+}
+
+
+.rv-calendar-nav {
+
+    color:
+        #bcc6cd;
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+
+.rv-calendar-weekdays {
+
+    border-bottom-color:
+        rgba(255,255,255,.07);
+
+}
+
+
+.rv-calendar-weekdays span {
+
+    color:
+        #8596a2;
+
+}
+
+
+.rv-day {
+
+    color:
+        #aebac2;
+
+    border-right-color:
+        rgba(255,255,255,.055);
+
+    border-bottom-color:
+        rgba(255,255,255,.055);
+
+}
+
+
+button.rv-day:hover:not(.weekend) {
+
+    background:
+        rgba(255,255,255,.065);
+
+}
+
+
+.rv-day.weekend {
+
+    opacity:
+        .58;
+
+    background:
+        rgba(0,0,0,.06);
+
+}
+
+
+.rv-day.selected {
+
+    background:
+        rgba(43,105,150,.22);
+
+    box-shadow:
+        inset 0 0 0 1px
+        rgba(83,157,210,.35);
+
+}
+
+
+.rv-day-event {
+
+    color:
+        #c0cad1;
+
+    background:
+        rgba(255,255,255,.065);
+
+}
+
+
+/* =========================================================
+   SELECCION VACACIONES
+========================================================= */
+
+.rv-selection {
+
+    border-color:
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.045);
+
+}
+
+
+.rv-selection span {
+
+    color:
+        #899aa6;
+
+}
+
+
+.rv-selection strong {
+
+    color:
+        #d6dde2;
+
+}
+
+
+/* =========================================================
+   HISTORIAL
+========================================================= */
+
+.rv-request {
+
+    border-color:
+        rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.04);
+
+}
+
+
+.rv-request strong {
+
+    color:
+        #d1d9de;
+
+}
+
+
+.rv-request small {
+
+    color:
+        #8c9ba6;
+
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+.rh-chat {
+
+    border-color:
+        rgba(255,255,255,.12);
+
+    background:
+
+        linear-gradient(
+            155deg,
+            rgba(43, 53, 63, .99),
+            rgba(20, 27, 34, .99)
+        );
+
+}
+
+
+.rh-chat-header span {
+
+    color:
+        #91a2ae;
+
+}
+
+
+.rh-chat-header h2 {
+
+    color:
+        #f1f4f6;
+
+}
+
+
+.rh-chat-header small {
+
+    color:
+        #99a7b1;
+
+}
+
+
+.rh-note {
+
+    border-color:
+        rgba(255,255,255,.09);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(57, 91, 115, .48),
+            rgba(31, 43, 53, .90)
+        );
+
+}
+
+
+.rh-note:nth-child(3n + 2) {
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(123, 73, 47, .40),
+            rgba(43, 37, 36, .92)
+        );
+
+}
+
+
+.rh-note p {
+
+    color:
+        #e0e6ea;
+
+}
+
+
+.rh-note-footer {
+
+    color:
+        #95a4af;
+
+}
+
+
+.rh-chat-composer textarea {
+
+    color:
+        #e3e9ed;
+
+    border-color:
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+
+/* =========================================================
+   EMPTY STATES
+========================================================= */
+
+.rh-empty strong {
+
+    color:
+        #d6dde2;
+
+}
+
+
+.rh-empty p,
+.rv-upcoming-empty {
+
+    color:
+        #94a3ae;
+
+}
+
+
+.rv-upcoming-empty {
+
+    border-color:
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.module-page * {
+
+    scrollbar-width:
+        thin;
+
+    scrollbar-color:
+        #465865
+        transparent;
+
+}
+
+
+.module-page *::-webkit-scrollbar {
+
+    width:
+        8px;
+
+    height:
+        8px;
+
+}
+
+
+.module-page *::-webkit-scrollbar-thumb {
+
+    border-radius:
+        20px;
+
+    background:
+        #465865;
+
+}
+
+
+.module-page *::-webkit-scrollbar-track {
+
+    background:
+        transparent;
+
+}

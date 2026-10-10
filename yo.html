@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#080b0f"
+    >
+
+    <title>
+        Mi espacio | Grupo Gutierrez
+    </title>
+
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <link
+        rel="stylesheet"
+        href="css/yo.css"
+    >
+
+</head>
+
+
+<body class="yo-body">
+
+
+    <!-- =====================================================
+         STATIC BACKGROUND
+    ====================================================== -->
+
+    <div
+        class="yo-background"
+        aria-hidden="true"
+    >
+
+        <div class="yo-grid">
+        </div>
+
+        <div class="yo-static-glow yo-static-glow-blue">
+        </div>
+
+        <div class="yo-static-glow yo-static-glow-orange">
+        </div>
+
+        <div class="yo-vignette">
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         APP
+    ====================================================== -->
+
+    <main
+        id="yoApp"
+        class="yo-shell"
+    >
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="yo-header">
+
+
+            <div class="yo-brand">
+
+                <div class="yo-brand-mark">
+                    GG
+                </div>
+
+
+                <div>
+
+                    <span>
+                        GRUPO GUTIERREZ
+                    </span>
+
+                    <strong>
+                        Mi Intranet
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="yo-header-actions">
+
+
+                <!-- NOTIFICACIONES -->
+
+                <div class="yo-notification-wrap">
+
+
+                    <button
+                        type="button"
+                        id="yoNotificationButton"
+                        class="yo-notification-button"
+                        aria-label="Notificaciones"
+                        aria-expanded="false"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <path
+                                d="
+                                    M18 9
+                                    a6 6 0 0 0
+                                    -12 0
+                                    c0 7
+                                    -3 7
+                                    -3 9
+                                    h18
+                                    c0 -2
+                                    -3 -2
+                                    -3 -9
+                                "
+                            ></path>
+
+                            <path
+                                d="
+                                    M10 21
+                                    h4
+                                "
+                            ></path>
+
+                        </svg>
+
+
+                        <span
+                            id="yoNotificationBadge"
+                            class="yo-notification-badge"
+                        >
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <div
+                        id="yoNotificationsPanel"
+                        class="yo-notifications-panel"
+                    >
+
+
+                        <div class="yo-notification-header">
+
+                            <span>
+                                INTRANET
+                            </span>
+
+                            <strong>
+                                Notificaciones
+                            </strong>
+
+                        </div>
+
+
+                        <div
+                            id="yoNotificationsList"
+                            class="yo-notifications-list"
+                        >
+
+                            <div class="yo-notifications-empty">
+
+                                <span>
+                                    ◌
+                                </span>
+
+                                <strong>
+                                    Todo tranquilo
+                                </strong>
+
+                                <p>
+                                    Cuando Recursos Humanos publique
+                                    noticias aparecerán aquí.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="yoLogout"
+                    class="yo-header-button"
+                >
+                    Salir
+                </button>
+
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =================================================
+             LOADING
+        ================================================== -->
+
+        <section
+            id="yoLoading"
+            class="yo-loading"
+        >
+
+            <div class="yo-loading-orb">
+            </div>
+
+            <span>
+                Preparando tu espacio...
+            </span>
+
+        </section>
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <div
+            id="yoContent"
+            class="yo-content"
+        >
+
+
+            <!-- =============================================
+                 PROFILE
+            ============================================== -->
+
+            <section class="yo-profile-section">
+
+
+                <div class="yo-profile-main">
+
+
+                    <div class="yo-avatar-shell">
+
+
+                        <div class="yo-avatar-ring">
+                        </div>
+
+
+                        <div
+                            id="yoAvatar"
+                            class="yo-avatar"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="3.2"
+                                ></circle>
+
+                                <path
+                                    d="
+                                        M5.8 19
+                                        C6.4 15.7
+                                        8.6 14
+                                        12 14
+                                        C15.4 14
+                                        17.6 15.7
+                                        18.2 19
+                                    "
+                                ></path>
+
+                            </svg>
+
+
+                            <span id="yoInitials">
+                                GG
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="yo-profile-copy">
+
+
+                        <span class="yo-profile-kicker">
+                            MI ESPACIO
+                        </span>
+
+
+                        <h1 id="yoEmployeeName">
+                            Empleado
+                        </h1>
+
+
+                        <p id="yoEmployeePosition">
+                            —
+                        </p>
+
+
+                        <div
+                            id="yoEmployeeCompany"
+                            class="yo-company-chip"
+                        >
+                            —
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- INFO -->
+
+                <div class="yo-profile-info">
+
+
+                    <article>
+
+                        <span>
+                            PUESTO
+                        </span>
+
+                        <strong id="yoPosition">
+                            —
+                        </strong>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            ANTIGÜEDAD
+                        </span>
+
+                        <strong id="yoSeniority">
+                            —
+                        </strong>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            FECHA DE INGRESO
+                        </span>
+
+                        <strong id="yoEntryDate">
+                            —
+                        </strong>
+
+                    </article>
+
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 VACACIONES
+            ================================================== -->
+
+            <section class="yo-vacations-section">
+
+
+                <div class="yo-section-heading">
+
+                    <div>
+
+                        <span>
+                            RECURSOS HUMANOS
+                        </span>
+
+                        <h2>
+                            Mis vacaciones
+                        </h2>
+
+                    </div>
+
+
+                    <p>
+                        Tu saldo y próximas vacaciones.
+                    </p>
+
+                </div>
+
+
+                <!-- =============================================
+                     VACATION GRID
+                ============================================== -->
+
+                <div class="yo-vacation-grid">
+
+
+                    <!-- DISPONIBLE LIQUID -->
+
+                    <article
+                        class="
+                            yo-vacation-card
+                            yo-vacation-available
+                            yo-enter-card
+                        "
+                    >
+
+
+                        <div class="yo-liquid-layer">
+
+                            <div class="yo-liquid-blob yo-liquid-one">
+                            </div>
+
+                            <div class="yo-liquid-blob yo-liquid-two">
+                            </div>
+
+                            <div class="yo-liquid-blob yo-liquid-three">
+                            </div>
+
+                        </div>
+
+
+                        <div class="yo-card-content">
+
+                            <span class="yo-card-label">
+                                DÍAS DISPONIBLES
+                            </span>
+
+
+                            <div class="yo-big-number">
+
+                                <strong id="yoAvailableDays">
+                                    0
+                                </strong>
+
+                                <small>
+                                    días
+                                </small>
+
+                            </div>
+
+
+                            <p>
+                                Puedes utilizarlos actualmente.
+                            </p>
+
+                        </div>
+
+
+                    </article>
+
+
+                    <!-- PERIODO -->
+
+                    <article
+                        class="
+                            yo-vacation-card
+                            yo-enter-card
+                        "
+                    >
+
+                        <span class="yo-card-label">
+                            DÍAS DE ESTE PERIODO
+                        </span>
+
+                        <div class="yo-medium-number">
+
+                            <strong id="yoPeriodDays">
+                                0
+                            </strong>
+
+                            <small>
+                                días
+                            </small>
+
+                        </div>
+
+                        <p>
+                            Los que corresponden por tu antigüedad.
+                        </p>
+
+                    </article>
+
+
+                    <!-- ACUMULADO -->
+
+                    <article
+                        class="
+                            yo-vacation-card
+                            yo-enter-card
+                        "
+                    >
+
+                        <span class="yo-card-label">
+                            DÍAS ACUMULADOS
+                        </span>
+
+                        <div class="yo-medium-number">
+
+                            <strong id="yoAccumulatedDays">
+                                0
+                            </strong>
+
+                            <small>
+                                días
+                            </small>
+
+                        </div>
+
+                        <p>
+                            Saldo vigente acumulado.
+                        </p>
+
+                    </article>
+
+
+                    <!-- PRÓXIMO DESBLOQUEO -->
+
+                    <article
+                        class="
+                            yo-vacation-card
+                            yo-vacation-next
+                            yo-enter-card
+                        "
+                    >
+
+                        <span class="yo-card-label">
+                            PRÓXIMO DESBLOQUEO
+                        </span>
+
+
+                        <div class="yo-next-unlock">
+
+                            <strong id="yoNextUnlockDays">
+                                —
+                            </strong>
+
+                            <span id="yoNextUnlockDate">
+                                —
+                            </span>
+
+                        </div>
+
+
+                        <p>
+                            Liberación anticipada del siguiente periodo.
+                        </p>
+
+                    </article>
+
+
+                    <!-- DISFRUTADOS -->
+
+                    <article
+                        class="
+                            yo-vacation-card
+                            yo-enter-card
+                        "
+                    >
+
+                        <span class="yo-card-label">
+                            DÍAS DISFRUTADOS
+                        </span>
+
+                        <div class="yo-medium-number">
+
+                            <strong id="yoEnjoyedDays">
+                                0
+                            </strong>
+
+                            <small>
+                                días
+                            </small>
+
+                        </div>
+
+                        <p>
+                            Vacaciones que ya has tomado.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 VACACIONES AUTORIZADAS
+            ================================================== -->
+
+            <section class="yo-authorized-section">
+
+
+                <div class="yo-section-heading">
+
+                    <div>
+
+                        <span>
+                            PROGRAMACIÓN
+                        </span>
+
+                        <h2>
+                            Vacaciones autorizadas
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="yoAuthorizedVacations"
+                    class="yo-authorized-grid"
+                >
+                </div>
+
+
+            </section>
+
+
+        </div>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="yo-footer">
+
+            <span>
+                GRUPO GUTIERREZ
+            </span>
+
+            <i>
+            </i>
+
+            <span>
+                MI INTRANET
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         SCRIPTS
+    ====================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <script
+        src="js/supabase-client.js"
+    ></script>
+
+
+    <script
+        src="js/yo.js"
+    ></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#080b0f"
+    >
+
+    <title>
+        Sistema | Grupo Gutierrez
+    </title>
+
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <link
+        rel="stylesheet"
+        href="css/sistema.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         STATIC TECH BACKGROUND
+    ====================================================== -->
+
+    <div
+        class="system-background"
+        aria-hidden="true"
+    >
+
+        <div class="system-grid">
+        </div>
+
+        <div class="system-glow system-glow-blue">
+        </div>
+
+        <div class="system-glow system-glow-orange">
+        </div>
+
+        <div class="system-vignette">
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="system-header">
+
+
+        <div class="system-brand">
+
+
+            <div class="system-brand-mark">
+                GG
+            </div>
+
+
+            <div>
+
+                <span>
+                    GRUPO GUTIERREZ
+                </span>
+
+                <strong>
+                    Sistema Central
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="system-user">
+
+
+            <div class="system-user-info">
+
+                <span>
+                    SESIÓN ACTIVA
+                </span>
+
+                <strong id="systemUserEmail">
+                    ...
+                </strong>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="systemLogoutButton"
+                class="system-logout-button"
+            >
+                Salir
+            </button>
+
+
+        </div>
+
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTENT
+    ====================================================== -->
+
+    <main class="system-shell">
+
+
+        <section class="system-intro">
+
+
+            <span class="system-eyebrow">
+                Grupo Gutierrez
+            </span>
+
+
+            <h1>
+                Sistema
+            </h1>
+
+
+            <p>
+
+                Selecciona el modulo al cual quieres acceder.
+
+            </p>
+
+
+        </section>
+
+
+        <!-- =================================================
+             CIRCULAR SELECTOR
+        ================================================== -->
+
+        <section class="module-orbit">
+
+
+            <!-- RINGS -->
+
+            <div class="orbit-ring orbit-ring-one">
+            </div>
+
+            <div class="orbit-ring orbit-ring-two">
+            </div>
+
+
+            <!-- CENTER -->
+
+            <div class="orbit-center">
+
+
+                <div class="orbit-center-inner">
+
+                    <span class="orbit-center-kicker">
+                        GRUPO
+                    </span>
+
+                    <strong>
+                        GTZ
+                    </strong>
+
+                    <small>
+                        SISTEMA
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 RECURSOS HUMANOS
+            ================================================== -->
+
+            <button
+                type="button"
+                class="module-node module-node-hr"
+                data-module="recursos-humanos"
+            >
+
+                <span class="module-node-index">
+                    01
+                </span>
+
+                <span class="module-node-icon">
+                    RH
+                </span>
+
+                <span class="module-node-copy">
+
+                    <strong>
+                        Recursos Humanos
+                    </strong>
+
+                    <small>
+                        Personal y organización
+                    </small>
+
+                </span>
+
+                <span class="module-node-arrow">
+                    ↗
+                </span>
+
+            </button>
+
+
+            <!-- =================================================
+                 COTIZACIONES
+            ================================================== -->
+
+            <button
+                type="button"
+                class="module-node module-node-quotes"
+                data-module="cotizaciones"
+            >
+
+                <span class="module-node-index">
+                    02
+                </span>
+
+                <span class="module-node-icon">
+                    CT
+                </span>
+
+                <span class="module-node-copy">
+
+                    <strong>
+                        Cotizaciones
+                    </strong>
+
+                    <small>
+                        Cotizaciones a clientes
+                    </small>
+
+                </span>
+
+                <span class="module-node-arrow">
+                    ↗
+                </span>
+
+            </button>
+
+
+            <!-- =================================================
+                 ALMACÉN
+            ================================================== -->
+
+            <button
+                type="button"
+                class="module-node module-node-warehouse"
+                data-module="almacen"
+            >
+
+                <span class="module-node-index">
+                    03
+                </span>
+
+                <span class="module-node-icon">
+                    AL
+                </span>
+
+                <span class="module-node-copy">
+
+                    <strong>
+                        Almacén
+                    </strong>
+
+                    <small>
+                        Existencias y movimientos
+                    </small>
+
+                </span>
+
+                <span class="module-node-arrow">
+                    ↗
+                </span>
+
+            </button>
+
+
+            <!-- =================================================
+                 COBRANZA
+            ================================================== -->
+
+            <button
+                type="button"
+                class="module-node module-node-collections"
+                data-module="cobranza"
+            >
+
+                <span class="module-node-index">
+                    04
+                </span>
+
+                <span class="module-node-icon">
+                    CB
+                </span>
+
+                <span class="module-node-copy">
+
+                    <strong>
+                        Cobranza
+                    </strong>
+
+                    <small>
+                        Automatización de correos de cobranza
+                    </small>
+
+                </span>
+
+                <span class="module-node-arrow">
+                    ↗
+                </span>
+
+            </button>
+
+
+            <!-- =================================================
+                 VENTAS
+            ================================================== -->
+
+            <button
+                type="button"
+                class="module-node module-node-sales"
+                data-module="ventas"
+            >
+
+                <span class="module-node-index">
+                    05
+                </span>
+
+                <span class="module-node-icon">
+                    VT
+                </span>
+
+                <span class="module-node-copy">
+
+                    <strong>
+                        Ventas
+                    </strong>
+
+                    <small>
+                        Comercial y clientes
+                    </small>
+
+                </span>
+
+                <span class="module-node-arrow">
+                    ↗
+                </span>
+
+            </button>
+
+
+        </section>
+
+
+        <!-- =================================================
+             MOBILE MODULE LIST
+        ================================================== -->
+
+        <section
+            id="mobileModules"
+            class="mobile-modules"
+        >
+        </section>
+
+
+        <footer class="system-footer">
+
+            <span>
+                GRUPO GUTIERREZ
+            </span>
+
+            <span class="system-footer-dot">
+            </span>
+
+            <span>
+                Departamento de Sistemas
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        id="systemToast"
+        class="system-toast"
+    >
+    </div>
+
+
+    <!-- =====================================================
+         MODULE TRANSITION
+    ====================================================== -->
+
+    <div
+        id="moduleTransition"
+        class="module-transition"
+    >
+
+        <div class="module-transition-ring">
+        </div>
+
+        <span>
+            GRUPO GUTIERREZ
+        </span>
+
+        <strong id="moduleTransitionTitle">
+            Abriendo módulo
+        </strong>
+
+    </div>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <script src="js/supabase-client.js"></script>
+
+    <script src="js/sistema.js"></script>
+
+
+</body>
+
+</html>

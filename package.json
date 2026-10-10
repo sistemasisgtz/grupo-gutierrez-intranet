@@ -1,0 +1,15 @@
+{
+  "name": "grupo-gutierrez",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plataforma Grupo Gutierrez",
+  "scripts": {
+    "start": "vite --host 0.0.0.0",
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^7.1.7"
+  }
+}
