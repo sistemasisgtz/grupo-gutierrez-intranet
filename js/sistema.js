@@ -49,21 +49,21 @@
 
         },
 
-        "almacen": {
+"almacen": {
 
-            name:
-                "Almacén",
+    name:
+        "Almacén",
 
-            short:
-                "AL",
+    short:
+        "AL",
 
-            description:
-                "Existencias y movimientos",
+    description:
+        "Existencias y movimientos",
 
-            route:
-                null
+    route:
+        "almacen.html"
 
-        },
+},
 
         "cobranza": {
 

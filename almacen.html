@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#080b0f"
+    >
+
+    <title>
+        Almacén | Grupo Gutierrez
+    </title>
+
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <link
+        rel="stylesheet"
+        href="css/modulo-shell.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/almacen.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/almacen-herramientas.css"
+    >
+
+</head>
+
+
+<body class="module-page warehouse-page">
+
+
+    <div
+        class="module-background"
+        aria-hidden="true"
+    >
+    </div>
+
+
+    <main class="module-shell">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="module-header">
+
+
+            <div class="module-brand">
+
+
+                <div class="module-brand-mark">
+                    AL
+                </div>
+
+
+                <div class="module-brand-copy">
+
+                    <span>
+                        GRUPO GUTIERREZ · SISTEMA
+                    </span>
+
+                    <strong>
+                        Almacén
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="module-header-actions">
+
+
+                <div class="warehouse-user-chip">
+
+                    <span>
+                        SESIÓN
+                    </span>
+
+                    <strong id="warehouseUserEmail">
+                        ...
+                    </strong>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="warehouseRefresh"
+                    class="module-button"
+                >
+                    ↻ Actualizar
+                </button>
+
+
+                <button
+                    type="button"
+                    id="backToSystem"
+                    class="module-button"
+                >
+                    ← Sistema
+                </button>
+
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="warehouse-hero">
+
+
+            <div>
+
+                <span class="warehouse-eyebrow">
+                    CONTROL OPERATIVO
+                </span>
+
+                <h1>
+                    Almacén
+                </h1>
+
+                <p>
+                    Productos, existencias, costos,
+                    movimientos y control visual de herramientas.
+                </p>
+
+            </div>
+
+
+            <div class="warehouse-hero-status">
+
+                <span class="warehouse-live-dot">
+                </span>
+
+                <div>
+
+                    <small>
+                        ESTADO
+                    </small>
+
+                    <strong>
+                        Almacén conectado a la Base de Datos
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             MÉTRICAS
+        ================================================== -->
+
+        <section class="warehouse-global-metrics">
+
+
+            <article>
+
+                <span>
+                    PRODUCTOS ACTIVOS
+                </span>
+
+                <strong id="warehouseMetricProducts">
+                    0
+                </strong>
+
+                <small>
+                    Catálogo disponible
+                </small>
+
+            </article>
+
+
+            <article>
+
+                <span>
+                    UNIDADES EN STOCK
+                </span>
+
+                <strong id="warehouseMetricStock">
+                    0
+                </strong>
+
+                <small>
+                    Existencia acumulada
+                </small>
+
+            </article>
+
+
+            <article>
+
+                <span>
+                    STOCK BAJO
+                </span>
+
+                <strong id="warehouseMetricLow">
+                    0
+                </strong>
+
+                <small>
+                    En o debajo del mínimo
+                </small>
+
+            </article>
+
+
+            <article>
+
+                <span>
+                    VALOR INVENTARIO
+                </span>
+
+                <strong id="warehouseMetricValue">
+                    $0
+                </strong>
+
+                <small>
+                    Stock × costo unitario
+                </small>
+
+            </article>
+
+
+        </section>
+
+
+        <!-- =================================================
+             BROWSER
+        ================================================== -->
+
+        <section
+            class="module-browser"
+            data-module-tabs
+        >
+
+
+            <nav
+                class="module-tabbar"
+                aria-label="Módulos de almacén"
+            >
+
+
+                <button
+                    type="button"
+                    class="module-tab active"
+                    data-module-tab="movimientos"
+                    aria-selected="true"
+                >
+
+                    <span class="module-tab-dot">
+                    </span>
+
+                    <span>
+                        Movimientos
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="module-tab"
+                    data-module-tab="productos"
+                    aria-selected="false"
+                >
+
+                    <span class="module-tab-dot">
+                    </span>
+
+                    <span>
+                        Productos
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="module-tab"
+                    data-module-tab="inventario"
+                    aria-selected="false"
+                >
+
+                    <span class="module-tab-dot">
+                    </span>
+
+                    <span>
+                        Inventario
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="module-tab"
+                    data-module-tab="costos"
+                    aria-selected="false"
+                >
+
+                    <span class="module-tab-dot">
+                    </span>
+
+                    <span>
+                        Costos
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="module-tab"
+                    data-module-tab="historial"
+                    aria-selected="false"
+                >
+
+                    <span class="module-tab-dot">
+                    </span>
+
+                    <span>
+                        Historial
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="module-tab"
+                    data-module-tab="herramientas"
+                    aria-selected="false"
+                >
+
+                    <span class="module-tab-dot">
+                    </span>
+
+                    <span>
+                        Herramientas
+                    </span>
+
+                </button>
+
+
+            </nav>
+
+
+            <div class="module-tab-content">
+
+
+                <!-- =================================================
+                     MOVIMIENTOS
+                ================================================== -->
+
+                <section
+                    class="
+                        module-tab-panel
+                        active
+                        warehouse-panel
+                    "
+                    data-module-panel="movimientos"
+                >
+
+
+                    <div class="warehouse-section-heading">
+
+                        <div>
+
+                            <span class="warehouse-eyebrow">
+                                OPERACIÓN DIARIA
+                            </span>
+
+                            <h2>
+                                Movimientos
+                            </h2>
+
+                            <p>
+                                Registra entradas y salidas.
+                                Cada movimiento modifica stock
+                                y deja auditoría.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="warehouse-movement-actions">
+
+
+                        <button
+                            type="button"
+                            id="openIncomeMovement"
+                            class="
+                                warehouse-movement-card
+                                warehouse-movement-card-in
+                            "
+                        >
+
+                            <span class="warehouse-movement-icon">
+                                ＋
+                            </span>
+
+                            <span class="warehouse-movement-copy">
+
+                                <small>
+                                    ENTRADA DE MATERIAL
+                                </small>
+
+                                <strong>
+                                    Ingreso
+                                </strong>
+
+                                <em>
+                                    Proveedor · factura · producto · cantidad
+                                </em>
+
+                            </span>
+
+                            <span class="warehouse-movement-arrow">
+                                ↗
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            id="openOutcomeMovement"
+                            class="
+                                warehouse-movement-card
+                                warehouse-movement-card-out
+                            "
+                        >
+
+                            <span class="warehouse-movement-icon">
+                                −
+                            </span>
+
+                            <span class="warehouse-movement-copy">
+
+                                <small>
+                                    SALIDA DE MATERIAL
+                                </small>
+
+                                <strong>
+                                    Egreso
+                                </strong>
+
+                                <em>
+                                    Cliente · remisión · motivo · solicitante
+                                </em>
+
+                            </span>
+
+                            <span class="warehouse-movement-arrow">
+                                ↗
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+
+                    <section class="warehouse-surface">
+
+
+                        <div class="warehouse-surface-header">
+
+                            <div>
+
+                                <span>
+                                    ÚLTIMA ACTIVIDAD
+                                </span>
+
+                                <strong>
+                                    Movimientos recientes
+                                </strong>
+
+                            </div>
+
+                            <small id="warehouseRecentMovementCount">
+                                0 registros
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            id="warehouseRecentMovements"
+                            class="warehouse-movement-feed"
+                        >
+                        </div>
+
+
+                    </section>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     PRODUCTOS
+                ================================================== -->
+
+                <section
+                    class="
+                        module-tab-panel
+                        warehouse-panel
+                    "
+                    data-module-panel="productos"
+                >
+
+
+                    <div
+                        class="
+                            warehouse-section-heading
+                            warehouse-section-heading-actions
+                        "
+                    >
+
+
+                        <div>
+
+                            <span class="warehouse-eyebrow">
+                                CATÁLOGO MAESTRO
+                            </span>
+
+                            <h2>
+                                Productos
+                            </h2>
+
+                            <p>
+                                Ficha única del producto, etiqueta,
+                                ubicación, marca y trazabilidad completa.
+                            </p>
+
+                        </div>
+
+
+                        <div class="warehouse-action-row">
+
+
+                            <button
+                                type="button"
+                                id="warehouseCategoriesButton"
+                                class="module-button"
+                            >
+                                Categorías
+                            </button>
+
+
+                            <button
+                                type="button"
+                                id="warehouseBrandsButton"
+                                class="module-button"
+                            >
+                                Marcas
+                            </button>
+
+
+                            <button
+                                type="button"
+                                id="warehouseNewProductButton"
+                                class="
+                                    module-button
+                                    module-button-primary
+                                "
+                            >
+                                + Producto
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="warehouse-toolbar">
+
+
+                        <div class="warehouse-search">
+
+                            <span>
+                                ⌕
+                            </span>
+
+                            <input
+                                id="warehouseProductSearch"
+                                type="search"
+                                placeholder="Buscar folio, código, descripción, marca, ubicación..."
+                            >
+
+                        </div>
+
+
+                        <select
+                            id="warehouseProductCategoryFilter"
+                            aria-label="Filtrar por categoría"
+                        >
+
+                            <option value="">
+                                Todas las categorías
+                            </option>
+
+                        </select>
+
+
+                        <select
+                            id="warehouseProductBrandFilter"
+                            aria-label="Filtrar por marca"
+                        >
+
+                            <option value="">
+                                Todas las marcas
+                            </option>
+
+                        </select>
+
+
+                        <select
+                            id="warehouseProductLabelFilter"
+                            aria-label="Filtrar por etiqueta"
+                        >
+
+                            <option value="">
+                                Todas las etiquetas
+                            </option>
+
+                        </select>
+
+
+                        <select
+                            id="warehouseProductStatusFilter"
+                            aria-label="Filtrar por estado"
+                        >
+
+                            <option value="active">
+                                Activos
+                            </option>
+
+                            <option value="all">
+                                Todos
+                            </option>
+
+                            <option value="inactive">
+                                Archivados
+                            </option>
+
+                            <option value="low">
+                                Stock bajo
+                            </option>
+
+                        </select>
+
+
+                    </div>
+
+
+                    <section
+                        class="
+                            warehouse-surface
+                            warehouse-table-surface
+                        "
+                    >
+
+
+                        <div class="warehouse-surface-header">
+
+                            <div>
+
+                                <span>
+                                    DIRECTORIO
+                                </span>
+
+                                <strong id="warehouseProductCount">
+                                    0 productos
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="warehouse-table-scroll">
+
+
+                            <table class="warehouse-table">
+
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Etiqueta
+                                        </th>
+
+                                        <th>
+                                            Folio
+                                        </th>
+
+                                        <th>
+                                            Código
+                                        </th>
+
+                                        <th>
+                                            Producto
+                                        </th>
+
+                                        <th>
+                                            Categoría
+                                        </th>
+
+                                        <th>
+                                            Marca
+                                        </th>
+
+                                        <th>
+                                            Ubicación
+                                        </th>
+
+                                        <th>
+                                            Stock
+                                        </th>
+
+                                        <th>
+                                            Costo
+                                        </th>
+
+                                        <th>
+                                            Acciones
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody id="warehouseProductsBody">
+                                </tbody>
+
+
+                            </table>
+
+
+                        </div>
+
+
+                    </section>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     INVENTARIO
+                ================================================== -->
+
+                <section
+                    class="
+                        module-tab-panel
+                        warehouse-panel
+                    "
+                    data-module-panel="inventario"
+                >
+
+
+                    <div
+                        class="
+                            warehouse-section-heading
+                            warehouse-section-heading-actions
+                        "
+                    >
+
+
+                        <div>
+
+                            <span class="warehouse-eyebrow">
+                                CONTEO FÍSICO
+                            </span>
+
+                            <h2>
+                                Inventario
+                            </h2>
+
+                            <p>
+                                Captura el conteo real.
+                                El stock no se modifica hasta que
+                                la solicitud sea autorizada.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            id="warehouseRequestInventoryApproval"
+                            class="
+                                module-button
+                                module-button-primary
+                            "
+                            disabled
+                        >
+
+                            Pedir autorización ·
+
+                            <span id="warehouseInventoryChangesCount">
+                                0
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+
+                    <div class="warehouse-security-note">
+
+                        <span>
+                            ⌁
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Control protegido
+                            </strong>
+
+                            <p>
+                                Los cambios quedan como
+                                <b>pendientes</b>.
+                                El flujo de aprobación queda preparado
+                                para enlazar al Gerente de Operaciones
+                                cuando RH tenga responsables/permisos.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="warehouse-toolbar">
+
+
+                        <div class="warehouse-search">
+
+                            <span>
+                                ⌕
+                            </span>
+
+                            <input
+                                id="warehouseInventorySearch"
+                                type="search"
+                                placeholder="Buscar para realizar conteo..."
+                            >
+
+                        </div>
+
+
+                        <select id="warehouseInventoryCategoryFilter">
+
+                            <option value="">
+                                Todas las categorías
+                            </option>
+
+                        </select>
+
+
+                        <select id="warehouseInventoryDifferenceFilter">
+
+                            <option value="">
+                                Todos
+                            </option>
+
+                            <option value="changed">
+                                Solo con cambios
+                            </option>
+
+                            <option value="low">
+                                Stock bajo
+                            </option>
+
+                        </select>
+
+
+                    </div>
+
+
+                    <section
+                        class="
+                            warehouse-surface
+                            warehouse-table-surface
+                        "
+                    >
+
+
+                        <div class="warehouse-table-scroll">
+
+
+                            <table
+                                class="
+                                    warehouse-table
+                                    warehouse-inventory-table
+                                "
+                            >
+
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Folio
+                                        </th>
+
+                                        <th>
+                                            Código
+                                        </th>
+
+                                        <th>
+                                            Producto
+                                        </th>
+
+                                        <th>
+                                            Marca
+                                        </th>
+
+                                        <th>
+                                            Ubicación
+                                        </th>
+
+                                        <th>
+                                            Stock sistema
+                                        </th>
+
+                                        <th>
+                                            Nuevo stock
+                                        </th>
+
+                                        <th>
+                                            Movimiento
+                                        </th>
+
+                                        <th>
+                                            Diferencia
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody id="warehouseInventoryBody">
+                                </tbody>
+
+
+                            </table>
+
+
+                        </div>
+
+
+                    </section>
+
+
+                    <section class="warehouse-pending-requests">
+
+
+                        <div class="warehouse-surface-header">
+
+                            <div>
+
+                                <span>
+                                    AUTORIZACIÓN
+                                </span>
+
+                                <strong>
+                                    Solicitudes recientes
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="warehouseInventoryRequests"
+                            class="warehouse-request-list"
+                        >
+                        </div>
+
+
+                    </section>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     COSTOS
+                ================================================== -->
+
+                <section
+                    class="
+                        module-tab-panel
+                        warehouse-panel
+                    "
+                    data-module-panel="costos"
+                >
+
+
+                    <div
+                        class="
+                            warehouse-section-heading
+                            warehouse-section-heading-actions
+                        "
+                    >
+
+
+                        <div>
+
+                            <span class="warehouse-eyebrow">
+                                VALUACIÓN
+                            </span>
+
+                            <h2>
+                                Costos
+                            </h2>
+
+                            <p>
+                                Edita costos unitarios en lote.
+                                Al aplicar, cada modificación
+                                entra al historial del producto.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            id="warehouseApplyCosts"
+                            class="
+                                module-button
+                                module-button-primary
+                            "
+                            disabled
+                        >
+
+                            Aplicar cambios ·
+
+                            <span id="warehouseCostChangesCount">
+                                0
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+
+                    <div class="warehouse-toolbar">
+
+
+                        <div class="warehouse-search">
+
+                            <span>
+                                ⌕
+                            </span>
+
+                            <input
+                                id="warehouseCostSearch"
+                                type="search"
+                                placeholder="Buscar producto para actualizar costo..."
+                            >
+
+                        </div>
+
+
+                        <select id="warehouseCostBrandFilter">
+
+                            <option value="">
+                                Todas las marcas
+                            </option>
+
+                        </select>
+
+
+                        <select id="warehouseCostChangedFilter">
+
+                            <option value="">
+                                Todos
+                            </option>
+
+                            <option value="changed">
+                                Solo modificados
+                            </option>
+
+                            <option value="without">
+                                Sin costo
+                            </option>
+
+                        </select>
+
+
+                    </div>
+
+
+                    <div class="warehouse-cost-summary">
+
+                        <span>
+                            VALOR ACTUAL DEL INVENTARIO
+                        </span>
+
+                        <strong id="warehouseCostInventoryValue">
+                            $0
+                        </strong>
+
+                    </div>
+
+
+                    <section
+                        class="
+                            warehouse-surface
+                            warehouse-table-surface
+                        "
+                    >
+
+
+                        <div class="warehouse-table-scroll">
+
+
+                            <table
+                                class="
+                                    warehouse-table
+                                    warehouse-cost-table
+                                "
+                            >
+
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Folio
+                                        </th>
+
+                                        <th>
+                                            Código
+                                        </th>
+
+                                        <th>
+                                            Descripción
+                                        </th>
+
+                                        <th>
+                                            Marca
+                                        </th>
+
+                                        <th>
+                                            Cantidad
+                                        </th>
+
+                                        <th>
+                                            Costo unitario
+                                        </th>
+
+                                        <th>
+                                            Valor
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody id="warehouseCostsBody">
+                                </tbody>
+
+
+                            </table>
+
+
+                        </div>
+
+
+                    </section>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     HISTORIAL
+                ================================================== -->
+
+                <section
+                    class="
+                        module-tab-panel
+                        warehouse-panel
+                    "
+                    data-module-panel="historial"
+                >
+
+
+                    <div class="warehouse-section-heading">
+
+                        <div>
+
+                            <span class="warehouse-eyebrow">
+                                AUDITORÍA
+                            </span>
+
+                            <h2>
+                                Historial
+                            </h2>
+
+                            <p>
+                                Quién hizo qué, cuándo
+                                y sobre qué producto o herramienta.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            warehouse-toolbar
+                            warehouse-history-toolbar
+                        "
+                    >
+
+
+                        <div class="warehouse-search">
+
+                            <span>
+                                ⌕
+                            </span>
+
+                            <input
+                                id="warehouseHistorySearch"
+                                type="search"
+                                placeholder="Producto, folio, código, descripción..."
+                            >
+
+                        </div>
+
+
+                        <select id="warehouseHistoryUserFilter">
+
+                            <option value="">
+                                Todos los usuarios
+                            </option>
+
+                        </select>
+
+
+                        <select id="warehouseHistoryTypeFilter">
+
+                            <option value="">
+                                Todos los movimientos
+                            </option>
+
+                        </select>
+
+
+                        <input
+                            id="warehouseHistoryDateFrom"
+                            type="date"
+                            aria-label="Desde"
+                        >
+
+
+                        <input
+                            id="warehouseHistoryDateTo"
+                            type="date"
+                            aria-label="Hasta"
+                        >
+
+
+                    </div>
+
+
+                    <section class="warehouse-surface">
+
+
+                        <div class="warehouse-surface-header">
+
+                            <div>
+
+                                <span>
+                                    TRAZABILIDAD
+                                </span>
+
+                                <strong id="warehouseHistoryCount">
+                                    0 eventos
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="warehouseHistoryList"
+                            class="warehouse-history-list"
+                        >
+                        </div>
+
+
+                    </section>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     HERRAMIENTAS
+                ================================================== -->
+
+                <section
+                    class="
+                        module-tab-panel
+                        warehouse-panel
+                        warehouse-tools-panel
+                    "
+                    data-module-panel="herramientas"
+                >
+
+
+                    <div
+                        class="
+                            warehouse-section-heading
+                            warehouse-section-heading-actions
+                        "
+                    >
+
+
+                        <div>
+
+                            <span class="warehouse-eyebrow">
+                                WORKSPACE VISUAL
+                            </span>
+
+                            <h2>
+                                Herramientas
+                            </h2>
+
+                            <p>
+                                Mapa libre de grupos.
+                                Arrastra, haz zoom y administra
+                                el estado de cada herramienta.
+                            </p>
+
+                        </div>
+
+
+                        <div class="warehouse-action-row">
+
+
+                            <button
+                                type="button"
+                                id="warehouseToolResponsiblesButton"
+                                class="module-button"
+                            >
+                                Responsables
+                            </button>
+
+
+                            <button
+                                type="button"
+                                id="warehouseToolGroupsButton"
+                                class="module-button"
+                            >
+                                Grupos
+                            </button>
+
+
+                            <button
+                                type="button"
+                                id="warehouseToolsCatalogButton"
+                                class="module-button"
+                            >
+                                Herramientas
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="warehouse-tools-toolbar">
+
+
+                        <button
+                            type="button"
+                            id="warehouseAddGroupToWorld"
+                            class="warehouse-world-add"
+                            title="Agregar grupo al workspace"
+                        >
+                            +
+                        </button>
+
+
+                        <div class="warehouse-world-help">
+
+                            <span>
+                                ARRASTRAR FONDO
+                            </span>
+
+                            <i>
+                            </i>
+
+                            <span>
+                                RUEDA = ZOOM
+                            </span>
+
+                            <i>
+                            </i>
+
+                            <span>
+                                ARRASTRAR GRUPO = MOVER
+                            </span>
+
+                        </div>
+
+
+                        <div class="warehouse-world-zoom">
+
+
+                            <button
+                                type="button"
+                                id="warehouseWorldZoomOut"
+                            >
+                                −
+                            </button>
+
+
+                            <strong id="warehouseWorldZoomLabel">
+                                100%
+                            </strong>
+
+
+                            <button
+                                type="button"
+                                id="warehouseWorldZoomIn"
+                            >
+                                +
+                            </button>
+
+
+                            <button
+                                type="button"
+                                id="warehouseWorldReset"
+                            >
+                                Centrar
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div
+                        id="warehouseWorldViewport"
+                        class="warehouse-world-viewport"
+                    >
+
+
+                        <div
+                            class="warehouse-world-grid"
+                            aria-hidden="true"
+                        >
+                        </div>
+
+
+                        <div
+                            id="warehouseWorldCanvas"
+                            class="warehouse-world-canvas"
+                        >
+                        </div>
+
+
+                        <div
+                            id="warehouseWorldEmpty"
+                            class="warehouse-world-empty"
+                        >
+
+                            <span>
+                                ＋
+                            </span>
+
+                            <strong>
+                                Tu workspace está vacío
+                            </strong>
+
+                            <p>
+                                Presiona el botón + para colocar
+                                tu primer grupo de herramientas.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="warehouse-tools-legend">
+
+
+                        <span>
+                            <i data-tool-status="available">
+                            </i>
+                            Disponible
+                        </span>
+
+
+                        <span>
+                            <i data-tool-status="loan_collaborator">
+                            </i>
+                            Prestada a colaborador
+                        </span>
+
+
+                        <span>
+                            <i data-tool-status="loan_external">
+                            </i>
+                            Prestada a externo
+                        </span>
+
+
+                        <span>
+                            <i data-tool-status="workshop">
+                            </i>
+                            En taller
+                        </span>
+
+
+                        <span>
+                            <i data-tool-status="damaged">
+                            </i>
+                            Daño
+                        </span>
+
+
+                        <span>
+                            <i data-tool-status="lost">
+                            </i>
+                            Extravío
+                        </span>
+
+
+                    </div>
+
+
+                </section>
+
+
+            </div>
+
+
+        </section>
+
+
+        <footer class="warehouse-footer">
+
+            <span>
+                GRUPO GUTIERREZ
+            </span>
+
+            <i>
+            </i>
+
+            <span>
+                ALMACÉN · CONTROL CENTRAL
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+    <div
+        id="warehouseToast"
+        class="warehouse-toast"
+    >
+    </div>
+
+
+    <div id="warehouseModalRoot">
+    </div>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <script src="js/supabase-client.js"></script>
+
+    <script src="js/modulo-tabs.js"></script>
+
+    <script src="js/almacen-core.js"></script>
+
+    <script src="js/almacen-productos.js"></script>
+
+    <script src="js/almacen-movimientos.js"></script>
+
+    <script src="js/almacen-inventario-costos.js"></script>
+
+    <script src="js/almacen-historial.js"></script>
+
+    <script src="js/almacen-herramientas.js"></script>
+
+
+</body>
+
+</html>

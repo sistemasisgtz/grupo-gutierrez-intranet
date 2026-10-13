@@ -1,0 +1,1339 @@
+/* =========================================================
+   GRUPO GUTIERREZ · ALMACÉN
+   HERRAMIENTAS / WORLDSPACE
+========================================================= */
+
+.warehouse-tools-panel {
+
+    padding-bottom:
+        16px;
+
+}
+
+
+.warehouse-tools-toolbar {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        auto
+        1fr
+        auto;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+    margin-bottom:
+        10px;
+
+}
+
+
+.warehouse-world-add {
+
+    width:
+        54px;
+
+    height:
+        54px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px solid
+        rgba(81,156,204,.34);
+
+    border-radius:
+        18px;
+
+    color:
+        #eaf3f8;
+
+    background:
+
+        radial-gradient(
+            circle at 30% 20%,
+            rgba(255,255,255,.14),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            145deg,
+            #265f86,
+            #183f5c
+        );
+
+    box-shadow:
+
+        0 16px 35px
+        rgba(24,78,114,.20),
+
+        inset 0 1px 0
+        rgba(255,255,255,.08);
+
+    cursor:
+        pointer;
+
+    font-size:
+        30px;
+
+    font-weight:
+        300;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.warehouse-world-add:hover {
+
+    transform:
+        translateY(-2px)
+        rotate(3deg);
+
+    box-shadow:
+
+        0 22px 42px
+        rgba(24,78,114,.28),
+
+        inset 0 1px 0
+        rgba(255,255,255,.08);
+
+}
+
+
+.warehouse-world-help {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        10px;
+
+    color:
+        #63737f;
+
+    font-size:
+        6px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .12em;
+
+}
+
+
+.warehouse-world-help i {
+
+    width:
+        3px;
+
+    height:
+        3px;
+
+    border-radius:
+        50%;
+
+    background:
+        #52626d;
+
+}
+
+
+.warehouse-world-zoom {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        5px;
+
+    padding:
+        5px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.065);
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(255,255,255,.02);
+
+}
+
+
+.warehouse-world-zoom button {
+
+    min-width:
+        31px;
+
+    height:
+        31px;
+
+    border:
+        0;
+
+    border-radius:
+        8px;
+
+    color:
+        #83939e;
+
+    background:
+        rgba(255,255,255,.03);
+
+    cursor:
+        pointer;
+
+    font-size:
+        8px;
+
+}
+
+
+.warehouse-world-zoom button:hover {
+
+    color:
+        #e0e7eb;
+
+    background:
+        rgba(255,255,255,.065);
+
+}
+
+
+.warehouse-world-zoom strong {
+
+    min-width:
+        50px;
+
+    color:
+        #9dacb6;
+
+    text-align:
+        center;
+
+    font-size:
+        7px;
+
+}
+
+
+.warehouse-world-viewport {
+
+    position:
+        relative;
+
+    height:
+        min(
+            720px,
+            68vh
+        );
+
+    min-height:
+        480px;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(255,255,255,.075);
+
+    border-radius:
+        22px;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(35,83,114,.08),
+            transparent 45%
+        ),
+
+        linear-gradient(
+            145deg,
+            #0d1217,
+            #080b0f
+        );
+
+    cursor:
+        grab;
+
+    user-select:
+        none;
+
+    touch-action:
+        none;
+
+    box-shadow:
+
+        inset 0 1px 0
+        rgba(255,255,255,.025),
+
+        inset 0 0 90px
+        rgba(0,0,0,.20);
+
+}
+
+
+.warehouse-world-viewport.is-panning {
+
+    cursor:
+        grabbing;
+
+}
+
+
+.warehouse-world-grid {
+
+    position:
+        absolute;
+
+    inset:
+        -200%;
+
+    pointer-events:
+        none;
+
+    opacity:
+        .42;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle,
+            rgba(79,146,190,.18) 1px,
+            transparent 1.5px
+        );
+
+    background-size:
+
+        44px 44px,
+
+        44px 44px,
+
+        220px 220px;
+
+}
+
+
+.warehouse-world-canvas {
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    top:
+        0;
+
+    width:
+        3000px;
+
+    height:
+        2000px;
+
+    transform-origin:
+        0 0;
+
+    will-change:
+        transform;
+
+}
+
+
+.warehouse-world-empty {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        50%;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    max-width:
+        300px;
+
+    transform:
+        translate(-50%,-50%);
+
+    pointer-events:
+        none;
+
+    text-align:
+        center;
+
+}
+
+
+.warehouse-world-empty > span {
+
+    width:
+        54px;
+
+    height:
+        54px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    margin-bottom:
+        12px;
+
+    border:
+        1px dashed
+        rgba(83,151,195,.24);
+
+    border-radius:
+        18px;
+
+    color:
+        #56788e;
+
+    font-size:
+        25px;
+
+}
+
+
+.warehouse-world-empty strong {
+
+    color:
+        #778994;
+
+    font-size:
+        10px;
+
+}
+
+
+.warehouse-world-empty p {
+
+    margin:
+        6px 0 0;
+
+    color:
+        #52616c;
+
+    font-size:
+        7px;
+
+    line-height:
+        1.55;
+
+}
+
+
+.warehouse-world-empty.hidden {
+
+    display:
+        none;
+
+}
+
+
+/* =========================================================
+   NODO
+========================================================= */
+
+.warehouse-tool-node {
+
+    position:
+        absolute;
+
+    width:
+        330px;
+
+    min-height:
+        190px;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius:
+        20px;
+
+    background:
+
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(61,123,164,.09),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            145deg,
+            rgba(29,38,46,.97),
+            rgba(15,20,25,.98)
+        );
+
+    box-shadow:
+
+        0 24px 60px
+        rgba(0,0,0,.30),
+
+        inset 0 1px 0
+        rgba(255,255,255,.045);
+
+    cursor:
+        default;
+
+}
+
+
+.warehouse-tool-node.is-dragging {
+
+    z-index:
+        50;
+
+    box-shadow:
+
+        0 35px 80px
+        rgba(0,0,0,.42),
+
+        0 0 0 1px
+        rgba(74,143,189,.18);
+
+}
+
+
+.warehouse-tool-node-header {
+
+    min-height:
+        58px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        10px;
+
+    padding:
+        12px 14px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.06);
+
+    cursor:
+        grab;
+
+}
+
+
+.warehouse-tool-node.is-dragging
+.warehouse-tool-node-header {
+
+    cursor:
+        grabbing;
+
+}
+
+
+.warehouse-tool-node-title {
+
+    min-width:
+        0;
+
+    display:
+        grid;
+
+    gap:
+        2px;
+
+}
+
+
+.warehouse-tool-node-title span {
+
+    color:
+        #60717d;
+
+    font-size:
+        6px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .14em;
+
+}
+
+
+.warehouse-tool-node-title strong {
+
+    overflow:
+        hidden;
+
+    color:
+        #e0e7eb;
+
+    font-family:
+        "Manrope",
+        sans-serif;
+
+    font-size:
+        14px;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+
+}
+
+
+.warehouse-tool-node-count {
+
+    min-width:
+        30px;
+
+    height:
+        27px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        9px;
+
+    color:
+        #8999a4;
+
+    background:
+        rgba(255,255,255,.025);
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+}
+
+
+.warehouse-tool-node-body {
+
+    display:
+        grid;
+
+    gap:
+        7px;
+
+    padding:
+        10px;
+
+}
+
+
+/* =========================================================
+   HERRAMIENTA
+========================================================= */
+
+.warehouse-tool-card {
+
+    position:
+        relative;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        12px
+        minmax(0,1fr)
+        auto;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    min-height:
+        47px;
+
+    padding:
+        8px 9px;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(255,255,255,.055);
+
+    border-radius:
+        12px;
+
+    color:
+        #aeb9c1;
+
+    background:
+        rgba(255,255,255,.018);
+
+    cursor:
+        pointer;
+
+    text-align:
+        left;
+
+    transition:
+        transform .16s ease,
+        border-color .16s ease,
+        background .16s ease;
+
+}
+
+
+.warehouse-tool-card:hover {
+
+    transform:
+        translateX(2px);
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--tool-color) 35%,
+            transparent
+        );
+
+    background:
+        color-mix(
+            in srgb,
+            var(--tool-color) 7%,
+            transparent
+        );
+
+}
+
+
+.warehouse-tool-status-dot {
+
+    width:
+        10px;
+
+    height:
+        10px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--tool-color);
+
+    box-shadow:
+        0 0 14px
+        color-mix(
+            in srgb,
+            var(--tool-color) 55%,
+            transparent
+        );
+
+}
+
+
+.warehouse-tool-card-copy {
+
+    min-width:
+        0;
+
+    display:
+        grid;
+
+    gap:
+        2px;
+
+}
+
+
+.warehouse-tool-card-copy strong {
+
+    overflow:
+        hidden;
+
+    color:
+        #d7dfe4;
+
+    font-size:
+        8px;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+
+}
+
+
+.warehouse-tool-card-copy small {
+
+    overflow:
+        hidden;
+
+    color:
+        #63737e;
+
+    font-size:
+        6px;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+
+}
+
+
+.warehouse-tool-status-label {
+
+    color:
+        var(--tool-color);
+
+    font-size:
+        6px;
+
+    font-weight:
+        900;
+
+}
+
+
+.warehouse-tool-empty-group {
+
+    min-height:
+        100px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    color:
+        #53616b;
+
+    text-align:
+        center;
+
+    font-size:
+        7px;
+
+}
+
+
+/* =========================================================
+   STATUS COLORS
+========================================================= */
+
+.warehouse-tool-card[data-status="available"],
+.warehouse-tools-legend i[data-tool-status="available"] {
+
+    --tool-color:
+        #64b685;
+
+}
+
+
+.warehouse-tool-card[data-status="loan_collaborator"],
+.warehouse-tools-legend i[data-tool-status="loan_collaborator"] {
+
+    --tool-color:
+        #4b9fd0;
+
+}
+
+
+.warehouse-tool-card[data-status="loan_external"],
+.warehouse-tools-legend i[data-tool-status="loan_external"] {
+
+    --tool-color:
+        #8b78cf;
+
+}
+
+
+.warehouse-tool-card[data-status="workshop"],
+.warehouse-tools-legend i[data-tool-status="workshop"] {
+
+    --tool-color:
+        #cda45e;
+
+}
+
+
+.warehouse-tool-card[data-status="damaged"],
+.warehouse-tools-legend i[data-tool-status="damaged"] {
+
+    --tool-color:
+        #cc6c58;
+
+}
+
+
+.warehouse-tool-card[data-status="lost"],
+.warehouse-tools-legend i[data-tool-status="lost"] {
+
+    --tool-color:
+        #c5525d;
+
+}
+
+
+/* =========================================================
+   LEGEND
+========================================================= */
+
+.warehouse-tools-legend {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        8px 16px;
+
+    padding:
+        12px 4px 0;
+
+    color:
+        #667680;
+
+    font-size:
+        6px;
+
+    font-weight:
+        800;
+
+}
+
+
+.warehouse-tools-legend span {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+}
+
+
+.warehouse-tools-legend i {
+
+    --tool-color:
+        #71808b;
+
+    width:
+        7px;
+
+    height:
+        7px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--tool-color);
+
+    box-shadow:
+        0 0 9px
+        color-mix(
+            in srgb,
+            var(--tool-color) 50%,
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   STATUS MODAL
+========================================================= */
+
+.warehouse-status-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+    gap:
+        8px;
+
+    margin-bottom:
+        14px;
+
+}
+
+
+.warehouse-status-option {
+
+    position:
+        relative;
+
+}
+
+
+.warehouse-status-option input {
+
+    position:
+        absolute;
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+
+}
+
+
+.warehouse-status-option label {
+
+    min-height:
+        60px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        10px
+        1fr;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    padding:
+        10px 11px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.065);
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(255,255,255,.018);
+
+    cursor:
+        pointer;
+
+}
+
+
+.warehouse-status-option label i {
+
+    width:
+        10px;
+
+    height:
+        10px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--status-color);
+
+    box-shadow:
+        0 0 13px
+        color-mix(
+            in srgb,
+            var(--status-color) 50%,
+            transparent
+        );
+
+}
+
+
+.warehouse-status-option label span {
+
+    display:
+        grid;
+
+    gap:
+        2px;
+
+}
+
+
+.warehouse-status-option label strong {
+
+    color:
+        #bfc9cf;
+
+    font-size:
+        8px;
+
+}
+
+
+.warehouse-status-option label small {
+
+    color:
+        #64747f;
+
+    font-size:
+        6px;
+
+}
+
+
+.warehouse-status-option
+input:checked + label {
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--status-color) 40%,
+            transparent
+        );
+
+    background:
+        color-mix(
+            in srgb,
+            var(--status-color) 8%,
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   GROUP PICKER
+========================================================= */
+
+.warehouse-world-group-picker {
+
+    display:
+        grid;
+
+    gap:
+        7px;
+
+}
+
+
+.warehouse-world-group-pick {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        auto;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    padding:
+        12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.065);
+
+    border-radius:
+        12px;
+
+    color:
+        #aeb9c1;
+
+    background:
+        rgba(255,255,255,.018);
+
+    cursor:
+        pointer;
+
+    text-align:
+        left;
+
+}
+
+
+.warehouse-world-group-pick:hover {
+
+    border-color:
+        rgba(73,142,188,.25);
+
+    background:
+        rgba(49,97,130,.08);
+
+}
+
+
+.warehouse-world-group-pick strong {
+
+    color:
+        #d5dde2;
+
+    font-size:
+        9px;
+
+}
+
+
+.warehouse-world-group-pick small {
+
+    display:
+        block;
+
+    margin-top:
+        3px;
+
+    color:
+        #657580;
+
+    font-size:
+        7px;
+
+}
+
+
+.warehouse-world-group-pick span {
+
+    color:
+        #67869a;
+
+    font-size:
+        18px;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .warehouse-tools-toolbar {
+
+        grid-template-columns:
+            auto 1fr;
+
+    }
+
+
+    .warehouse-world-help {
+
+        display:
+            none;
+
+    }
+
+
+    .warehouse-world-zoom {
+
+        justify-self:
+            end;
+
+    }
+
+
+    .warehouse-world-viewport {
+
+        height:
+            62vh;
+
+        min-height:
+            440px;
+
+    }
+
+
+    .warehouse-status-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
