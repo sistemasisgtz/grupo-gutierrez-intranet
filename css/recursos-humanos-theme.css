@@ -1,0 +1,1371 @@
+/* =========================================================
+   GRUPO GUTIERREZ · RH
+   TEMA OSCURO / CLARO
+========================================================= */
+
+
+/* =========================================================
+   BOTÓN TEMA
+========================================================= */
+
+.rh-theme-button {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+}
+
+
+.rh-theme-icon {
+
+    width:
+        18px;
+
+    height:
+        18px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border-radius:
+        50%;
+
+    font-size:
+        11px;
+
+}
+
+
+.rh-theme-copy {
+
+    white-space:
+        nowrap;
+
+}
+
+
+/* =========================================================
+   FIX SELECTS · MODO OSCURO
+========================================================= */
+
+html:not([data-rh-theme="light"])
+body.module-page
+select {
+
+    color-scheme:
+        dark;
+
+}
+
+
+html:not([data-rh-theme="light"])
+body.module-page
+select option,
+
+html:not([data-rh-theme="light"])
+body.module-page
+select optgroup {
+
+    color:
+        #f2f6f8 !important;
+
+    background:
+        #202a33 !important;
+
+}
+
+
+html:not([data-rh-theme="light"])
+body.module-page
+select option:checked {
+
+    color:
+        #ffffff !important;
+
+    background:
+        #315f7e !important;
+
+}
+
+
+/* =========================================================
+   LIGHT · BODY
+========================================================= */
+
+html[data-rh-theme="light"]
+body.module-page {
+
+    color:
+        #26333d !important;
+
+    background:
+
+        radial-gradient(
+            circle at 78% 4%,
+            rgba(85,145,184,.13),
+            transparent 34%
+        ),
+
+        radial-gradient(
+            circle at 10% 92%,
+            rgba(189,100,55,.08),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            145deg,
+            #f5f7f9,
+            #edf1f4 62%,
+            #e8edf1
+        ) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-background::before {
+
+    opacity:
+        .34 !important;
+
+    background-image:
+
+        linear-gradient(
+            rgba(36,55,69,.055) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(36,55,69,.055) 1px,
+            transparent 1px
+        ) !important;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+html[data-rh-theme="light"]
+.module-brand-copy span,
+
+html[data-rh-theme="light"]
+.rh-user-chip span,
+
+html[data-rh-theme="light"]
+.rh-eyebrow,
+
+html[data-rh-theme="light"]
+.rv-eyebrow,
+
+html[data-rh-theme="light"]
+.rv-policy-chip span,
+
+html[data-rh-theme="light"]
+.rv-card-stat span,
+
+html[data-rh-theme="light"]
+.rv-future-item span,
+
+html[data-rh-theme="light"]
+.rv-global-metric span,
+
+html[data-rh-theme="light"]
+.rh-table-meta span {
+
+    color:
+        #6c7d89 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-brand-copy strong,
+
+html[data-rh-theme="light"]
+.rh-section-header h1,
+
+html[data-rh-theme="light"]
+.rh-section-header h2,
+
+html[data-rh-theme="light"]
+.rv-section-title h2,
+
+html[data-rh-theme="light"]
+.rv-hero h1,
+
+html[data-rh-theme="light"]
+.rv-hero h2,
+
+html[data-rh-theme="light"]
+.module-modal-header h2 {
+
+    color:
+        #18242d !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-brand-mark {
+
+    color:
+        #233440 !important;
+
+    border-color:
+        rgba(38,61,78,.14) !important;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #e8edf1
+        ) !important;
+
+    box-shadow:
+
+        inset 0 1px 0
+        #ffffff,
+
+        0 12px 28px
+        rgba(45,65,80,.10) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-user-chip strong {
+
+    color:
+        #334754 !important;
+
+}
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+html[data-rh-theme="light"]
+.module-button,
+
+html[data-rh-theme="light"]
+.rh-icon-button,
+
+html[data-rh-theme="light"]
+.rv-calendar-nav button,
+
+html[data-rh-theme="light"]
+.rv-details-toggle {
+
+    color:
+        #344955 !important;
+
+    border-color:
+        rgba(47,73,91,.14) !important;
+
+    background:
+        rgba(255,255,255,.72) !important;
+
+    box-shadow:
+        0 6px 18px
+        rgba(47,67,82,.06) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-button:hover,
+
+html[data-rh-theme="light"]
+.rh-icon-button:hover,
+
+html[data-rh-theme="light"]
+.rv-calendar-nav button:hover,
+
+html[data-rh-theme="light"]
+.rv-details-toggle:hover {
+
+    color:
+        #17242d !important;
+
+    border-color:
+        rgba(50,111,153,.26) !important;
+
+    background:
+        #ffffff !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-button-primary {
+
+    color:
+        #ffffff !important;
+
+    border-color:
+        rgba(38,102,147,.35) !important;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2f6f9c,
+            #3e86b7
+        ) !important;
+
+    box-shadow:
+        0 10px 25px
+        rgba(47,111,156,.18) !important;
+
+}
+
+
+/* =========================================================
+   BROWSER / TABS
+========================================================= */
+
+html[data-rh-theme="light"]
+.module-browser {
+
+    border-color:
+        rgba(50,70,84,.13) !important;
+
+    background:
+        rgba(248,250,252,.88) !important;
+
+    box-shadow:
+
+        0 28px 70px
+        rgba(44,62,76,.10),
+
+        inset 0 1px 0
+        rgba(255,255,255,.94) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-tabbar {
+
+    border-bottom-color:
+        rgba(46,68,84,.10) !important;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.92),
+            rgba(242,246,249,.92)
+        ) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-tab {
+
+    color:
+        #657784 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-tab:hover {
+
+    color:
+        #243640 !important;
+
+    background:
+        rgba(54,91,117,.055) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-tab.active {
+
+    color:
+        #1c303c !important;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #edf2f5
+        ) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-tab.active::after {
+
+    background:
+        #e6ebef !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-tab-dot {
+
+    background:
+        #9aa8b1 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-tab.active
+.module-tab-dot {
+
+    background:
+        #4387b4 !important;
+
+    box-shadow:
+        0 0 10px
+        rgba(67,135,180,.35) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-panel {
+
+    background:
+        rgba(255,255,255,.30) !important;
+
+}
+
+
+/* =========================================================
+   MÉTRICAS / CARDS
+========================================================= */
+
+html[data-rh-theme="light"]
+.rh-metric,
+
+html[data-rh-theme="light"]
+.rv-global-metric,
+
+html[data-rh-theme="light"]
+.rv-upcoming-card,
+
+html[data-rh-theme="light"]
+.rv-employee-card,
+
+html[data-rh-theme="light"]
+.rv-modal-stat,
+
+html[data-rh-theme="light"]
+.rh-position-item,
+
+html[data-rh-theme="light"]
+.rh-system-user-item {
+
+    border-color:
+        rgba(46,70,87,.11) !important;
+
+    background:
+        rgba(255,255,255,.72) !important;
+
+    box-shadow:
+        0 8px 24px
+        rgba(46,65,80,.045) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-metric strong,
+
+html[data-rh-theme="light"]
+.rv-global-metric strong,
+
+html[data-rh-theme="light"]
+.rv-card-stat strong,
+
+html[data-rh-theme="light"]
+.rv-seniority strong,
+
+html[data-rh-theme="light"]
+.rv-future-item strong,
+
+html[data-rh-theme="light"]
+.rv-modal-stat strong {
+
+    color:
+        #22343f !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-metric span,
+
+html[data-rh-theme="light"]
+.rh-metric small,
+
+html[data-rh-theme="light"]
+.rv-global-metric small,
+
+html[data-rh-theme="light"]
+.rv-upcoming-card small {
+
+    color:
+        #6c7d89 !important;
+
+}
+
+
+/* =========================================================
+   TOOLBAR / FILTROS
+========================================================= */
+
+html[data-rh-theme="light"]
+.rh-toolbar,
+
+html[data-rh-theme="light"]
+.rv-toolbar,
+
+html[data-rh-theme="light"]
+.rh-filters {
+
+    border-color:
+        rgba(47,70,86,.10) !important;
+
+    background:
+        rgba(243,247,249,.78) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-search-wrap,
+
+html[data-rh-theme="light"]
+.rh-filter-grid input,
+
+html[data-rh-theme="light"]
+.rh-filter-grid select,
+
+html[data-rh-theme="light"]
+.rv-toolbar input,
+
+html[data-rh-theme="light"]
+.rv-toolbar select,
+
+html[data-rh-theme="light"]
+.rh-system-user-search input {
+
+    color:
+        #263945 !important;
+
+    border-color:
+        rgba(46,70,87,.13) !important;
+
+    background:
+        #ffffff !important;
+
+}
+
+
+html[data-rh-theme="light"]
+input::placeholder,
+
+html[data-rh-theme="light"]
+textarea::placeholder {
+
+    color:
+        #95a2aa !important;
+
+}
+
+
+/* =========================================================
+   SELECTS · LIGHT
+========================================================= */
+
+html[data-rh-theme="light"]
+body.module-page
+select {
+
+    color-scheme:
+        light;
+
+    color:
+        #263945 !important;
+
+    background-color:
+        #ffffff !important;
+
+}
+
+
+html[data-rh-theme="light"]
+body.module-page
+select option,
+
+html[data-rh-theme="light"]
+body.module-page
+select optgroup {
+
+    color:
+        #20313c !important;
+
+    background:
+        #ffffff !important;
+
+}
+
+
+html[data-rh-theme="light"]
+body.module-page
+select option:checked {
+
+    color:
+        #ffffff !important;
+
+    background:
+        #3f7fa9 !important;
+
+}
+
+
+/* =========================================================
+   TABLA EMPLEADOS
+========================================================= */
+
+html[data-rh-theme="light"]
+.rh-employee-surface {
+
+    border-color:
+        rgba(47,70,86,.11) !important;
+
+    background:
+        rgba(255,255,255,.60) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-table thead th {
+
+    color:
+        #667884 !important;
+
+    border-bottom-color:
+        rgba(45,69,85,.11) !important;
+
+    background:
+        #eef3f6 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-table tbody td {
+
+    color:
+        #445762 !important;
+
+    border-bottom-color:
+        rgba(49,71,87,.075) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-table tbody tr:hover {
+
+    background:
+        rgba(63,127,169,.045) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-employee-copy strong {
+
+    color:
+        #243640 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-employee-copy small,
+
+html[data-rh-theme="light"]
+.rh-table-meta strong {
+
+    color:
+        #758590 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-employee-avatar,
+
+html[data-rh-theme="light"]
+.rv-employee-avatar {
+
+    color:
+        #49606e !important;
+
+    border-color:
+        rgba(48,72,89,.12) !important;
+
+    background:
+        #f2f6f8 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-employee-avatar::after,
+
+html[data-rh-theme="light"]
+.rv-employee-avatar::after {
+
+    border-color:
+        #f5f7f9 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-company-pill,
+
+html[data-rh-theme="light"]
+.rh-status-pill,
+
+html[data-rh-theme="light"]
+.rh-system-pill,
+
+html[data-rh-theme="light"]
+.rv-employee-company {
+
+    color:
+        #526975 !important;
+
+    border-color:
+        rgba(45,69,85,.10) !important;
+
+    background:
+        rgba(230,237,241,.85) !important;
+
+}
+
+
+/* =========================================================
+   MODALES
+========================================================= */
+
+html[data-rh-theme="light"]
+.module-modal {
+
+    background:
+        rgba(35,48,58,.30) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-modal-card {
+
+    color:
+        #2b3d48 !important;
+
+    border-color:
+        rgba(46,70,87,.13) !important;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f0f4f6
+        ) !important;
+
+    box-shadow:
+        0 35px 90px
+        rgba(35,52,64,.20) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-modal-header,
+
+html[data-rh-theme="light"]
+.module-modal-footer {
+
+    border-color:
+        rgba(46,70,87,.10) !important;
+
+    background:
+        rgba(244,247,249,.90) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-modal-close {
+
+    color:
+        #5c6f7b !important;
+
+    border-color:
+        rgba(44,67,83,.12) !important;
+
+    background:
+        #ffffff !important;
+
+}
+
+
+/* =========================================================
+   FORMULARIOS
+========================================================= */
+
+html[data-rh-theme="light"]
+.module-field label,
+
+html[data-rh-theme="light"]
+.rh-field-help {
+
+    color:
+        #60727e !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-field input,
+
+html[data-rh-theme="light"]
+.module-field select,
+
+html[data-rh-theme="light"]
+.module-field textarea {
+
+    color:
+        #233640 !important;
+
+    border-color:
+        rgba(44,68,84,.14) !important;
+
+    background:
+        #ffffff !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.module-field input:focus,
+
+html[data-rh-theme="light"]
+.module-field select:focus,
+
+html[data-rh-theme="light"]
+.module-field textarea:focus {
+
+    border-color:
+        rgba(58,127,174,.45) !important;
+
+    background:
+        #ffffff !important;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(58,127,174,.10) !important;
+
+}
+
+
+/* =========================================================
+   CREDENCIALES / FOTO
+========================================================= */
+
+html[data-rh-theme="light"]
+.rh-credentials-box,
+
+html[data-rh-theme="light"]
+.rh-system-link-box,
+
+html[data-rh-theme="light"]
+.rh-photo-field {
+
+    border-color:
+        rgba(45,69,85,.11) !important;
+
+    background:
+        rgba(239,244,247,.85) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-credentials-heading strong,
+
+html[data-rh-theme="light"]
+.rh-system-link-box strong,
+
+html[data-rh-theme="light"]
+.rh-photo-heading strong {
+
+    color:
+        #263945 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-photo-heading span,
+
+html[data-rh-theme="light"]
+.rh-photo-heading small,
+
+html[data-rh-theme="light"]
+.rh-photo-status {
+
+    color:
+        #687b87 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-photo-preview {
+
+    color:
+        #3d5564 !important;
+
+    border-color:
+        rgba(46,70,87,.13) !important;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #e7eff4,
+            #dce6ec
+        ) !important;
+
+    box-shadow:
+
+        inset 0 1px 0
+        #ffffff,
+
+        0 14px 30px
+        rgba(48,70,86,.10) !important;
+
+}
+
+
+/* =========================================================
+   VACACIONES
+========================================================= */
+
+html[data-rh-theme="light"]
+.rv-hero,
+
+html[data-rh-theme="light"]
+.rv-calendar-hero,
+
+html[data-rh-theme="light"]
+.rv-upcoming-section,
+
+html[data-rh-theme="light"]
+.rv-request-section {
+
+    border-color:
+        rgba(46,70,87,.10) !important;
+
+    background:
+        rgba(255,255,255,.58) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-policy-chip,
+
+html[data-rh-theme="light"]
+.rv-seniority,
+
+html[data-rh-theme="light"]
+.rv-card-stat,
+
+html[data-rh-theme="light"]
+.rv-future-item,
+
+html[data-rh-theme="light"]
+.rv-selection,
+
+html[data-rh-theme="light"]
+.rv-request {
+
+    border-color:
+        rgba(46,70,87,.10) !important;
+
+    background:
+        rgba(240,245,248,.88) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-employee-main strong,
+
+html[data-rh-theme="light"]
+.rv-upcoming-card strong,
+
+html[data-rh-theme="light"]
+.rv-request strong {
+
+    color:
+        #243640 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-employee-main small,
+
+html[data-rh-theme="light"]
+.rv-seniority span,
+
+html[data-rh-theme="light"]
+.rv-card-footer,
+
+html[data-rh-theme="light"]
+.rv-request p,
+
+html[data-rh-theme="light"]
+.rv-notes {
+
+    color:
+        #6b7d89 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-card-stat.available strong {
+
+    color:
+        #397da8 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-card-stat.warning strong {
+
+    color:
+        #a96343 !important;
+
+}
+
+
+/* =========================================================
+   CALENDARIO
+========================================================= */
+
+html[data-rh-theme="light"]
+.rv-calendar-shell,
+
+html[data-rh-theme="light"]
+.rv-global-calendar {
+
+    border-color:
+        rgba(46,70,87,.11) !important;
+
+    background:
+        rgba(255,255,255,.72) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-calendar-header,
+
+html[data-rh-theme="light"]
+.rv-calendar-weekdays {
+
+    border-color:
+        rgba(46,70,87,.09) !important;
+
+    background:
+        #eef3f6 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-calendar-header strong,
+
+html[data-rh-theme="light"]
+.rv-calendar-weekdays span,
+
+html[data-rh-theme="light"]
+.rv-day-number {
+
+    color:
+        #4c616e !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-day {
+
+    color:
+        #354b58 !important;
+
+    border-color:
+        rgba(47,70,86,.075) !important;
+
+    background:
+        rgba(255,255,255,.86) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-day:hover {
+
+    background:
+        #f3f7f9 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-day.outside,
+
+html[data-rh-theme="light"]
+.rv-day.weekend {
+
+    background:
+        rgba(233,239,243,.70) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-day.today {
+
+    border-color:
+        rgba(57,125,168,.40) !important;
+
+    box-shadow:
+
+        inset 0 0 0 1px
+        rgba(57,125,168,.16) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-day.selected {
+
+    background:
+        rgba(66,137,184,.12) !important;
+
+    border-color:
+        rgba(66,137,184,.34) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rv-day-event {
+
+    color:
+        #38566a !important;
+
+    background:
+        rgba(64,125,165,.12) !important;
+
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+html[data-rh-theme="light"]
+.rh-chat {
+
+    color:
+        #2a3d48 !important;
+
+    border-color:
+        rgba(46,70,87,.13) !important;
+
+    background:
+        #f8fafb !important;
+
+    box-shadow:
+
+        -18px 0 55px
+        rgba(44,61,73,.15) !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-chat-header,
+
+html[data-rh-theme="light"]
+.rh-chat-composer {
+
+    border-color:
+        rgba(46,70,87,.10) !important;
+
+    background:
+        #eef3f6 !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-note {
+
+    border-color:
+        rgba(46,70,87,.10) !important;
+
+    background:
+        #ffffff !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-note p,
+
+html[data-rh-theme="light"]
+.rh-chat-header strong {
+
+    color:
+        #2d414d !important;
+
+}
+
+
+html[data-rh-theme="light"]
+.rh-chat-composer textarea {
+
+    color:
+        #263945 !important;
+
+    border-color:
+        rgba(46,70,87,.13) !important;
+
+    background:
+        #ffffff !important;
+
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+html[data-rh-theme="light"]
+.rh-empty,
+
+html[data-rh-theme="light"]
+.rh-chat-empty,
+
+html[data-rh-theme="light"]
+.rv-upcoming-empty {
+
+    color:
+        #72838e !important;
+
+}
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+html[data-rh-theme="light"] * {
+
+    scrollbar-color:
+        #b1bec6
+        #e8eef2;
+
+}
+
+
+html[data-rh-theme="light"]
+*::-webkit-scrollbar-track {
+
+    background:
+        #e8eef2;
+
+}
+
+
+html[data-rh-theme="light"]
+*::-webkit-scrollbar-thumb {
+
+    background:
+        #aab8c1;
+
+    border-color:
+        #e8eef2;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 720px) {
+
+    .rh-theme-copy {
+
+        display:
+            none;
+
+    }
+
+
+    .rh-theme-button {
+
+        min-width:
+            40px;
+
+        justify-content:
+            center;
+
+        padding-inline:
+            10px !important;
+
+    }
+
+}

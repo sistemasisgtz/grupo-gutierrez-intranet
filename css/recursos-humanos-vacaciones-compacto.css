@@ -1,0 +1,191 @@
+/* =========================================================
+   GRUPO GUTIERREZ · RH
+   VACACIONES · TARJETAS COMPACTAS
+========================================================= */
+
+.rv-details-toggle {
+
+    position:
+        relative;
+
+    z-index:
+        3;
+
+    width:
+        100%;
+
+    min-height:
+        36px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        12px;
+
+    margin-top:
+        13px;
+
+    padding:
+        0 11px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.055);
+
+    border-radius:
+        10px;
+
+    color:
+        #8797a2;
+
+    background:
+        rgba(255,255,255,.018);
+
+    cursor:
+        pointer;
+
+    font-size:
+        7px;
+
+    font-weight:
+        850;
+
+    letter-spacing:
+        .08em;
+
+    text-transform:
+        uppercase;
+
+    transition:
+        border-color .18s ease,
+        background .18s ease,
+        color .18s ease;
+
+}
+
+
+.rv-details-toggle:hover {
+
+    color:
+        #dce4e9;
+
+    border-color:
+        rgba(91,145,184,.22);
+
+    background:
+        rgba(255,255,255,.035);
+
+}
+
+
+.rv-details-toggle-arrow {
+
+    font-size:
+        14px;
+
+    line-height:
+        1;
+
+    transition:
+        transform .24s ease;
+
+}
+
+
+.rv-employee-details {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    max-height:
+        0;
+
+    overflow:
+        hidden;
+
+    opacity:
+        0;
+
+    transform:
+        translateY(-5px);
+
+    transition:
+
+        max-height
+        .34s
+        cubic-bezier(.2,.8,.2,1),
+
+        opacity
+        .22s
+        ease,
+
+        transform
+        .22s
+        ease;
+
+}
+
+
+.rv-employee-card.details-open
+.rv-employee-details {
+
+    max-height:
+        620px;
+
+    opacity:
+        1;
+
+    transform:
+        translateY(0);
+
+}
+
+
+.rv-employee-card.details-open
+.rv-details-toggle-arrow {
+
+    transform:
+        rotate(180deg);
+
+}
+
+
+.rv-employee-card
+.rv-employee-details
+.rv-seniority {
+
+    margin-top:
+        10px;
+
+}
+
+
+@media (max-width: 620px) {
+
+    .rv-details-toggle {
+
+        min-height:
+            40px;
+
+    }
+
+
+    .rv-employee-card.details-open
+    .rv-employee-details {
+
+        max-height:
+            820px;
+
+    }
+
+}
