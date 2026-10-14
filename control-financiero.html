@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0d1319"
+    >
+
+    <title>
+        Control Financiero | Grupo Gutierrez
+    </title>
+
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <link
+        rel="stylesheet"
+        href="css/finanzas.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/control-financiero.css"
+    >
+
+</head>
+
+
+<body class="finance-page control-finance-page">
+
+
+    <main class="finance-shell">
+
+
+        <header class="finance-header">
+
+
+            <div class="finance-brand">
+
+                <div class="finance-brand-mark">
+                    CF
+                </div>
+
+                <div class="finance-brand-copy">
+
+                    <span>
+                        GRUPO GUTIERREZ · SISTEMA
+                    </span>
+
+                    <strong>
+                        Control Financiero
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="finance-header-actions">
+
+                <div class="finance-user-chip">
+
+                    <span>
+                        SESIÓN FINANZAS
+                    </span>
+
+                    <strong data-finance-user-email>
+                        ...
+                    </strong>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="finance-button"
+                    id="financeControlRefresh"
+                >
+                    ↻ Actualizar
+                </button>
+
+                <button
+                    type="button"
+                    class="finance-button"
+                    data-back-system
+                >
+                    ← Sistema
+                </button>
+
+            </div>
+
+
+        </header>
+
+
+        <section class="finance-hero">
+
+
+            <div>
+
+                <span class="finance-kicker">
+                    FINANZAS · CONTROL CENTRAL
+                </span>
+
+                <h1>
+                    Control Financiero
+                </h1>
+
+                <p>
+                    Autorizaciones, pagos, concentrado financiero,
+                    costos, gastos y análisis de las operaciones
+                    del Grupo Gutierrez.
+                </p>
+
+            </div>
+
+
+            <div class="finance-action-row">
+
+                <button
+                    type="button"
+                    class="finance-button"
+                    id="financeGroupsButton"
+                >
+                    Grupos de pago
+                </button>
+
+                <button
+                    type="button"
+                    class="finance-button"
+                    id="financeAccessRequestsButton"
+                >
+                    Solicitudes de acceso
+
+                    <span
+                        id="financeAccessCount"
+                        class="finance-access-badge"
+                    >
+                        0
+                    </span>
+
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+        <section
+            id="financeAdminWarning"
+            class="finance-admin-warning"
+        >
+            Este usuario no tiene permisos para ingresar a
+            Control Financiero.
+        </section>
+
+
+        <div
+            id="financeAdminContent"
+            class="finance-admin-content hidden"
+        >
+
+
+            <section class="finance-browser">
+
+
+                <nav
+                    class="finance-tabbar"
+                    aria-label="Control Financiero"
+                >
+
+                    <button
+                        type="button"
+                        class="finance-tab active"
+                        data-finance-tab="solicitudes"
+                    >
+                        <span class="finance-tab-dot"></span>
+                        Solicitudes
+                    </button>
+
+                    <button
+                        type="button"
+                        class="finance-tab"
+                        data-finance-tab="resumen"
+                    >
+                        <span class="finance-tab-dot"></span>
+                        Resumen ejecutivo
+                    </button>
+
+                    <button
+                        type="button"
+                        class="finance-tab"
+                        data-finance-tab="analisis"
+                    >
+                        <span class="finance-tab-dot"></span>
+                        Análisis semanal y mensual
+                    </button>
+
+                    <button
+                        type="button"
+                        class="finance-tab"
+                        data-finance-tab="financiero"
+                    >
+                        <span class="finance-tab-dot"></span>
+                        Análisis financiero
+                    </button>
+
+                </nav>
+
+
+                <!-- =========================================
+                     SOLICITUDES
+                ========================================== -->
+
+                <section
+                    class="finance-panel active"
+                    data-finance-panel="solicitudes"
+                >
+
+
+                    <div class="finance-section-heading">
+
+                        <div>
+
+                            <span class="finance-kicker">
+                                CONCENTRADO CENTRAL
+                            </span>
+
+                            <h2>
+                                Solicitudes
+                            </h2>
+
+                            <p>
+                                Todas las solicitudes de los grupos,
+                                autorización, pagos, factura y datos reales.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="finance-button primary"
+                            id="financeRequestsExcel"
+                        >
+                            ↓ Descargar Excel
+                        </button>
+
+                    </div>
+
+
+                    <div class="finance-toolbar">
+
+
+                        <div class="finance-search">
+
+                            <span>⌕</span>
+
+                            <input
+                                id="financeRequestSearch"
+                                type="search"
+                                placeholder="Buscar ID, proveedor, proyecto, factura, concepto..."
+                            >
+
+                        </div>
+
+
+                        <select id="financeRequestGroupFilter">
+
+                            <option value="">
+                                Todos los grupos
+                            </option>
+
+                        </select>
+
+
+                        <select id="financeRequestAuthFilter">
+
+                            <option value="">
+                                Toda autorización
+                            </option>
+
+                            <option value="pending">
+                                Pendientes
+                            </option>
+
+                            <option value="authorized">
+                                Autorizadas
+                            </option>
+
+                            <option value="rejected">
+                                No autorizadas
+                            </option>
+
+                        </select>
+
+
+                        <select id="financeRequestPaidFilter">
+
+                            <option value="">
+                                Todos los pagos
+                            </option>
+
+                            <option value="paid">
+                                Pagadas
+                            </option>
+
+                            <option value="unpaid">
+                                Sin pagar
+                            </option>
+
+                        </select>
+
+
+                        <input
+                            id="financeRequestDateFrom"
+                            type="date"
+                        >
+
+
+                        <input
+                            id="financeRequestDateTo"
+                            type="date"
+                        >
+
+
+                    </div>
+
+
+                    <section class="finance-surface">
+
+
+                        <div class="finance-surface-header">
+
+                            <div>
+
+                                <span class="finance-surface-label">
+                                    SOLICITUDES
+                                </span>
+
+                                <strong id="financeRequestCount">
+                                    0 solicitudes
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="financeRequestsTable"
+                            class="finance-table-scroll"
+                        >
+                        </div>
+
+
+                    </section>
+
+
+                </section>
+
+
+                <!-- =========================================
+                     RESUMEN EJECUTIVO
+                ========================================== -->
+
+                <section
+                    class="finance-panel"
+                    data-finance-panel="resumen"
+                >
+
+
+                    <div class="finance-section-heading">
+
+                        <div>
+
+                            <span class="finance-kicker">
+                                VISIÓN EJECUTIVA
+                            </span>
+
+                            <h2>
+                                Resumen ejecutivo
+                            </h2>
+
+                            <p>
+                                Los importes pagados, costos y gastos utilizan
+                                exclusivamente importe real con pago confirmado.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="finance-analysis-controls">
+
+                        <select id="financeSummaryYear">
+                        </select>
+
+                        <select id="financeSummaryMonth">
+
+                            <option value="">
+                                Todos los meses
+                            </option>
+
+                        </select>
+
+                        <select id="financeSummaryWeek">
+
+                            <option value="">
+                                Todas las semanas
+                            </option>
+
+                        </select>
+
+                        <input
+                            id="financeSummaryFrom"
+                            type="date"
+                        >
+
+                        <input
+                            id="financeSummaryTo"
+                            type="date"
+                        >
+
+                    </div>
+
+
+                    <div class="finance-summary-grid">
+
+
+                        <article class="finance-summary-card">
+
+                            <span>
+                                TOTAL PAGADO
+                            </span>
+
+                            <strong id="financeSummaryPaid">
+                                $0.00
+                            </strong>
+
+                        </article>
+
+
+                        <article class="finance-summary-card">
+
+                            <span>
+                                PENDIENTE AUTORIZACIÓN
+                            </span>
+
+                            <strong id="financeSummaryPending">
+                                $0.00
+                            </strong>
+
+                        </article>
+
+
+                        <article class="finance-summary-card">
+
+                            <span>
+                                AUTORIZADO SIN PAGAR
+                            </span>
+
+                            <strong id="financeSummaryAuthorized">
+                                $0.00
+                            </strong>
+
+                        </article>
+
+
+                        <article class="finance-summary-card">
+
+                            <span>
+                                COSTOS PAGADOS
+                            </span>
+
+                            <strong id="financeSummaryCosts">
+                                $0.00
+                            </strong>
+
+                        </article>
+
+
+                        <article class="finance-summary-card">
+
+                            <span>
+                                GASTOS PAGADOS
+                            </span>
+
+                            <strong id="financeSummaryExpenses">
+                                $0.00
+                            </strong>
+
+                        </article>
+
+
+                    </div>
+
+
+                    <section class="finance-report">
+
+                        <h3>
+                            Resumen por grupo
+                        </h3>
+
+                        <p>
+                            Comparativo de cada grupo de pago.
+                        </p>
+
+                        <div
+                            id="financeSummaryByGroup"
+                            class="finance-table-scroll"
+                        >
+                        </div>
+
+                    </section>
+
+
+                </section>
+
+
+                <!-- =========================================
+                     ANÁLISIS SEMANAL / MENSUAL
+                ========================================== -->
+
+                <section
+                    class="finance-panel"
+                    data-finance-panel="analisis"
+                >
+
+
+                    <div class="finance-section-heading">
+
+                        <div>
+
+                            <span class="finance-kicker">
+                                ANÁLISIS OPERATIVO
+                            </span>
+
+                            <h2>
+                                Análisis semanal y mensual
+                            </h2>
+
+                            <p>
+                                En estos reportes se consideran únicamente
+                                solicitudes con pago confirmado e importe real.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="finance-analysis-controls">
+
+                        <select id="financeAnalysisArea">
+                        </select>
+
+                        <select id="financeAnalysisYear">
+                        </select>
+
+                        <select id="financeAnalysisMonth">
+
+                            <option value="">
+                                Todos los meses
+                            </option>
+
+                        </select>
+
+                        <select id="financeAnalysisWeek">
+
+                            <option value="">
+                                Todas las semanas
+                            </option>
+
+                        </select>
+
+                        <input
+                            id="financeAnalysisFrom"
+                            type="date"
+                        >
+
+                        <input
+                            id="financeAnalysisTo"
+                            type="date"
+                        >
+
+                    </div>
+
+
+                    <section class="finance-report">
+
+                        <h3>
+                            Montos por grupo
+                        </h3>
+
+                        <p>
+                            Área agrupadora seleccionada.
+                        </p>
+
+                        <div
+                            id="financeAnalysisGroupAmounts"
+                            class="finance-table-scroll"
+                        >
+                        </div>
+
+                    </section>
+
+
+                    <section class="finance-report">
+
+                        <h3>
+                            Grupo × mes × tipo
+                        </h3>
+
+                        <p>
+                            Costos, gastos, otros y deuda distribuidos
+                            horizontalmente por mes.
+                        </p>
+
+                        <div
+                            id="financeAnalysisMatrix"
+                            class="finance-matrix-scroll"
+                        >
+                        </div>
+
+                    </section>
+
+
+                    <section class="finance-report">
+
+                        <h3>
+                            Categoría por mes
+                        </h3>
+
+                        <p>
+                            Meses en vertical para el área y categoría seleccionadas.
+                        </p>
+
+
+                        <div
+                            class="finance-analysis-controls"
+                            style="margin-top:12px"
+                        >
+
+                            <select id="financeAnalysisCategory">
+                            </select>
+
+                        </div>
+
+
+                        <div class="finance-report-grid">
+
+                            <div
+                                id="financeAnalysisCategoryTable"
+                                class="finance-table-scroll"
+                            >
+                            </div>
+
+                            <div>
+
+                                <div class="finance-chart-legend">
+
+                                    <span class="one">
+                                        <i></i>
+                                        Monto pagado
+                                    </span>
+
+                                </div>
+
+                                <div
+                                    id="financeAnalysisCategoryChart"
+                                    class="finance-chart"
+                                >
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </section>
+
+
+                </section>
+
+
+                <!-- =========================================
+                     ANÁLISIS FINANCIERO
+                ========================================== -->
+
+                <section
+                    class="finance-panel"
+                    data-finance-panel="financiero"
+                >
+
+
+                    <div class="finance-section-heading">
+
+                        <div>
+
+                            <span class="finance-kicker">
+                                ANÁLISIS ANUAL
+                            </span>
+
+                            <h2>
+                                Análisis financiero
+                            </h2>
+
+                            <p>
+                                Costos, gastos y total pagado confirmados.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="finance-analysis-controls">
+
+                        <select id="financeFinancialYear">
+                        </select>
+
+                    </div>
+
+
+                    <section class="finance-report">
+
+                        <h3>
+                            Trimestres
+                        </h3>
+
+                        <div
+                            id="financeQuarterCards"
+                            class="finance-quarter-grid"
+                        >
+                        </div>
+
+                    </section>
+
+
+                    <section class="finance-report">
+
+                        <h3>
+                            Montos por grupos
+                        </h3>
+
+                        <div
+                            id="financeFinancialByGroup"
+                            class="finance-table-scroll"
+                        >
+                        </div>
+
+                    </section>
+
+
+                    <section class="finance-report">
+
+                        <h3>
+                            Costos y gastos por mes
+                        </h3>
+
+                        <div class="finance-report-grid">
+
+                            <div
+                                id="financeFinancialMonthlyTable"
+                                class="finance-table-scroll"
+                            >
+                            </div>
+
+                            <div>
+
+                                <div class="finance-chart-legend">
+
+                                    <span class="one">
+                                        <i></i>
+                                        Costos
+                                    </span>
+
+                                    <span class="two">
+                                        <i></i>
+                                        Gastos
+                                    </span>
+
+                                    <span class="three">
+                                        <i></i>
+                                        Total pagado
+                                    </span>
+
+                                </div>
+
+                                <div
+                                    id="financeFinancialMonthlyChart"
+                                    class="finance-chart"
+                                >
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                </section>
+
+
+            </section>
+
+
+        </div>
+
+
+        <footer class="finance-footer">
+
+            <span>
+                GRUPO GUTIERREZ
+            </span>
+
+            <span>·</span>
+
+            <span>
+                CONTROL FINANCIERO
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+    <div data-finance-modal-root></div>
+
+    <div
+        class="finance-toast"
+        data-finance-toast
+    ></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/supabase-client.js"></script>
+
+    <script src="js/finanzas-core.js"></script>
+
+    <script src="js/finanzas-excel.js"></script>
+
+    <script src="js/control-financiero-solicitudes.js"></script>
+
+    <script src="js/control-financiero-resumen.js"></script>
+
+    <script src="js/control-financiero-analisis.js"></script>
+
+
+</body>
+
+</html>

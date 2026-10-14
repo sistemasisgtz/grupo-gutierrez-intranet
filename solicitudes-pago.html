@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0d1319"
+    >
+
+    <title>
+        Solicitudes de Pago | Grupo Gutierrez
+    </title>
+
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/finanzas.css"
+    >
+
+</head>
+
+
+<body class="finance-page payment-request-page">
+
+
+    <main class="finance-shell">
+
+
+        <header class="finance-header">
+
+
+            <div class="finance-brand">
+
+                <div class="finance-brand-mark">
+                    SP
+                </div>
+
+                <div class="finance-brand-copy">
+
+                    <span>
+                        GRUPO GUTIERREZ · SISTEMA
+                    </span>
+
+                    <strong>
+                        Solicitudes de Pago
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="finance-header-actions">
+
+                <div class="finance-user-chip">
+
+                    <span>
+                        SESIÓN
+                    </span>
+
+                    <strong data-finance-user-email>
+                        ...
+                    </strong>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="finance-button"
+                    id="paymentRefresh"
+                >
+                    ↻ Actualizar
+                </button>
+
+                <button
+                    type="button"
+                    class="finance-button"
+                    data-back-system
+                >
+                    ← Sistema
+                </button>
+
+            </div>
+
+
+        </header>
+
+
+        <section class="finance-hero">
+
+
+            <div>
+
+                <span class="finance-kicker">
+                    OPERACIÓN · SOLICITUDES
+                </span>
+
+                <h1>
+                    Solicitudes de Pago
+                </h1>
+
+                <p>
+                    Captura, consulta y da seguimiento a las solicitudes
+                    de los grupos de pago a los que Finanzas te haya asignado.
+                </p>
+
+            </div>
+
+
+            <div
+                class="finance-context"
+                id="paymentGroupContext"
+            >
+
+                <label for="paymentGroupSelect">
+                    GRUPO ACTIVO
+                </label>
+
+                <select id="paymentGroupSelect">
+                </select>
+
+            </div>
+
+
+        </section>
+
+
+        <section
+            id="paymentNoGroup"
+            class="finance-no-group"
+        >
+
+            <div class="finance-no-group-icon">
+                !
+            </div>
+
+            <h2>
+                Aún no estás agregado a un grupo
+            </h2>
+
+            <p>
+                Para generar solicitudes necesitas que Finanzas te asigne
+                a un grupo de pago. Puedes enviar una solicitud de acceso
+                desde aquí.
+            </p>
+
+            <button
+                type="button"
+                class="finance-button primary"
+                id="paymentRequestAccess"
+            >
+                Solicitar a Finanzas ser agregado
+            </button>
+
+        </section>
+
+
+        <div
+            id="paymentWorkspace"
+            class="finance-workspace hidden"
+        >
+
+
+            <section class="finance-metrics">
+
+                <article class="finance-metric">
+
+                    <span>
+                        SOLICITUDES DEL GRUPO
+                    </span>
+
+                    <strong id="paymentMetricTotal">
+                        0
+                    </strong>
+
+                    <small>
+                        Registros visibles
+                    </small>
+
+                </article>
+
+                <article class="finance-metric">
+
+                    <span>
+                        PENDIENTES DE AUTORIZACIÓN
+                    </span>
+
+                    <strong id="paymentMetricPending">
+                        0
+                    </strong>
+
+                    <small>
+                        Esperando Finanzas
+                    </small>
+
+                </article>
+
+                <article class="finance-metric">
+
+                    <span>
+                        AUTORIZADAS SIN PAGAR
+                    </span>
+
+                    <strong id="paymentMetricAuthorized">
+                        0
+                    </strong>
+
+                    <small>
+                        Autorizadas pendientes de pago
+                    </small>
+
+                </article>
+
+                <article class="finance-metric">
+
+                    <span>
+                        PAGADAS
+                    </span>
+
+                    <strong id="paymentMetricPaid">
+                        0
+                    </strong>
+
+                    <small>
+                        Confirmación de pago
+                    </small>
+
+                </article>
+
+            </section>
+
+
+            <section class="finance-browser">
+
+
+                <nav
+                    class="finance-tabbar"
+                    aria-label="Solicitudes de pago"
+                >
+
+                    <button
+                        type="button"
+                        class="finance-tab active"
+                        data-finance-tab="solicitudes"
+                    >
+                        <span class="finance-tab-dot"></span>
+                        Solicitudes
+                    </button>
+
+                    <button
+                        type="button"
+                        class="finance-tab"
+                        data-finance-tab="mis-solicitudes"
+                    >
+                        <span class="finance-tab-dot"></span>
+                        Mis Solicitudes
+                    </button>
+
+                </nav>
+
+
+                <section
+                    class="finance-panel active"
+                    data-finance-panel="solicitudes"
+                >
+
+
+                    <div class="finance-section-heading">
+
+                        <div>
+
+                            <span class="finance-kicker">
+                                GRUPO DE PAGO
+                            </span>
+
+                            <h2>
+                                Solicitudes
+                            </h2>
+
+                            <p>
+                                Aquí aparecen las solicitudes realizadas por
+                                todos los integrantes del grupo seleccionado.
+                            </p>
+
+                        </div>
+
+
+                        <div class="finance-action-row">
+
+                            <button
+                                type="button"
+                                class="finance-button"
+                                id="paymentRequestersButton"
+                            >
+                                Solicitantes
+                            </button>
+
+                            <button
+                                type="button"
+                                class="finance-button"
+                                id="paymentProvidersButton"
+                            >
+                                Proveedores
+                            </button>
+
+                            <button
+                                type="button"
+                                class="finance-button"
+                                id="paymentClientsButton"
+                            >
+                                Clientes
+                            </button>
+
+                            <button
+                                type="button"
+                                class="finance-button primary"
+                                id="paymentNewRequest"
+                            >
+                                + Nueva solicitud
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="finance-toolbar">
+
+                        <div class="finance-search">
+
+                            <span>⌕</span>
+
+                            <input
+                                id="paymentGroupSearch"
+                                type="search"
+                                placeholder="Buscar ID, proveedor, concepto, proyecto, solicitante..."
+                            >
+
+                        </div>
+
+                        <select id="paymentGroupAuthorizationFilter">
+
+                            <option value="">
+                                Toda autorización
+                            </option>
+
+                            <option value="pending">
+                                Pendientes
+                            </option>
+
+                            <option value="authorized">
+                                Autorizadas
+                            </option>
+
+                            <option value="rejected">
+                                No autorizadas
+                            </option>
+
+                        </select>
+
+                        <select id="paymentGroupPaidFilter">
+
+                            <option value="">
+                                Pago: todos
+                            </option>
+
+                            <option value="paid">
+                                Pagadas
+                            </option>
+
+                            <option value="unpaid">
+                                Sin pagar
+                            </option>
+
+                        </select>
+
+                        <select id="paymentGroupTypeFilter">
+
+                            <option value="">
+                                Todos los tipos
+                            </option>
+
+                        </select>
+
+                        <input
+                            id="paymentGroupDateFrom"
+                            type="date"
+                        >
+
+                        <input
+                            id="paymentGroupDateTo"
+                            type="date"
+                        >
+
+                    </div>
+
+
+                    <section class="finance-surface">
+
+                        <div class="finance-surface-header">
+
+                            <div>
+
+                                <span class="finance-surface-label">
+                                    CONCENTRADO
+                                </span>
+
+                                <strong id="paymentGroupCount">
+                                    0 solicitudes
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="paymentGroupRequests"
+                            class="finance-table-scroll"
+                        >
+                        </div>
+
+                    </section>
+
+
+                </section>
+
+
+                <section
+                    class="finance-panel"
+                    data-finance-panel="mis-solicitudes"
+                >
+
+
+                    <div class="finance-section-heading">
+
+                        <div>
+
+                            <span class="finance-kicker">
+                                ACTIVIDAD PERSONAL
+                            </span>
+
+                            <h2>
+                                Mis Solicitudes
+                            </h2>
+
+                            <p>
+                                Solo las solicitudes enviadas por tu usuario
+                                dentro del grupo activo.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="finance-toolbar">
+
+                        <div class="finance-search">
+
+                            <span>⌕</span>
+
+                            <input
+                                id="paymentMySearch"
+                                type="search"
+                                placeholder="Buscar en mis solicitudes..."
+                            >
+
+                        </div>
+
+                        <select id="paymentMyAuthorizationFilter">
+
+                            <option value="">
+                                Toda autorización
+                            </option>
+
+                            <option value="pending">
+                                Pendientes
+                            </option>
+
+                            <option value="authorized">
+                                Autorizadas
+                            </option>
+
+                            <option value="rejected">
+                                No autorizadas
+                            </option>
+
+                        </select>
+
+                        <select id="paymentMyPaidFilter">
+
+                            <option value="">
+                                Pago: todos
+                            </option>
+
+                            <option value="paid">
+                                Pagadas
+                            </option>
+
+                            <option value="unpaid">
+                                Sin pagar
+                            </option>
+
+                        </select>
+
+                        <select id="paymentMyTypeFilter">
+
+                            <option value="">
+                                Todos los tipos
+                            </option>
+
+                        </select>
+
+                        <input
+                            id="paymentMyDateFrom"
+                            type="date"
+                        >
+
+                        <input
+                            id="paymentMyDateTo"
+                            type="date"
+                        >
+
+                    </div>
+
+
+                    <section class="finance-surface">
+
+                        <div class="finance-surface-header">
+
+                            <div>
+
+                                <span class="finance-surface-label">
+                                    MI ACTIVIDAD
+                                </span>
+
+                                <strong id="paymentMyCount">
+                                    0 solicitudes
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="paymentMyRequests"
+                            class="finance-table-scroll"
+                        >
+                        </div>
+
+                    </section>
+
+
+                </section>
+
+
+            </section>
+
+
+        </div>
+
+
+        <footer class="finance-footer">
+
+            <span>
+                GRUPO GUTIERREZ
+            </span>
+
+            <span>·</span>
+
+            <span>
+                SOLICITUDES DE PAGO
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+    <div data-finance-modal-root></div>
+
+    <div
+        class="finance-toast"
+        data-finance-toast
+    ></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/supabase-client.js"></script>
+
+    <script src="js/finanzas-core.js"></script>
+
+    <script src="js/solicitudes-pago.js"></script>
+
+
+</body>
+
+</html>

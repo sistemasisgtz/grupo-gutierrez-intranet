@@ -1,0 +1,514 @@
+/* =========================================================
+   GRUPO GUTIERREZ
+   SISTEMA CENTRAL · ACCESOS FINANZAS
+========================================================= */
+
+
+/* =========================================================
+   ORBITADOR DE 7 MÓDULOS
+========================================================= */
+
+.module-orbit {
+
+    height:
+        660px;
+
+}
+
+
+.orbit-ring-one {
+
+    width:
+        550px;
+
+    height:
+        550px;
+
+}
+
+
+/* =========================================================
+   NUEVA DISTRIBUCIÓN
+========================================================= */
+
+
+/* 01 · RECURSOS HUMANOS */
+
+.module-node-hr {
+
+    left:
+        50%;
+
+    top:
+        18px;
+
+    transform:
+        translateX(-50%);
+
+}
+
+
+/* 06 · SOLICITUDES DE PAGO */
+
+.module-node-payments {
+
+    right:
+        -4px;
+
+    top:
+        105px;
+
+}
+
+
+/* 02 · COTIZACIONES */
+
+.module-node-quotes {
+
+    right:
+        -4px;
+
+    top:
+        238px;
+
+}
+
+
+/* 03 · ALMACÉN */
+
+.module-node-warehouse {
+
+    right:
+        84px;
+
+    bottom:
+        36px;
+
+}
+
+
+/* 07 · CONTROL FINANCIERO */
+
+.module-node-finance {
+
+    left:
+        84px;
+
+    bottom:
+        36px;
+
+}
+
+
+/* 04 · COBRANZA */
+
+.module-node-collections {
+
+    left:
+        -4px;
+
+    top:
+        238px;
+
+}
+
+
+/* 05 · VENTAS */
+
+.module-node-sales {
+
+    left:
+        -4px;
+
+    top:
+        105px;
+
+}
+
+
+/* =========================================================
+   SOLICITUDES DE PAGO
+========================================================= */
+
+.module-node-payments
+.module-node-icon {
+
+    color:
+        #72B9B0;
+
+    border-color:
+        rgba(83, 176, 165, .18);
+
+    background:
+        rgba(48, 135, 124, .075);
+
+}
+
+
+.module-node-payments:hover {
+
+    border-color:
+        rgba(84, 184, 170, .32);
+
+    box-shadow:
+
+        0 25px 55px
+        rgba(0,0,0,.28),
+
+        0 0 35px
+        rgba(52, 150, 139, .055);
+
+}
+
+
+.module-node-payments:hover
+.module-node-icon {
+
+    color:
+        #B8E3DC;
+
+    background:
+        rgba(52, 148, 137, .15);
+
+}
+
+
+/* =========================================================
+   CONTROL FINANCIERO
+========================================================= */
+
+.module-node-finance
+.module-node-icon {
+
+    color:
+        #A28BC7;
+
+    border-color:
+        rgba(144, 111, 198, .18);
+
+    background:
+        rgba(104, 71, 157, .08);
+
+}
+
+
+.module-node-finance:hover {
+
+    border-color:
+        rgba(145, 111, 204, .30);
+
+    box-shadow:
+
+        0 25px 55px
+        rgba(0,0,0,.28),
+
+        0 0 35px
+        rgba(116, 76, 181, .055);
+
+}
+
+
+.module-node-finance:hover
+.module-node-icon {
+
+    color:
+        #D1C0EA;
+
+    background:
+        rgba(110, 76, 166, .15);
+
+}
+
+
+/* =========================================================
+   PUNTOS DE CONEXIÓN AL NÚCLEO
+========================================================= */
+
+
+/* TOP */
+
+.module-node-hr::after {
+
+    left:
+        calc(50% - 2px);
+
+    bottom:
+        -34px;
+
+}
+
+
+/* TOP RIGHT */
+
+.module-node-payments::after {
+
+    left:
+        -32px;
+
+    bottom:
+        10px;
+
+}
+
+
+/* MID RIGHT */
+
+.module-node-quotes::after {
+
+    left:
+        -32px;
+
+    top:
+        35px;
+
+}
+
+
+/* BOTTOM RIGHT */
+
+.module-node-warehouse::after {
+
+    left:
+        -26px;
+
+    top:
+        -18px;
+
+}
+
+
+/* BOTTOM LEFT */
+
+.module-node-finance::after {
+
+    right:
+        -26px;
+
+    top:
+        -18px;
+
+}
+
+
+/* MID LEFT */
+
+.module-node-collections::after {
+
+    right:
+        -32px;
+
+    top:
+        35px;
+
+}
+
+
+/* TOP LEFT */
+
+.module-node-sales::after {
+
+    right:
+        -32px;
+
+    bottom:
+        10px;
+
+}
+
+
+/* =========================================================
+   CONTROL FINANCIERO BLOQUEADO
+========================================================= */
+
+.module-node.finance-module-locked,
+.module-node-mobile.finance-module-locked {
+
+    opacity:
+        .58;
+
+}
+
+
+.module-node.finance-module-locked {
+
+    border-color:
+        rgba(152, 120, 174, .09);
+
+}
+
+
+.module-node.finance-module-locked:hover {
+
+    transform:
+        none;
+
+    border-color:
+        rgba(162, 126, 188, .17);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(24,30,37,.94),
+            rgba(10,13,17,.94)
+        );
+
+}
+
+
+.module-node.finance-module-locked
+.module-node-icon,
+
+.module-node-mobile.finance-module-locked
+.module-node-icon {
+
+    color:
+        #776783;
+
+    border-color:
+        rgba(141, 113, 158, .12);
+
+    background:
+        rgba(100, 76, 114, .05);
+
+}
+
+
+.module-node.finance-module-locked
+.module-node-copy small,
+
+.module-node-mobile.finance-module-locked
+.module-node-copy small {
+
+    color:
+        #705f78;
+
+}
+
+
+.module-node.finance-module-locked
+.module-node-arrow,
+
+.module-node-mobile.finance-module-locked
+.module-node-arrow {
+
+    color:
+        #755e81;
+
+}
+
+
+/* =========================================================
+   MOBILE · COLORES DE LOS NUEVOS
+========================================================= */
+
+.module-node-mobile[
+    data-module="solicitudes-pago"
+]
+.module-node-icon {
+
+    color:
+        #72B9B0;
+
+    border-color:
+        rgba(83, 176, 165, .18);
+
+    background:
+        rgba(48, 135, 124, .075);
+
+}
+
+
+.module-node-mobile[
+    data-module="control-financiero"
+]
+.module-node-icon {
+
+    color:
+        #A28BC7;
+
+    border-color:
+        rgba(144, 111, 198, .18);
+
+    background:
+        rgba(104, 71, 157, .08);
+
+}
+
+
+/* =========================================================
+   PANTALLAS INTERMEDIAS
+========================================================= */
+
+@media (
+    min-width:
+    851px
+)
+and
+(
+    max-width:
+    1030px
+) {
+
+    .module-orbit {
+
+        transform:
+            scale(.88);
+
+        transform-origin:
+            top center;
+
+        margin-bottom:
+            -65px;
+
+    }
+
+}
+
+/* =========================================================
+   FIX · TAMAÑO COBRANZA
+========================================================= */
+
+.module-node-collections {
+
+    width: 230px !important;
+
+    min-width: 230px !important;
+
+    max-width: 230px !important;
+
+    min-height: 92px !important;
+
+    height: 92px !important;
+
+    padding: 13px 14px !important;
+
+}
+
+
+.module-node-collections
+.module-node-copy {
+
+    min-width: 0;
+
+}
+
+
+.module-node-collections
+.module-node-copy strong {
+
+    font-size: 10px;
+
+}
+
+
+.module-node-collections
+.module-node-copy small {
+
+    font-size: 6px;
+
+    line-height: 1.35;
+
+    white-space: normal;
+
+}
