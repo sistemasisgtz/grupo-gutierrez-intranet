@@ -1,0 +1,218 @@
+/* =========================================================
+   GRUPO GUTIERREZ · ALMACÉN
+   PRODUCTOS · EXTENSIONES
+========================================================= */
+
+
+/* =========================================================
+   TOOLBAR PRODUCTOS
+========================================================= */
+
+.warehouse-products-toolbar {
+
+    grid-template-columns:
+        minmax(280px,1fr)
+        repeat(
+            4,
+            minmax(135px,auto)
+        );
+
+}
+
+
+/* =========================================================
+   FOLIO BLOQUEADO
+========================================================= */
+
+.warehouse-folio-locked {
+
+    cursor:
+        not-allowed;
+
+    color:
+        #95a7b3 !important;
+
+    border-color:
+        rgba(79,143,185,.15) !important;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(45,74,94,.16),
+            rgba(24,31,38,.82)
+        ) !important;
+
+    box-shadow:
+
+        inset 0 0 0 1px
+        rgba(255,255,255,.015) !important;
+
+}
+
+
+.warehouse-folio-locked:focus {
+
+    border-color:
+        rgba(79,143,185,.15) !important;
+
+    box-shadow:
+        none !important;
+
+}
+
+
+/* =========================================================
+   TIPO DE PRODUCTO
+========================================================= */
+
+.warehouse-product-type-chip {
+
+    width:
+        fit-content;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    min-height:
+        20px;
+
+    margin-top:
+        5px;
+
+    padding:
+        0 7px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        999px;
+
+    font-size:
+        6px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .10em;
+
+}
+
+
+.warehouse-product-type-chip.general {
+
+    color:
+        #8aa5b6;
+
+    border-color:
+        rgba(68,133,175,.18);
+
+    background:
+        rgba(50,104,140,.08);
+
+}
+
+
+.warehouse-product-type-chip.insumo {
+
+    color:
+        #c9a46a;
+
+    border-color:
+        rgba(190,143,69,.20);
+
+    background:
+        rgba(158,111,43,.09);
+
+}
+
+
+/* =========================================================
+   REPORTE
+========================================================= */
+
+.warehouse-report-button {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+}
+
+
+.warehouse-report-button span {
+
+    font-size:
+        12px;
+
+}
+
+
+/* =========================================================
+   UNIDADES
+========================================================= */
+
+#whUnitAbbreviation {
+
+    text-transform:
+        uppercase;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1180px) {
+
+    .warehouse-products-toolbar {
+
+        grid-template-columns:
+            1fr
+            1fr;
+
+    }
+
+
+    .warehouse-products-toolbar
+    .warehouse-search {
+
+        grid-column:
+            1 / -1;
+
+    }
+
+}
+
+
+@media (max-width: 760px) {
+
+    .warehouse-products-toolbar {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .warehouse-products-toolbar
+    .warehouse-search {
+
+        grid-column:
+            auto;
+
+    }
+
+}
