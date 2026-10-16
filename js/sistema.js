@@ -1,626 +1,401 @@
-// =========================================================
-// GRUPO GUTIERREZ
-// SISTEMA CENTRAL
-// =========================================================
+
+/*
+  GRUPO GUTIÉRREZ
+  SISTEMA CENTRAL · GLASS ATELIER
+
+  Sesión, navegación y permisos.
+*/
 
 (() => {
-
-    "use strict";
-
-
-    // =====================================================
-    // ROUTES
-    //
-    // TODAVÍA NO EXISTEN LOS MÓDULOS.
-    // LOS VAMOS CONECTANDO UNO POR UNO.
-    // =====================================================
-
-    const MODULES = {
-
-        "recursos-humanos": {
-
-            name:
-                "Recursos Humanos",
-
-            short:
-                "RH",
-
-            description:
-                "Personal y organización",
-
-            route:
-    "recursos-humanos.html"
-
-        },
-
-        "cotizaciones": {
-
-            name:
-                "Cotizaciones",
-
-            short:
-                "CT",
-
-            description:
-                "Costos y propuestas",
-
-            route:
-                null
-
-        },
-
-"almacen": {
-
-    name:
-        "Almacén",
-
-    short:
-        "AL",
-
-    description:
-        "Existencias y movimientos",
-
-    route:
-        "almacen.html"
-
-},
-
-        "cobranza": {
-
-            name:
-                "Cobranza",
-
-            short:
-                "CB",
-
-            description:
-                "Cartera y seguimiento",
-
-            route:
-                null
-
-        },
-
-        "ventas": {
-
-            name:
-                "Ventas",
-
-            short:
-                "VT",
-
-            description:
-                "Comercial y clientes",
-
-            route:
-                null
-
-        }
-
-    };
-
-
-    // =====================================================
-    // DOM
-    // =====================================================
-
-    const userEmail =
-        document.getElementById(
-            "systemUserEmail"
-        );
-
-
-    const logoutButton =
-        document.getElementById(
-            "systemLogoutButton"
-        );
-
-
-    const toast =
-        document.getElementById(
-            "systemToast"
-        );
-
-
-    const mobileModules =
-        document.getElementById(
-            "mobileModules"
-        );
-
-
-    const transition =
-        document.getElementById(
-            "moduleTransition"
-        );
-
-
-    const transitionTitle =
-        document.getElementById(
-            "moduleTransitionTitle"
-        );
-
-
-    let toastTimer =
-        null;
-
-
-    // =====================================================
-    // INIT
-    // =====================================================
-
-    async function initializeSystem() {
-
-
-        if (
-            !window.ggSupabase
-        ) {
-
-            window.location.href =
-                "index.html";
-
-
-            return;
-
-        }
-
-
-        // =================================================
-        // SESSION
-        // =================================================
-
-        const {
-            data: {
-                session
-            },
-            error
-        } =
-            await window.ggSupabase
-                .auth
-                .getSession();
-
-
-        if (
-            error
-            ||
-            !session
-        ) {
-
-            window.location.replace(
-                "index.html"
-            );
-
-
-            return;
-
-        }
-
-
-        // =================================================
-        // USER
-        // =================================================
-
-        userEmail.textContent =
-            session.user.email
-            ||
-            "Usuario";
-
-
-        // =================================================
-        // MOBILE VERSION
-        // =================================================
-
-        createMobileModules();
-
-
-        // =================================================
-        // BUTTONS
-        // =================================================
-
-        bindModuleButtons();
-
-
-        // =================================================
-        // LOGOUT
-        // =================================================
-
-        logoutButton.addEventListener(
-
-            "click",
-
-            logout
-
-        );
-
-
-        // =================================================
-        // SI CIERRAN SESIÓN EN OTRA PESTAÑA
-        // =================================================
-
-        window.ggSupabase
-            .auth
-            .onAuthStateChange(
-
-                (
-                    event,
-                    sessionNow
-                ) => {
-
-
-                    if (
-                        event ===
-                        "SIGNED_OUT"
-
-                        ||
-
-                        !sessionNow
-                    ) {
-
-                        window.location.replace(
-                            "index.html"
-                        );
-
-                    }
-
-                }
-
-            );
-
+  "use strict";
+
+  // ========================================
+  // RUTAS DE LOS MÓDULOS
+  // ========================================
+
+  const ROUTES = Object.freeze({
+
+    ventas: {
+      name: "Ventas",
+      url: "ventas.html"
+    },
+
+    "recursos-humanos": {
+      name: "Recursos Humanos",
+      url: "recursos-humanos.html"
+    },
+
+    almacen: {
+      name: "Almacén",
+      url: "almacen.html"
+    },
+
+    "solicitudes-pago": {
+      name: "Solicitudes de Pago",
+      url: "solicitudes-pago.html"
+    },
+
+    "control-financiero": {
+      name: "Control Financiero",
+      url: "control-financiero.html",
+      finance: true
+    },
+
+    cobranza: {
+      name: "Cobranza",
+      url: null
     }
 
+  });
 
-    // =====================================================
-    // MOBILE MODULES
-    // =====================================================
+  // ========================================
+  // ELEMENTOS
+  // ========================================
 
-    function createMobileModules() {
+  const $ = selector =>
+    document.querySelector(selector);
 
+  const client = window.ggSupabase;
 
-        mobileModules.innerHTML =
+  const emailNode = $("#systemUserEmail");
+  const logoutBtn = $("#systemLogoutButton");
+  const toast = $("#systemToast");
 
-            Object
-                .entries(
-                    MODULES
-                )
-                .map(
+  const overlay = $("#moduleTransition");
+  const overlayTitle = $("#moduleTransitionTitle");
 
-                    (
-                        [
-                            key,
-                            module
-                        ],
+  const financeCard = $(
+    '[data-module="control-financiero"]'
+  );
 
-                        index
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
 
-                    ) => `
+  let financeState = "checking";
+  let busy = false;
+  let toastTimer;
 
-                        <button
-                            type="button"
-                            class="module-node-mobile"
-                            data-module="${key}"
-                        >
+  // ========================================
+  // NOTIFICACIONES
+  // ========================================
 
-                            <span class="module-node-icon">
-                                ${module.short}
-                            </span>
+  function notify(text) {
+    if (!toast) return;
 
+    toast.textContent = text;
+    toast.classList.add("visible");
 
-                            <span class="module-node-copy">
+    clearTimeout(toastTimer);
 
-                                <strong>
-                                    ${module.name}
-                                </strong>
+    toastTimer = setTimeout(() => {
+      toast.classList.remove("visible");
+    }, 3500);
+  }
 
-                                <small>
-                                    ${module.description}
-                                </small>
+  // ========================================
+  // ESTADO DE CONTROL FINANCIERO
+  // ========================================
 
-                            </span>
+  function updateFinanceUI(state) {
+    financeState = state;
 
+    if (!financeCard) return;
 
-                            <span class="module-node-arrow">
-                                ↗
-                            </span>
+    const info = financeCard.querySelector(
+      "[data-finance-copy]"
+    );
 
+    const tag = financeCard.querySelector(
+      "[data-finance-tag]"
+    );
 
-                            <span class="module-node-index">
-                                ${String(
-                                    index + 1
-                                ).padStart(
-                                    2,
-                                    "0"
-                                )}
-                            </span>
+    financeCard.classList.toggle(
+      "is-restricted",
+      state !== "allowed"
+    );
 
-                        </button>
+    financeCard.setAttribute(
+      "aria-disabled",
+      String(state !== "allowed")
+    );
 
-                    `
-
-                )
-                .join(
-                    ""
-                );
-
+    if (info) {
+      info.textContent =
+        state === "allowed"
+          ? "Autorizaciones, pagos y análisis"
+          : state === "checking"
+            ? "Validando permisos…"
+            : "Acceso exclusivo para Finanzas";
     }
 
+    if (tag) {
+      tag.textContent =
+        state === "allowed"
+          ? "Disponible"
+          : state === "checking"
+            ? "Verificando"
+            : "Restringido";
+    }
+  }
 
-    // =====================================================
-    // MODULE EVENTS
-    // =====================================================
+  // ========================================
+  // VERIFICAR PERMISOS SUPABASE
+  // ========================================
 
-    function bindModuleButtons() {
+  async function checkFinance() {
+    try {
+      const { data, error } = await client.rpc(
+        "finance_is_admin"
+      );
 
+      if (error) throw error;
 
-        document.addEventListener(
+      updateFinanceUI(
+        data === true ? "allowed" : "denied"
+      );
 
-            "click",
+    } catch (error) {
+      console.error(
+        "[SISTEMA] Permiso de Finanzas:",
+        error
+      );
 
-            event => {
+      updateFinanceUI("denied");
+    }
+  }
 
+  // ========================================
+  // NAVEGAR A UN MÓDULO
+  // ========================================
 
-                const button =
-                    event.target.closest(
-                        "[data-module]"
-                    );
+  function openModule(id) {
+    if (busy) return;
 
+    const route = ROUTES[id];
+    if (!route) return;
 
-                if (
-                    !button
-                ) {
+    // Verificar autorización especial.
+    if (
+      route.finance &&
+      financeState !== "allowed"
+    ) {
+      notify(
+        financeState === "checking"
+          ? "Estamos verificando tu acceso a Control Financiero."
+          : "Tu cuenta no tiene autorización para Control Financiero."
+      );
 
-                    return;
+      return;
+    }
 
-                }
+    // Módulo sin ruta activa.
+    if (!route.url) {
+      notify(
+        "Cobranza estará disponible próximamente."
+      );
 
+      return;
+    }
 
-                const moduleId =
-                    button.dataset
-                        .module;
+    busy = true;
 
+    // Transición elegante.
+    if (overlay && overlayTitle) {
+      overlayTitle.textContent = route.name;
 
-                openModule(
-                    moduleId
-                );
+      overlay.classList.add("is-visible");
 
+      overlay.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+    }
+
+    setTimeout(() => {
+      window.location.assign(route.url);
+    }, reducedMotion.matches ? 0 : 420);
+  }
+
+  // ========================================
+  // CERRAR SESIÓN
+  // ========================================
+
+  async function logout() {
+    if (busy || !client) return;
+
+    logoutBtn.disabled = true;
+
+    try {
+      const { error } = await client.auth.signOut();
+
+      if (error) throw error;
+
+      window.location.replace("index.html");
+
+    } catch (error) {
+      console.error(
+        "[SISTEMA] Logout:",
+        error
+      );
+
+      logoutBtn.disabled = false;
+
+      notify(
+        "No pudimos cerrar la sesión. Inténtalo otra vez."
+      );
+    }
+  }
+
+  // ========================================
+  // TARJETAS + REFLEJO LÍQUIDO
+  // ========================================
+
+  function bindCards() {
+
+    document
+      .querySelectorAll("[data-module]")
+      .forEach(card => {
+
+        // Navegación original.
+        card.addEventListener("click", () => {
+          openModule(card.dataset.module);
+        });
+
+        // Respetar preferencias de movimiento.
+        if (reducedMotion.matches) return;
+
+        // El reflejo sigue al cursor.
+        card.addEventListener(
+          "pointermove",
+          event => {
+
+            if (event.pointerType !== "mouse") {
+              return;
             }
 
+            const rect =
+              card.getBoundingClientRect();
+
+            const x =
+              event.clientX - rect.left;
+
+            const y =
+              event.clientY - rect.top;
+
+            card.style.setProperty(
+              "--spot-x",
+              `${x}px`
+            );
+
+            card.style.setProperty(
+              "--spot-y",
+              `${y}px`
+            );
+          }
         );
 
+      });
+  }
+
+  // ========================================
+  // INICIALIZACIÓN
+  // ========================================
+
+  async function init() {
+
+    // Cliente Supabase no disponible.
+    if (!client) {
+      window.location.replace("index.html");
+      return;
     }
 
+    // Verificar sesión.
+    try {
+      const { data, error } =
+        await client.auth.getSession();
 
-    // =====================================================
-    // OPEN MODULE
-    // =====================================================
+      if (error || !data?.session) {
+        window.location.replace("index.html");
+        return;
+      }
 
-    async function openModule(
-        moduleId
-    ) {
+      if (emailNode) {
+        emailNode.textContent =
+          data.session.user?.email || "Usuario";
+      }
 
+    } catch (error) {
+      console.error(
+        "[SISTEMA] Sesión:",
+        error
+      );
 
-        const module =
-            MODULES[
-                moduleId
-            ];
+      notify(
+        "No se pudo verificar la sesión. Recarga esta página."
+      );
 
-
-        if (
-            !module
-        ) {
-
-            return;
-
-        }
-
-
-        // =================================================
-        // TODAVÍA NO EXISTE
-        // =================================================
-
-        if (
-            !module.route
-        ) {
-
-
-            showToast(
-
-                `${module.name}: listo para construir.`
-
-            );
-
-
-            await playTransition(
-
-                module.name,
-
-                430
-
-            );
-
-
-            return;
-
-        }
-
-
-        // =================================================
-        // REAL ROUTE
-        // =================================================
-
-        transitionTitle.textContent =
-            module.name;
-
-
-        transition.classList
-            .add(
-                "active"
-            );
-
-
-        await delay(
-            360
-        );
-
-
-        window.location.href =
-            module.route;
-
+      return;
     }
 
+    // Sesión cerrada desde otra pestaña.
+    client.auth.onAuthStateChange(event => {
 
-    // =====================================================
-    // TRANSITION PREVIEW
-    // =====================================================
+      if (event === "SIGNED_OUT") {
+        window.location.replace("index.html");
+      }
 
-    async function playTransition(
+    });
 
-        title,
+    // Activar tarjetas.
+    bindCards();
 
-        duration
+    // Botón salir.
+    logoutBtn?.addEventListener(
+      "click",
+      logout
+    );
 
-    ) {
+    // Acceso a Finanzas.
+    updateFinanceUI("checking");
+    checkFinance();
 
+    document.body.classList.add("is-loaded");
+  }
 
-        transitionTitle.textContent =
-            title;
+  // ========================================
+  // RESTABLECER AL VOLVER
+  // ========================================
 
+  window.addEventListener("pageshow", () => {
 
-        transition.classList
-            .add(
-                "active"
-            );
+    busy = false;
 
+    overlay?.classList.remove(
+      "is-visible"
+    );
 
-        await delay(
-            duration
-        );
+    overlay?.setAttribute(
+      "aria-hidden",
+      "true"
+    );
 
+  });
 
-        transition.classList
-            .remove(
-                "active"
-            );
+  // ========================================
+  // INICIAR
+  // ========================================
 
-    }
+  if (document.readyState === "loading") {
 
+    document.addEventListener(
+      "DOMContentLoaded",
+      init,
+      { once: true }
+    );
 
-    // =====================================================
-    // LOGOUT
-    // =====================================================
-
-    async function logout() {
-
-
-        logoutButton.disabled =
-            true;
-
-
-        logoutButton.textContent =
-            "...";
-
-
-        try {
-
-
-            await window.ggSupabase
-                .auth
-                .signOut();
-
-
-        }
-
-        catch (
-            error
-        ) {
-
-            console.error(
-                error
-            );
-
-        }
-
-
-        window.location.replace(
-            "index.html"
-        );
-
-    }
-
-
-    // =====================================================
-    // TOAST
-    // =====================================================
-
-    function showToast(
-        message
-    ) {
-
-
-        toast.textContent =
-            message;
-
-
-        toast.classList
-            .add(
-                "show"
-            );
-
-
-        clearTimeout(
-            toastTimer
-        );
-
-
-        toastTimer =
-            window.setTimeout(
-
-                () => {
-
-                    toast.classList
-                        .remove(
-                            "show"
-                        );
-
-                },
-
-                2400
-
-            );
-
-    }
-
-
-    // =====================================================
-    // DELAY
-    // =====================================================
-
-    function delay(
-        milliseconds
-    ) {
-
-
-        return new Promise(
-
-            resolve => {
-
-                window.setTimeout(
-
-                    resolve,
-
-                    milliseconds
-
-                );
-
-            }
-
-        );
-
-    }
-
-
-    // =====================================================
-    // START
-    // =====================================================
-
-    initializeSystem();
+  } else {
+    init();
+  }
 
 })();
