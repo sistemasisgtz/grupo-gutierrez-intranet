@@ -1,0 +1,79 @@
+/* =========================================================
+   VENTAS V2
+   SELECTOR CENTRAL SIN MÓDULO COTIZACIONES
+========================================================= */
+
+.module-orbit {
+    height: 660px;
+}
+
+
+/* RH */
+
+.module-node-hr {
+    left: 50% !important;
+    top: 18px !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translateX(-50%) !important;
+}
+
+
+/* VENTAS */
+
+.module-node-sales {
+    left: 46px !important;
+    top: 125px !important;
+    right: auto !important;
+    bottom: auto !important;
+}
+
+
+/* SOLICITUDES DE PAGO */
+
+.module-node-payments {
+    right: 46px !important;
+    top: 125px !important;
+    left: auto !important;
+    bottom: auto !important;
+}
+
+
+/* COBRANZA */
+
+.module-node-collections {
+    left: 18px !important;
+    top: auto !important;
+    bottom: 105px !important;
+    right: auto !important;
+}
+
+
+/* ALMACÉN */
+
+.module-node-warehouse {
+    right: 18px !important;
+    top: auto !important;
+    bottom: 105px !important;
+    left: auto !important;
+}
+
+
+/* CONTROL FINANCIERO */
+
+.module-node-finance {
+    left: 50% !important;
+    bottom: 20px !important;
+    top: auto !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+}
+
+/* =========================================================
+   COTIZACIONES LEGACY
+   El nuevo flujo vive dentro de Ventas
+========================================================= */
+
+[data-module="cotizaciones"] {
+    display: none !important;
+}

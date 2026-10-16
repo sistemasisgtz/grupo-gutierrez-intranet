@@ -1,0 +1,175 @@
+.warehouse-material-filters {
+    display: grid;
+    grid-template-columns:
+        1.6fr
+        1fr
+        1fr
+        1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+
+.warehouse-material-filters input,
+.warehouse-material-filters select,
+.warehouse-material-actions select {
+    min-height: 38px;
+    padding: 0 10px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 9px;
+    color: #dce6eb;
+    background: #18212a;
+    font: 500 8px Inter;
+}
+
+
+.warehouse-material-list {
+    display: grid;
+    gap: 8px;
+    padding: 10px;
+}
+
+
+.warehouse-material-card {
+    padding: 13px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 13px;
+    background: rgba(255,255,255,.018);
+}
+
+
+.warehouse-material-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+
+.warehouse-material-top > div {
+    display: grid;
+    gap: 3px;
+}
+
+
+.warehouse-material-top span {
+    color: #7095ad;
+    font-size: 7px;
+    font-weight: 900;
+}
+
+
+.warehouse-material-top strong {
+    color: #d8e1e6;
+    font-size: 10px;
+}
+
+
+.warehouse-material-top small {
+    color: #6e7e89;
+    font-size: 6px;
+}
+
+
+.warehouse-material-status {
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 6px;
+    font-weight: 900;
+}
+
+
+.warehouse-material-status.pending {
+    color: #c9a15e;
+    background: rgba(180,135,62,.10);
+}
+
+
+.warehouse-material-status.separated {
+    color: #a28acb;
+    background: rgba(130,96,180,.10);
+}
+
+
+.warehouse-material-status.supplied {
+    color: #74bd91;
+    background: rgba(80,157,109,.10);
+}
+
+
+.warehouse-material-items {
+    display: grid;
+    gap: 4px;
+    margin: 11px 0;
+}
+
+
+.warehouse-material-items > div {
+    display: grid;
+    grid-template-columns:
+        100px
+        minmax(0,1fr)
+        auto;
+    gap: 9px;
+    padding: 7px 8px;
+    border-top: 1px solid rgba(255,255,255,.045);
+    font-size: 7px;
+}
+
+
+.warehouse-material-items strong {
+    color: #cbd7dd;
+}
+
+
+.warehouse-material-items span {
+    color: #82929c;
+}
+
+
+.warehouse-material-items em {
+    color: #b3c1c9;
+    font-style: normal;
+}
+
+
+.warehouse-material-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+
+.warehouse-material-empty {
+    padding: 30px;
+    color: #697984;
+    text-align: center;
+    font-size: 8px;
+}
+
+
+@media (max-width:760px) {
+
+    .warehouse-material-filters {
+        grid-template-columns: 1fr;
+    }
+
+
+    .warehouse-material-items > div {
+        grid-template-columns: 1fr;
+    }
+
+
+    .warehouse-material-actions {
+        justify-content: stretch;
+    }
+
+
+    .warehouse-material-actions > * {
+        flex: 1;
+    }
+
+}

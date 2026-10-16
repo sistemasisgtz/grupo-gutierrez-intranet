@@ -1,0 +1,39 @@
+.gg-price-profit {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.gg-price-profit [data-q-price] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.gg-profit-field {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 6px;
+    border: 1px solid #a5b4fc;
+    background: rgba(99, 102, 241, 0.09);
+    border-radius: 7px;
+}
+
+.gg-profit-field span {
+    font-size: 11px;
+    font-weight: 800;
+    color: #818cf8;
+}
+
+.gg-profit-field input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 4px;
+    font-size: 12px;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: inherit;
+}
