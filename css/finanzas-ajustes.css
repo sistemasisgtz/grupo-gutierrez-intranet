@@ -1,0 +1,468 @@
+/* =========================================================
+   FINANZAS - AJUSTES VISUALES
+   Legibilidad + tablas corregidas + encabezados premium
+   ========================================================= */
+
+:root {
+  --gg-white: #f5f9ff;
+  --gg-soft-white: #dbe6f0;
+  --gg-muted: #a9b9ca;
+  --gg-muted-2: #8ea2b8;
+  --gg-border: rgba(146, 170, 196, .18);
+  --gg-border-2: rgba(146, 170, 196, .28);
+  --gg-panel: rgba(255, 255, 255, .03);
+  --gg-panel-2: rgba(116, 145, 190, .08);
+  --gg-accent-blue: #79aefc;
+  --gg-accent-blue-2: #4ca4df;
+  --gg-accent-orange: #f3a356;
+  --gg-accent-orange-2: #ffcc8b;
+  --gg-accent-cyan: #8fe3ff;
+  --gg-accent-lavender: #c6bbff;
+}
+
+/* =========================================================
+   BASE GENERAL
+   ========================================================= */
+
+.finance-page {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--gg-soft-white);
+}
+
+.finance-page .finance-section-heading p,
+.finance-page .finance-report p,
+.finance-page .finance-help,
+.finance-page .finance-chart-legend,
+.finance-page .finance-checkbox,
+.finance-page .finance-form-message,
+.finance-page .finance-kicker,
+.finance-page .finance-status,
+.finance-page .finance-tab,
+.finance-page .finance-button,
+.finance-page .finance-quarter-card small,
+.finance-page .finance-card small {
+  font-size: 12px !important;
+  line-height: 1.5;
+}
+
+.finance-page .finance-field label,
+.finance-page .gg-quarter-control span {
+  font-size: 12px !important;
+  line-height: 1.5;
+  color: var(--gg-soft-white);
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+
+.finance-page .finance-field input,
+.finance-page .finance-field select,
+.finance-page .finance-field textarea,
+.finance-page .finance-analysis-controls input,
+.finance-page .finance-analysis-controls select,
+.finance-page .finance-filter input,
+.finance-page .finance-filter select {
+  font-size: 14px !important;
+  min-height: 38px;
+  color: var(--gg-white);
+}
+
+.finance-page .finance-help,
+.finance-page .gg-form-hint {
+  color: var(--gg-muted);
+}
+
+.finance-page .finance-section-heading p,
+.finance-page .finance-report p {
+  color: var(--gg-muted);
+}
+
+/* =========================================================
+   ENCABEZADOS BONITOS
+   ========================================================= */
+
+/* Encabezados principales: efecto "agua con aceite" */
+.finance-page .finance-section-heading h2,
+.finance-page .finance-modal-header h2,
+.finance-page .finance-report > h3:first-of-type {
+  font-weight: 800;
+  letter-spacing: .01em;
+  line-height: 1.15;
+  background:
+    linear-gradient(
+      115deg,
+      #ffffff 0%,
+      #d7ecff 18%,
+      #79aefc 34%,
+      #ffffff 48%,
+      #f3a356 63%,
+      #ffcf92 72%,
+      #bfe6ff 84%,
+      #ffffff 100%
+    );
+  background-size: 240% 240%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ggOilWaterFlow 10s ease-in-out infinite;
+  text-shadow: 0 0 14px rgba(137, 178, 248, .08);
+}
+
+/* Kicker superior más tenue */
+.finance-page .finance-kicker {
+  color: var(--gg-accent-cyan);
+  font-weight: 800;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+}
+
+/* Algunos subtítulos más sobrios */
+.finance-page .finance-card h3,
+.finance-page .finance-quarter-card span,
+.finance-page .finance-report h3:not(:first-of-type) {
+  color: var(--gg-white);
+}
+
+/* Texto secundario menos plano */
+.finance-page .finance-quarter-card small,
+.finance-page .finance-card small,
+.finance-page .finance-chart-legend,
+.finance-page .finance-status {
+  color: var(--gg-muted);
+}
+
+/* Tabs: activas brillan más */
+.finance-page .finance-tab {
+  color: var(--gg-soft-white);
+}
+
+.finance-page .finance-tab.active {
+  color: var(--gg-white);
+}
+
+/* Botones un poco más elegantes */
+.finance-page .finance-button {
+  color: var(--gg-white);
+}
+
+/* =========================================================
+   TARJETAS / PANELES
+   ========================================================= */
+
+.finance-page .finance-panel,
+.finance-page .finance-report,
+.finance-page .finance-card,
+.finance-page .finance-quarter-card {
+  min-width: 0;
+}
+
+.finance-page .finance-quarter-card.gg-quarter-active {
+  border-color: #8ca7dd !important;
+  box-shadow: 0 0 0 2px rgba(140, 167, 221, .22);
+}
+
+.finance-page .finance-report-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+/* =========================================================
+   TABLAS - CORRECCIÓN DE ESPACIOS Y ALINEACIÓN
+   ========================================================= */
+
+/* Quitar anchos absurdos */
+.finance-page .finance-table,
+.finance-page .finance-table.compact-table,
+.finance-page .finance-matrix,
+.finance-page .gg-credit-table {
+  width: max-content !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  table-layout: auto;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.finance-page .finance-table-scroll,
+.finance-page .finance-matrix-scroll {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+}
+
+/* Celdas */
+.finance-page .finance-table :is(th, td),
+.finance-page .finance-matrix :is(th, td) {
+  padding: 9px 12px !important;
+  font-size: 12px !important;
+  line-height: 1.45;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--gg-border);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Encabezados de tabla: no todos blancos */
+.finance-page .finance-table th,
+.finance-page .finance-matrix th {
+  color: #bdd0df;
+  font-size: 11px !important;
+  letter-spacing: .03em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Datos */
+.finance-page .finance-table td,
+.finance-page .finance-matrix td {
+  color: var(--gg-soft-white);
+}
+
+.finance-page .finance-table td strong,
+.finance-page .finance-matrix td strong {
+  color: var(--gg-white);
+}
+
+/* Primera columna con wrap */
+.finance-page .finance-table td:first-child,
+.finance-page .finance-table th:first-child,
+.finance-page .finance-matrix td:first-child,
+.finance-page .finance-matrix th:first-child {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  min-width: 110px;
+  max-width: 280px;
+}
+
+/* Números alineados a la derecha */
+.finance-page .finance-money,
+.finance-page .gg-numeric-heading,
+.finance-page .finance-table td:last-child,
+.finance-page .finance-table th:last-child {
+  text-align: right !important;
+  white-space: nowrap !important;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Hover */
+.finance-page .finance-table tbody tr:hover,
+.finance-page .finance-matrix tbody tr:hover {
+  background: rgba(105, 150, 195, .08);
+}
+
+/* Totales */
+.finance-page .finance-table tfoot th,
+.finance-page .finance-table tfoot td,
+.finance-page .finance-matrix tfoot th,
+.finance-page .finance-matrix tfoot td {
+  color: var(--gg-white);
+  font-weight: 800;
+}
+
+/* =========================================================
+   ANALISIS FINANCIERO
+   ========================================================= */
+
+.finance-page .finance-analysis-controls {
+  align-items: end;
+}
+
+.gg-quarter-control {
+  display: grid;
+  gap: 5px;
+  min-width: 190px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.gg-quarter-control select {
+  min-height: 38px;
+  border: 1px solid #52617a;
+  border-radius: 9px;
+  padding: 8px 10px;
+  color: var(--gg-white);
+  background: #1b2938;
+}
+
+/* Gráficas */
+.finance-page .finance-chart {
+  min-width: 0;
+  min-height: 300px;
+  overflow: hidden;
+}
+
+.finance-page .finance-chart svg {
+  display: block;
+  width: 100%;
+  height: 285px;
+}
+
+/* Texto en gráficas */
+.finance-page .finance-chart text {
+  font-size: 12px;
+  fill: #c6d5e2;
+}
+
+/* Líneas / ejes si el SVG usa estas clases */
+.finance-page .finance-chart .chart-grid {
+  stroke: rgba(180, 200, 220, .14);
+  stroke-width: 1;
+}
+
+.finance-page .finance-chart .chart-axis {
+  stroke: rgba(190, 210, 230, .28);
+  stroke-width: 1.2;
+}
+
+.finance-page .finance-chart .chart-line-1 {
+  fill: none;
+  stroke: #6bc0ff;
+  stroke-width: 3;
+}
+
+.finance-page .finance-chart .chart-line-2 {
+  fill: none;
+  stroke: #f3a356;
+  stroke-width: 3;
+}
+
+.finance-page .finance-chart .chart-line-3 {
+  fill: none;
+  stroke: #cfdfff;
+  stroke-width: 3;
+}
+
+.finance-page .finance-chart .chart-dot-1 {
+  fill: #6bc0ff;
+}
+
+.finance-page .finance-chart .chart-dot-2 {
+  fill: #f3a356;
+}
+
+.finance-page .finance-chart .chart-dot-3 {
+  fill: #ffffff;
+}
+
+/* =========================================================
+   COMPRAS A CREDITO
+   ========================================================= */
+
+.gg-credit-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.gg-credit-summary > div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #34465f;
+  background: rgba(90, 120, 175, .07);
+}
+
+.gg-credit-summary small {
+  font-size: 12px;
+  color: var(--gg-muted);
+}
+
+.gg-credit-summary strong {
+  font-size: 20px;
+  color: var(--gg-white);
+  font-variant-numeric: tabular-nums;
+}
+
+.finance-page .gg-credit-table td:nth-last-child(-n+2),
+.finance-page .gg-credit-table th:nth-last-child(-n+2) {
+  text-align: right !important;
+}
+
+/* =========================================================
+   USUARIOS RH
+   ========================================================= */
+
+.gg-hr-label {
+  display: grid;
+  gap: 3px;
+  margin: 5px 0 0;
+  padding-left: 10px;
+  border-left: 2px solid #8498d7;
+}
+
+.gg-hr-label strong {
+  color: #cbbdff;
+  font-size: 13px;
+}
+
+.gg-hr-label small {
+  color: #87dfd2;
+  font-size: 12px;
+}
+
+/* =========================================================
+   PESTAÑAS Y NAVEGACIÓN
+   ========================================================= */
+
+.finance-page .finance-tabbar {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.finance-page .finance-tab {
+  padding: 10px 13px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1150px) {
+  .finance-page .finance-report-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .gg-credit-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .finance-page .finance-table :is(th, td),
+  .finance-page .finance-matrix :is(th, td) {
+    padding: 8px !important;
+  }
+}
+
+/* =========================================================
+   ANIMACIÓN DE ENCABEZADOS
+   ========================================================= */
+
+@keyframes ggOilWaterFlow {
+  0% {
+    background-position: 0% 50%;
+    filter: saturate(1) brightness(1);
+  }
+  25% {
+    background-position: 35% 55%;
+    filter: saturate(1.08) brightness(1.03);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: saturate(1.14) brightness(1.06);
+  }
+  75% {
+    background-position: 65% 45%;
+    filter: saturate(1.06) brightness(1.03);
+  }
+  100% {
+    background-position: 0% 50%;
+    filter: saturate(1) brightness(1);
+  }
+}
