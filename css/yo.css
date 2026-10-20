@@ -2434,3 +2434,77 @@ button {
     }
 
 }
+
+
+/* =================================================
+   YO - HISTORIAL DE VACACIONES
+================================================= */
+
+.yo-vacations-heading {
+    grid-column: 1 / -1;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    margin-top: 20px;
+    padding: 14px 0 10px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.09);
+}
+
+.yo-vacations-heading strong {
+    color: #dce8f2;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.yo-vacations-heading small {
+    color: #8499aa;
+    font-size: 10px;
+}
+
+.yo-vacations-history-list {
+    display: contents;
+}
+
+.yo-history-card {
+    border-color: rgba(103,153,190,.15);
+    background: rgba(91,143,186,.045);
+}
+
+.yo-history-card > span {
+    color: #7ca5c4;
+}
+
+.yo-vacations-history-controls {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 7px;
+}
+
+.yo-vacations-more {
+    padding: 12px 22px;
+
+    border: 1px solid
+        rgba(110,164,205,.28);
+
+    border-radius: 13px;
+
+    background: rgba(63,120,164,.13);
+    color: #bad7eb;
+
+    font: inherit;
+    font-size: 11px;
+    font-weight: 750;
+
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.yo-vacations-more:hover {
+    background: rgba(68,132,182,.24);
+    transform: translateY(-2px);
+}

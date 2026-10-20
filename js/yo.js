@@ -511,158 +511,256 @@
     // AUTHORIZED VACATIONS
     // =====================================================
 
-    function renderAuthorizedVacations() {
 
+function renderAuthorizedVacations() {
 
-        const today =
-            todayISO();
+    const container =
+        document.getElementById(
+            "yoAuthorizedVacations"
+        );
 
+    if (!container) return;
 
-        const future =
-            vacationRequests
+    const today = todayISO();
 
-                .filter(
-                    request =>
-                        request.end_date >=
-                        today
-                )
+    const validRequests = vacationRequests.filter(
+        request =>
+            request &&
+            request.start_date &&
+            request.end_date &&
+            request.status !== "cancelled"
+    );
 
-                .sort(
-                    (
-                        first,
-                        second
-                    ) =>
-                        first.start_date
-                            .localeCompare(
-                                second.start_date
-                            )
-                );
+    const upcoming = validRequests
+        .filter(request =>
+            request.end_date >= today
+        )
+        .sort((a, b) =>
+            a.start_date.localeCompare(b.start_date)
+        );
 
+    const history = validRequests
+        .filter(request =>
+            request.end_date < today
+        )
+        .sort((a, b) =>
+            b.start_date.localeCompare(a.start_date)
+        );
 
-        if (
-            !future.length
-        ) {
+    // Tarjetas con el diseño original de YO.
 
-            $("yoAuthorizedVacations")
-                .innerHTML = `
+    function buildCard(request, index, historical) {
 
+        const ongoing =
+            request.start_date <= today &&
+            request.end_date >= today;
+
+        const label = historical
+            ? "REGISTRO HISTÓRICO"
+            : ongoing
+                ? "EN CURSO"
+                : "AUTORIZADAS";
+
+        const days = Number(
+            request.days_count || 0
+        );
+
+        // Las notas técnicas de la migración
+        // no necesitan mostrarse al empleado.
+
+        const notes = String(
+            request.notes || ""
+        );
+
+        const visibleNotes =
+            notes.startsWith(
+                "MIGRACION_VACACIONES_2026_10|"
+            )
+                ? ""
+                : notes;
+
+        return `
+            <article
+                class="yo-authorized-card ${
+                    historical
+                        ? "yo-history-card"
+                        : ""
+                }"
+                style="
+                    animation-delay:
+                    ${Math.min(index * 0.04, 0.4)}s;
+                "
+            >
+
+                <span>${label}</span>
+
+                <strong>
+                    ${formatDateRange(
+                        request.start_date,
+                        request.end_date
+                    )}
+                </strong>
+
+                <p>
+                    ${days}
+                    ${
+                        days === 1
+                            ? "día de vacaciones"
+                            : "días de vacaciones"
+                    }
+                </p>
+
+                ${
+                    visibleNotes
+                        ? `
+                            <p>
+                                ${escapeHtml(visibleNotes)}
+                            </p>
+                        `
+                        : ""
+                }
+
+            </article>
+        `;
+    }
+
+    container.innerHTML = `
+
+        <div class="yo-vacations-heading">
+            <strong>
+                Próximas y en curso
+            </strong>
+
+            <small>
+                ${upcoming.length} solicitudes
+            </small>
+        </div>
+
+        ${
+            upcoming.length
+                ? upcoming
+                    .map((request, index) =>
+                        buildCard(
+                            request,
+                            index,
+                            false
+                        )
+                    )
+                    .join("")
+                : `
                     <div class="yo-authorized-empty">
-
-                        No tienes vacaciones futuras
-                        registradas actualmente.
-
+                        No tienes vacaciones próximas.
                     </div>
-
-                `;
-
-
-            return;
-
+                `
         }
 
+        <div class="yo-vacations-heading">
+            <strong>
+                Historial de vacaciones
+            </strong>
 
-        $("yoAuthorizedVacations")
-            .innerHTML =
-            future
-                .map(
-                    (
-                        request,
-                        index
-                    ) => {
+            <small>
+                ${history.length} solicitudes
+            </small>
+        </div>
 
+        <div
+            id="yoVacationHistoryList"
+            class="yo-vacations-history-list"
+        ></div>
 
-                        const ongoing =
-                            request.start_date <=
-                            today
+        <div
+            id="yoVacationHistoryControls"
+            class="yo-vacations-history-controls"
+        ></div>
+    `;
 
-                            &&
+    let visibleHistory = 12;
 
-                            request.end_date >=
-                            today;
+    function paintHistory() {
 
+        const list =
+            document.getElementById(
+                "yoVacationHistoryList"
+            );
 
-                        return `
+        const controls =
+            document.getElementById(
+                "yoVacationHistoryControls"
+            );
 
-                            <article
-                                class="yo-authorized-card"
-                                style="
-                                    animation-delay:
-                                    ${
-                                        .05
-                                        +
-                                        (
-                                            index
-                                            *
-                                            .06
-                                        )
-                                    }s;
-                                "
-                            >
+        if (!list || !controls) return;
 
-                                <span>
-                                    ${
-                                        ongoing
-                                            ?
-                                            "EN CURSO"
-                                            :
-                                            "AUTORIZADAS"
-                                    }
-                                </span>
+        if (!history.length) {
 
+            list.innerHTML = `
+                <div class="yo-authorized-empty">
+                    No hay vacaciones históricas
+                    disponibles en esta consulta.
+                </div>
+            `;
 
-                                <strong>
-                                    ${
-                                        formatDateRange(
-                                            request.start_date,
-                                            request.end_date
-                                        )
-                                    }
-                                </strong>
+            controls.innerHTML = "";
 
+            return;
+        }
 
-                                <p>
-
-                                    ${
-                                        request.days_count
-                                    }
-
-                                    ${
-                                        Number(
-                                            request.days_count
-                                        )
-                                        ===
-                                        1
-                                            ?
-                                            "día laboral"
-                                            :
-                                            "días laborales"
-                                    }
-
-                                    ${
-                                        request.notes
-                                            ?
-                                            ` · ${
-                                                escapeHtml(
-                                                    request.notes
-                                                )
-                                            }`
-                                            :
-                                            ""
-                                    }
-
-                                </p>
-
-                            </article>
-
-                        `;
-
-                    }
+        list.innerHTML = history
+            .slice(0, visibleHistory)
+            .map((request, index) =>
+                buildCard(
+                    request,
+                    index,
+                    true
                 )
-                .join(
-                    ""
-                );
+            )
+            .join("");
 
+        if (visibleHistory >= history.length) {
+
+            controls.innerHTML = "";
+
+            return;
+        }
+
+        controls.innerHTML = `
+
+            <button
+                id="yoShowMoreVacations"
+                class="yo-vacations-more"
+                type="button"
+            >
+                Ver más vacaciones
+
+                (${visibleHistory} de ${history.length})
+            </button>
+        `;
+
+        document.getElementById(
+            "yoShowMoreVacations"
+        ).addEventListener(
+            "click",
+            () => {
+
+                visibleHistory += 12;
+
+                paintHistory();
+            }
+        );
     }
+
+    paintHistory();
+
+    console.info(
+        "[YO] Vacaciones recibidas:",
+        vacationRequests.length,
+        "| Próximas:",
+        upcoming.length,
+        "| Históricas:",
+        history.length
+    );
+}
+
 
 
     // =====================================================
