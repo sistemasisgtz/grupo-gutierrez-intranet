@@ -1,0 +1,410 @@
+
+/* =====================================================
+   GRUPO GUTIÉRREZ
+   INTRANET YO - OPTIMIZACIÓN MÓVIL
+
+   Solo cambia presentación y rendimiento.
+   No modifica vacaciones, datos ni permisos.
+===================================================== */
+
+@media (max-width: 620px) {
+
+    body.yo-body {
+        font-family:
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Arial,
+            sans-serif;
+
+        overflow-x: hidden;
+    }
+
+    /* FONDO LIVIANO */
+
+    .yo-background {
+        background:
+            radial-gradient(
+                ellipse at 90% 0%,
+                #172c3e,
+                transparent 47%
+            ),
+            radial-gradient(
+                ellipse at 0% 90%,
+                #201713,
+                transparent 45%
+            ),
+            #080c11;
+    }
+
+    .yo-static-glow,
+    .yo-vignette {
+        display: none !important;
+    }
+
+    .yo-grid {
+        opacity: .12;
+
+        mask-image: none;
+        -webkit-mask-image: none;
+
+        background-size: 44px 44px;
+    }
+
+    /* CONTENEDOR */
+
+    .yo-shell {
+        width: calc(100% - 24px);
+        min-height: 100svh;
+
+        padding:
+            max(12px, env(safe-area-inset-top))
+            0
+            max(24px, env(safe-area-inset-bottom));
+    }
+
+    /* ENCABEZADO SIN ESPERA DE ANIMACIÓN */
+
+    .yo-header {
+        min-height: 60px;
+        gap: 10px;
+
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+
+    .yo-brand {
+        min-width: 0;
+        gap: 9px;
+    }
+
+    .yo-brand-mark {
+        flex-shrink: 0;
+    }
+
+    .yo-brand > div:last-child {
+        min-width: 0;
+    }
+
+    .yo-brand span {
+        font-size: 9px;
+    }
+
+    .yo-brand strong {
+        font-size: 12px;
+    }
+
+    .yo-header-actions {
+        flex-shrink: 0;
+        gap: 8px;
+    }
+
+    .yo-notifications-panel {
+        max-width: calc(100vw - 24px);
+
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    /* PANTALLA DE CARGA */
+
+    .yo-loading {
+        min-height: 55svh;
+        padding: 30px 12px;
+
+        gap: 17px;
+        text-align: center;
+
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .yo-loading-orb {
+        animation:
+            yoMobileLoading 1.3s
+            ease-in-out infinite alternate;
+    }
+
+    @keyframes yoMobileLoading {
+        from {
+            transform: scale(.96);
+            opacity: .65;
+        }
+
+        to {
+            transform: scale(1.04);
+            opacity: 1;
+        }
+    }
+
+    /* TARJETA DEL EMPLEADO */
+
+    .yo-profile-section {
+        margin-top: 25px;
+    }
+
+    .yo-profile-main {
+        min-height: auto;
+        gap: 16px;
+        padding: 20px;
+
+        border-radius: 20px;
+
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+
+        box-shadow:
+            0 12px 30px rgba(0,0,0,.14);
+    }
+
+    .yo-profile-info {
+        gap: 9px;
+
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+
+    .yo-avatar-shell {
+        width: 100px;
+        height: 100px;
+    }
+
+    .yo-avatar {
+        width: 84px;
+        height: 84px;
+
+        animation: none !important;
+    }
+
+    .yo-avatar-ring {
+        animation: none !important;
+    }
+
+    .yo-profile-kicker {
+        font-size: 10px;
+    }
+
+    .yo-profile-copy h1 {
+        font-size: clamp(23px, 6vw, 31px);
+        line-height: 1.15;
+        overflow-wrap: anywhere;
+    }
+
+    .yo-profile-copy p {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .yo-profile-info article {
+        border-radius: 14px;
+    }
+
+    .yo-profile-info span {
+        font-size: 10px;
+    }
+
+    .yo-profile-info strong {
+        font-size: 15px;
+    }
+
+    /* BLOQUES DE VACACIONES */
+
+    .yo-vacations-section,
+    .yo-authorized-section {
+        margin-top: 28px;
+    }
+
+    .yo-section-heading {
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .yo-section-heading span {
+        font-size: 9px;
+    }
+
+    .yo-section-heading h2 {
+        font-size: 21px;
+        line-height: 1.2;
+    }
+
+    .yo-vacation-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .yo-vacation-card {
+        min-height: 125px;
+        padding: 18px;
+        border-radius: 17px;
+    }
+
+    .yo-enter-card {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+
+    .yo-vacation-available {
+        min-height: 245px;
+    }
+
+    /* ELIMINAMOS LOS BLOBS ANIMADOS:
+       mantienen el color azul del fondo */
+
+    .yo-liquid-blob {
+        display: none !important;
+    }
+
+    .yo-card-label {
+        font-size: 10px;
+    }
+
+    .yo-big-number strong {
+        line-height: 1.1;
+    }
+
+    .yo-vacation-card p {
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    /* VACACIONES AUTORIZADAS / HISTORIAL */
+
+    .yo-authorized-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .yo-authorized-card {
+        padding: 15px;
+        border-radius: 15px;
+
+        animation: none !important;
+        transform: none !important;
+
+        background: rgba(255,255,255,.035);
+    }
+
+    .yo-authorized-card::after {
+        display: none;
+    }
+
+    .yo-authorized-card span {
+        font-size: 10px;
+    }
+
+    .yo-authorized-card strong {
+        font-size: 13px;
+    }
+
+    .yo-vacations-heading {
+        margin-top: 15px;
+        padding: 12px 0;
+    }
+
+    .yo-vacations-heading strong {
+        font-size: 13px;
+    }
+
+    .yo-vacations-heading small {
+        font-size: 11px;
+    }
+
+    .yo-vacations-more {
+        min-height: 42px;
+        font-size: 12px;
+    }
+
+    .yo-footer {
+        padding: 38px 0 18px;
+        font-size: 9px;
+    }
+
+}
+
+/* =====================================================
+   AVISO DE CONEXIÓN LENTA
+   Funciona en computadora y teléfono.
+===================================================== */
+
+.yo-load-warning {
+    width: min(340px, 100%);
+    margin-top: 14px;
+
+    padding: 18px;
+
+    border: 1px solid
+        rgba(117,159,191,.28);
+
+    border-radius: 15px;
+
+    background: rgba(26,39,52,.88);
+    color: #c8d8e5;
+
+    font-size: 12px;
+    line-height: 1.65;
+
+    text-align: center;
+}
+
+.yo-load-warning strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #e5eef5;
+    font-size: 13px;
+}
+
+.yo-load-warning p {
+    margin: 0 0 13px;
+}
+
+.yo-load-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.yo-load-actions button,
+.yo-load-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 10px 14px;
+
+    border: 1px solid
+        rgba(126,173,207,.35);
+
+    border-radius: 11px;
+
+    background: rgba(59,108,146,.24);
+    color: #e1edf6;
+
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.yo-load-actions button:active,
+.yo-load-actions a:active {
+    transform: scale(.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .yo-loading-orb,
+    .yo-avatar,
+    .yo-avatar-ring {
+        animation: none !important;
+    }
+
+}
