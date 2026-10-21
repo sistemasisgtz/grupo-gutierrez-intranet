@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html
+    lang="es"
+    data-sales-theme="dark"
+>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#090d12"
+    >
+
+    <title>
+        Ventas | Grupo Gutierrez
+    </title>
+
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <link
+        rel="stylesheet"
+        href="css/ventas.css"
+    >
+
+    <link rel="stylesheet" href="css/ventas-mejoras.css">
+
+    <link rel="stylesheet" href="css/ventas-plus.css">
+
+</head>
+
+
+<body>
+
+
+    <main class="sales-shell">
+
+
+        <header class="sales-header">
+
+
+            <div class="sales-brand">
+
+                <div class="sales-brand-mark">
+                    VT
+                </div>
+
+                <div>
+
+                    <span>
+                        GRUPO GUTIERREZ · SISTEMA
+                    </span>
+
+                    <strong>
+                        Ventas
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="sales-header-actions">
+
+
+                <div class="sales-user">
+
+                    <span>
+                        SESIÓN
+                    </span>
+
+                    <strong data-sales-user>
+                        ...
+                    </strong>
+
+                </div>
+
+
+                <button
+                    class="sales-btn"
+                    id="salesTheme"
+                >
+                    ☀ Claro
+                </button>
+
+
+                <button
+                    class="sales-btn"
+                    id="salesBack"
+                >
+                    ← Sistema
+                </button>
+
+
+            </div>
+
+
+        </header>
+
+
+        <section class="sales-hero">
+
+            <div>
+
+                <span class="sales-eyebrow">
+                    COMERCIAL · OPERACIÓN CENTRAL
+                </span>
+
+                <h1>
+                    Ventas
+                </h1>
+
+                <p>
+                    Cotizaciones, listas de precios,
+                    órdenes de compra, remisiones,
+                    material e historial en un solo
+                    flujo comercial.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="sales-browser">
+
+
+            <nav
+                class="sales-tabbar"
+                id="salesTabs"
+            >
+
+
+                <button
+                    class="sales-tab active"
+                    data-sales-tab="quotes"
+                >
+                    Cotizaciones
+                </button>
+
+
+                <button
+                    class="sales-tab"
+                    data-sales-tab="products"
+                >
+                    Productos
+                </button>
+
+
+                <button
+                    class="sales-tab"
+                    data-sales-tab="odc"
+                >
+                    ODC´s
+                </button>
+
+
+                <button
+                    class="sales-tab"
+                    data-sales-tab="remissions"
+                >
+                    Remisiones
+                </button>
+
+
+                <button
+                    class="sales-tab"
+                    data-sales-tab="material"
+                >
+                    Solicitud de Material
+                </button>
+
+
+                <button
+                    class="sales-tab"
+                    data-sales-tab="history"
+                >
+                    Historial
+                </button>
+
+
+            </nav>
+
+
+            <section
+                class="sales-panel active"
+                data-sales-panel="quotes"
+            >
+                <div id="salesQuotesApp"></div>
+            </section>
+
+
+            <section
+                class="sales-panel"
+                data-sales-panel="products"
+            >
+                <div id="salesProductsApp"></div>
+            </section>
+
+            <section
+                class="sales-panel"
+                data-sales-panel="odc"
+            >
+                <div id="salesOdcApp"></div>
+            </section>
+
+
+            <section
+                class="sales-panel"
+                data-sales-panel="remissions"
+            >
+                <div id="salesRemissionsApp"></div>
+            </section>
+
+
+            <section
+                class="sales-panel"
+                data-sales-panel="material"
+            >
+                <div id="salesMaterialApp"></div>
+            </section>
+
+
+            <section
+                class="sales-panel"
+                data-sales-panel="history"
+            >
+                <div id="salesHistoryApp"></div>
+            </section>
+
+
+        </section>
+
+
+    </main>
+
+
+    <div id="salesModalRoot">
+    </div>
+
+
+    <div
+        id="salesToast"
+        class="sales-toast"
+    >
+    </div>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <script src="js/supabase-client.js"></script>
+
+    <script src="js/ventas-core.js"></script>
+
+    <script src="js/ventas-modales-anidados.js"></script>
+
+    <script src="js/ventas-catalogos.js"></script>
+    
+    <script src="js/ventas-productos-precios.js"></script>
+
+    <script src="js/ventas-pdf.js"></script>
+
+    <script src="js/ventas-cotizaciones.js"></script>
+
+    <script src="js/ventas-odc.js"></script>
+
+    <script src="js/ventas-remisiones.js"></script>
+
+    <script src="js/ventas-material.js"></script>
+
+    <script src="js/ventas-historial.js"></script>
+
+    <script src="js/ventas-mejoras.js"></script>
+
+<script src="js/ventas-plus.js"></script>
+
+
+    <script>
+
+        document.addEventListener(
+
+            "DOMContentLoaded",
+
+            () => {
+
+                document
+                    .getElementById(
+                        "salesTabs"
+                    )
+                    .addEventListener(
+
+                        "click",
+
+                        event => {
+
+                            const button =
+                                event.target.closest(
+                                    "[data-sales-tab]"
+                                );
+
+
+                            if (
+                                !button
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            const key =
+                                button.dataset
+                                    .salesTab;
+
+
+                            document
+                                .querySelectorAll(
+                                    "[data-sales-tab]"
+                                )
+                                .forEach(
+                                    item => {
+
+                                        item.classList.toggle(
+
+                                            "active",
+
+                                            item ===
+                                            button
+
+                                        );
+
+                                    }
+                                );
+
+
+                            document
+                                .querySelectorAll(
+                                    "[data-sales-panel]"
+                                )
+                                .forEach(
+                                    panel => {
+
+                                        panel.classList.toggle(
+
+                                            "active",
+
+                                            panel.dataset
+                                                .salesPanel ===
+                                                key
+
+                                        );
+
+                                    }
+                                );
+
+                        }
+
+                    );
+
+            }
+
+        );
+
+    </script>
+
+
+</body>
+
+</html>

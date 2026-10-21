@@ -640,6 +640,12 @@ async function openFromQuote(
                     quote,
                     existing?.id||null
                 );
+
+            GGSalesPlus.mount("remission_quote", {
+                base: existing,
+                quoteId: quote.id,
+                entityId: quote.client_id
+            });
         }
     });
 }
@@ -676,8 +682,8 @@ async function saveFromQuote(event,quote,id){
     }
 
     try{
-        const {error}=await s.db.rpc(
-            "sales_save_remission",
+        const beganAt = new Date().toISOString();
+        const {data,error}=await s.db.rpc("sales_save_remission",
             {
                 p_remission_id:id,
                 p_header:{
@@ -696,6 +702,13 @@ async function saveFromQuote(event,quote,id){
         );
 
         if(error)throw error;
+
+        await GGSalesPlus.saved(
+            "remission_quote",
+            data,
+            id,
+            beganAt
+        );
 
         s.closeModal();
 
@@ -846,6 +859,11 @@ function openStandalone(base=null,items=[]){
             }else{
                 addStandaloneLine();
             }
+
+            GGSalesPlus.mount("remission_manual", {
+                base,
+                addLine: addStandaloneLine
+            });
         }
     });
 }
@@ -1371,8 +1389,8 @@ async function saveStandalone(event,id){
     }
 
     try{
-        const {error}=await s.db.rpc(
-            "sales_save_remission",
+        const beganAt = new Date().toISOString();
+        const {data,error}=await s.db.rpc("sales_save_remission",
             {
                 p_remission_id:id,
                 p_header:{
@@ -1391,6 +1409,13 @@ async function saveStandalone(event,id){
         );
 
         if(error)throw error;
+
+        await GGSalesPlus.saved(
+            "remission_manual",
+            data,
+            id,
+            beganAt
+        );
 
         s.closeModal();
 

@@ -890,6 +890,12 @@ function openQuoteForm(base=null,items=[],copy=false){
             }
 
             renderTotals();
+
+            GGSalesPlus.mount("quote", {
+                base: editing ? base : null,
+                isCopy: copy,
+                addLine
+            });
         }
     });
 }
@@ -1676,10 +1682,8 @@ async function saveQuote(event,id){
     }
 
     try{
-        const {
-            error
-        }=await s.db.rpc(
-            "sales_save_quote",
+        const beganAt = new Date().toISOString();
+        const {data,error}=await s.db.rpc("sales_save_quote",
             {
                 p_quote_id:id,
                 p_header:{
@@ -1697,6 +1701,13 @@ async function saveQuote(event,id){
         );
 
         if(error)throw error;
+
+        await GGSalesPlus.saved(
+            "quote",
+            data,
+            id,
+            beganAt
+        );
 
         s.closeModal();
 

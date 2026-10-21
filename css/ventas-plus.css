@@ -1,0 +1,237 @@
+
+/* =============================================
+   GRUPO GUTIÉRREZ · VENTAS PLUS
+
+   Borradores, campos nuevos,
+   productos rápidos y direcciones
+============================================= */
+
+.sales-plus-full {
+    grid-column: 1 / -1;
+    min-width: 0;
+}
+
+.sales-plus-heading {
+    margin-bottom: 20px;
+}
+
+.sales-plus-heading textarea {
+    min-height: 92px;
+    resize: vertical;
+}
+
+.sales-plus-draft {
+    padding: 12px 15px;
+    margin-bottom: 17px;
+
+    border: 1px solid
+        rgba(91, 164, 198, .23);
+
+    border-radius: 12px;
+
+    background:
+        rgba(60, 122, 158, .09);
+
+    color: #a7d4ed;
+
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.5;
+}
+
+.sales-plus-link {
+    display: inline-flex;
+    align-items: center;
+
+    margin-top: 9px;
+    padding: 6px 0;
+
+    background: none;
+    border: 0;
+
+    color: #7ebcdd;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    transition: color .18s ease;
+}
+
+.sales-plus-link:hover {
+    color: #b5e2f8;
+}
+
+.sales-plus-address {
+    display: grid;
+    gap: 10px;
+
+    margin: 18px 0 22px;
+    padding: 17px;
+
+    border: 1px solid
+        rgba(115, 153, 179, .19);
+
+    border-radius: 16px;
+
+    background:
+        rgba(109, 155, 184, .045);
+}
+
+.sales-plus-address strong {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.sales-plus-address select,
+.sales-plus-address textarea {
+    width: 100%;
+    min-width: 0;
+
+    padding: 11px 12px;
+
+    border: 1px solid
+        rgba(123, 162, 192, .25);
+
+    border-radius: 11px;
+
+    background: var(
+        --sales-input,
+        rgba(17, 25, 35, .78)
+    );
+
+    color: inherit;
+
+    font: inherit;
+    font-size: 12px;
+}
+
+.sales-plus-address textarea {
+    min-height: 88px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.sales-plus-address small {
+    color: #8497a8;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.sales-plus-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.sales-plus-address-list {
+    display: grid;
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+.sales-plus-address-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 13px;
+
+    padding: 14px;
+
+    border: 1px solid
+        rgba(126, 162, 190, .16);
+
+    border-radius: 12px;
+
+    background:
+        rgba(102, 146, 176, .045);
+}
+
+.sales-plus-address-item > span {
+    display: grid;
+    gap: 6px;
+
+    min-width: 150px;
+    flex: 1;
+}
+
+.sales-plus-address-item b {
+    font-size: 12px;
+}
+
+.sales-plus-address-item small {
+    font-size: 11px;
+    line-height: 1.5;
+
+    color: #91a4b6;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.sales-plus-address-item > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+#salesPlusProductForm .sales-grid,
+#salesPlusAddressForm {
+    margin-bottom: 15px;
+}
+
+#salesPlusCompanyDetails {
+    min-height: 110px;
+    resize: vertical;
+}
+
+@media (max-width: 700px) {
+
+    .sales-plus-heading,
+    .sales-plus-address {
+        margin-top: 12px;
+        margin-bottom: 18px;
+    }
+
+    .sales-plus-address {
+        padding: 13px;
+        border-radius: 13px;
+    }
+
+    .sales-plus-inline {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .sales-plus-inline .sales-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .sales-plus-address-item {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .sales-plus-address-item > div {
+        width: 100%;
+    }
+
+    .sales-plus-address-item .sales-mini {
+        flex: 1;
+    }
+
+    .sales-plus-draft {
+        padding: 11px 12px;
+        font-size: 10px;
+    }
+
+}

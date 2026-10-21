@@ -409,6 +409,16 @@
             company:
                 q.company_snapshot,
 
+            companyDetails:
+                GGSalesPlus.companyDetails(
+                    q.format_id,
+                    q.company_id,
+                    q.company_snapshot
+                ),
+
+            remissionDetail:
+                q.remission_detail || "",
+
             format:
                 q.format_snapshot,
 
@@ -524,6 +534,16 @@
 
             company:
                 r.company_snapshot,
+
+            companyDetails:
+                GGSalesPlus.companyDetails(
+                    r.format_id,
+                    r.company_id,
+                    r.company_snapshot
+                ),
+
+            deliveryAddress:
+                r.delivery_address || "",
 
             format:
                 r.format_snapshot,
@@ -683,6 +703,29 @@
 
             );
 
+        if (data.companyDetails) {
+            y = drawCompactNote(
+                doc, l, data, y,
+                "DATOS DE LA EMPRESA",
+                data.companyDetails
+            );
+        }
+
+        if (data.remissionDetail) {
+            y = drawCompactNote(
+                doc, l, data, y,
+                "REMISIÓN DETALLE",
+                data.remissionDetail
+            );
+        }
+
+        if (data.deliveryAddress) {
+            y = drawCompactNote(
+                doc, l, data, y,
+                "DIRECCIÓN DE ENTREGA",
+                data.deliveryAddress
+            );
+        }
 
         y =
             drawCommercialInfo(
@@ -903,6 +946,28 @@
 
             );
 
+        const companyDetails =
+            GGSalesPlus.companyDetails(
+                null,
+                order.company_id,
+                order.company_snapshot
+            );
+
+        if (companyDetails) {
+            y = drawCompactNote(
+                doc, l, data, y,
+                "DATOS DE LA EMPRESA",
+                companyDetails
+            );
+        }
+
+        if (order.pickup_address) {
+            y = drawCompactNote(
+                doc, l, data, y,
+                "DIRECCIÓN DE RECOGER",
+                order.pickup_address
+            );
+        }
 
         y =
             drawPurchaseOrderInfo(

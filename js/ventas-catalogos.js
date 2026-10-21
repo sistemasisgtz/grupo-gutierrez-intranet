@@ -1166,6 +1166,8 @@
                         .onsubmit =
                         saveCompany;
 
+                    GGSalesPlus.mountCompany(root);
+
 
                     root
                         .querySelector(
@@ -1304,8 +1306,10 @@
                         "salesCompanyName"
                     ),
 
-                logo_path:
-                    path
+                logo_path: path,
+
+                company_details:
+                    value("salesPlusCompanyDetails")
 
             };
 

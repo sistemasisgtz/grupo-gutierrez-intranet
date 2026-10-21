@@ -735,6 +735,11 @@ function openOrderForm(base=null,items=[]){
             }else{
                 addOrderLine();
             }
+
+            GGSalesPlus.mount("odc", {
+                base,
+                addLine: addOrderLine
+            });
         }
     });
 }
@@ -1239,8 +1244,8 @@ async function saveOrder(event,id){
     }
 
     try{
-        const {error}=await s.db.rpc(
-            "sales_save_purchase_order",
+        const beganAt = new Date().toISOString();
+        const {data,error}=await s.db.rpc("sales_save_purchase_order",
             {
                 p_order_id:id,
                 p_header:{
@@ -1255,6 +1260,13 @@ async function saveOrder(event,id){
         );
 
         if(error)throw error;
+
+        await GGSalesPlus.saved(
+            "odc",
+            data,
+            id,
+            beganAt
+        );
 
         s.closeModal();
 
