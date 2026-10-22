@@ -1,0 +1,369 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090c">
+
+  <title>Sistema Central · Grupo Gutiérrez</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="css/sistema.css">
+</head>
+
+<body>
+
+  <!-- FONDO ABIERTO -->
+  <div class="atmosphere" aria-hidden="true">
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+    <div class="atmosphere-noise"></div>
+  </div>
+
+  <!-- NAVEGACIÓN -->
+  <header class="masthead">
+
+    <a class="brand" href="sistema.html"
+       aria-label="Sistema Central, inicio">
+
+      <span class="brand-monogram">
+        GG<span class="brand-star">✳</span>
+      </span>
+
+      <span class="brand-divider"></span>
+
+      <span class="brand-text">
+        <strong>Grupo Gutiérrez</strong>
+        <small>intranet empresarial</small>
+      </span>
+    </a>
+
+    <span class="masthead-label">
+      <i></i> SISTEMA CENTRAL
+    </span>
+
+    <div class="masthead-right">
+
+      <div class="user-summary">
+        <small>SESIÓN ACTIVA</small>
+        <strong id="systemUserEmail">
+          Verificando sesión…
+        </strong>
+      </div>
+
+      <button
+        id="systemLogoutButton"
+        type="button"
+        class="exit-button"
+        aria-label="Cerrar sesión"
+      >
+        <span>Salir</span>
+
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4"/>
+          <path d="M16 17l5-5-5-5M21 12H9"/>
+        </svg>
+      </button>
+
+    </div>
+  </header>
+
+  <main class="page-content">
+
+    <!-- PRESENTACIÓN -->
+    <section class="hero" aria-labelledby="heroTitle">
+
+      <div class="hero-overline">
+        <span class="hairline"></span>
+        sistema
+        <span class="hairline"></span>
+      </div>
+
+      <h1 id="heroTitle">
+        grupo
+        <span>gutierrez</span>
+      </h1>
+
+      <p>
+        ISGTZ - JD - LO
+      </p>
+
+      <div class="hero-footnote">
+        <span class="soft-dot"></span>
+        Todo online y funcionando.
+      </div>
+
+    </section>
+
+    <!-- MÓDULOS SIN PANEL DE FONDO -->
+    <section class="workspace" aria-labelledby="moduleTitle">
+
+      <div class="workspace-heading">
+        <div>
+          <div class="eyebrow">
+            selecciona el módulo <span>— 01</span>
+          </div>
+
+          <h2 id="moduleTitle">
+            modulos<span class="heading-period">.</span>
+          </h2>
+        </div>
+
+        <span class="workspace-side">
+          · 06 módulos
+        </span>
+      </div>
+
+      <div class="module-grid">
+
+        <!-- 01 VENTAS -->
+        <div class="module-shell slot-sales" style="--delay:.06s">
+          <button
+            type="button"
+            class="module-card is-featured card-sales"
+            data-module="ventas"
+          >
+            <span class="card-top">
+              <span class="card-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 19V5M4 19h16M7 15l5-5 3 2 5-7M16 5h4v4"/>
+                </svg>
+              </span>
+              <span class="card-serial">01 / 06</span>
+            </span>
+
+            <span class="card-content">
+              <span class="card-eyebrow">ÁREA COMERCIAL</span>
+              <strong class="card-title">ventas</strong>
+              <span class="card-description">
+                Cotizaciones, remisiones y clientes.
+              </span>
+            </span>
+
+            <span class="card-footer">
+              <span class="card-meta">COMERCIAL</span>
+              <span class="card-arrow">↗</span>
+            </span>
+          </button>
+        </div>
+
+        <!-- 02 RECURSOS HUMANOS -->
+        <div class="module-shell slot-people" style="--delay:.12s">
+          <button
+            type="button"
+            class="module-card card-people"
+            data-module="recursos-humanos"
+          >
+            <span class="card-top">
+              <span class="card-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="9" cy="8" r="3"/>
+                  <path d="M3 20v-2a6 6 0 0 1 12 0v2M17 5a3 3 0 0 1 0 6M18 14a5 5 0 0 1 3 5v1"/>
+                </svg>
+              </span>
+              <span class="card-serial">02 / 06</span>
+            </span>
+
+            <span class="card-content">
+              <span class="card-eyebrow">PERSONAS</span>
+              <strong class="card-title">recursos humanos</strong>
+              <span class="card-description">
+                Personal y vacaciones.
+              </span>
+            </span>
+
+            <span class="card-footer">
+              <span class="card-meta">PERSONAL</span>
+              <span class="card-arrow">↗</span>
+            </span>
+          </button>
+        </div>
+
+        <!-- 03 ALMACÉN -->
+        <div class="module-shell slot-warehouse" style="--delay:.18s">
+          <button
+            type="button"
+            class="module-card card-warehouse"
+            data-module="almacen"
+          >
+            <span class="card-top">
+              <span class="card-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 8l9-5 9 5v10l-9 5-9-5zM3 8l9 5 9-5M12 13v10"/>
+                </svg>
+              </span>
+              <span class="card-serial">03 / 06</span>
+            </span>
+
+            <span class="card-content">
+              <span class="card-eyebrow">OPERACIONES</span>
+              <strong class="card-title">almacén</strong>
+              <span class="card-description">
+                Inventarios y movimientos.
+              </span>
+            </span>
+
+            <span class="card-footer">
+              <span class="card-meta">INVENTARIO</span>
+              <span class="card-arrow">↗</span>
+            </span>
+          </button>
+        </div>
+
+        <!-- 04 SOLICITUDES DE PAGO -->
+        <div class="module-shell slot-payments" style="--delay:.24s">
+          <button
+            type="button"
+            class="module-card card-payments"
+            data-module="solicitudes-pago"
+          >
+            <span class="card-top">
+              <span class="card-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="5" y="3" width="14" height="18" rx="2"/>
+                  <path d="M9 8h6M9 12h6M9 16h3"/>
+                </svg>
+              </span>
+              <span class="card-serial">04 / 06</span>
+            </span>
+
+            <span class="card-content">
+              <span class="card-eyebrow">SOLICITA</span>
+              <strong class="card-title">solicitudes de pago</strong>
+              <span class="card-description">
+                Solicitudes y seguimiento.
+              </span>
+            </span>
+
+            <span class="card-footer">
+              <span class="card-meta">PAGOS</span>
+              <span class="card-arrow">↗</span>
+            </span>
+          </button>
+        </div>
+
+        <!-- 05 CONTROL FINANCIERO -->
+        <div class="module-shell slot-finance" style="--delay:.30s">
+          <button
+            type="button"
+            class="module-card is-featured card-finance is-restricted"
+            data-module="control-financiero"
+            aria-disabled="true"
+          >
+            <span class="card-top">
+              <span class="card-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 20h18M6 17v-6M11 17V8M16 17v-5M21 17V5M3 8l6-3 5 2 7-4"/>
+                </svg>
+              </span>
+              <span class="card-serial">05 / 06</span>
+            </span>
+
+            <span class="card-content">
+              <span class="card-eyebrow">
+                DIRECCIÓN FINANCIERA
+              </span>
+              <strong class="card-title">
+                control financiero
+              </strong>
+              <span class="card-description" data-finance-copy>
+                Validando permisos…
+              </span>
+            </span>
+
+            <span class="card-footer">
+              <span class="card-meta" data-finance-tag>
+                Verificando
+              </span>
+              <span class="card-arrow">↗</span>
+            </span>
+          </button>
+        </div>
+
+        <!-- 06 COBRANZA -->
+        <div class="module-shell slot-collections" style="--delay:.36s">
+          <button
+            type="button"
+            class="module-card card-collections is-soon"
+            data-module="cobranza"
+          >
+            <span class="card-top">
+              <span class="card-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="3"/>
+                  <path d="M3 10h18M7 15h4"/>
+                </svg>
+              </span>
+              <span class="card-serial">06 / 06</span>
+            </span>
+
+            <span class="card-content">
+              <span class="card-eyebrow">CARTERA</span>
+              <strong class="card-title">cobranza</strong>
+              <span class="card-description">
+                trabajando....
+              </span>
+            </span>
+
+            <span class="card-footer">
+              <span class="card-meta">PRÓXIMAMENTE</span>
+              <span class="card-arrow">↗</span>
+            </span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <span>
+        GRUPO GUTIÉRREZ
+        <span class="footer-mark">✳</span>
+        SISTEMA CENTRAL
+      </span>
+
+      <span>
+        Departamento de Sistemas.
+      </span>
+    </footer>
+
+  </main>
+
+  <!-- MENSAJES -->
+  <div
+    id="systemToast"
+    class="system-toast"
+    role="status"
+    aria-live="polite"
+  ></div>
+
+  <!-- TRANSICIÓN -->
+  <div
+    id="moduleTransition"
+    class="module-transition"
+    aria-hidden="true"
+  >
+    <div class="transition-content">
+      <span class="transition-line"></span>
+      <small>ABRIENDO TU ESPACIO</small>
+      <strong id="moduleTransitionTitle">Cargando</strong>
+      <span class="transition-bottom">GRUPO GUTIÉRREZ</span>
+    </div>
+  </div>
+
+  <!-- SOLO LOS SCRIPTS NECESARIOS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/sistema.js"></script>
+
+</body>
+</html>

@@ -17,6 +17,7 @@
   >
 
   <link rel="stylesheet" href="css/sistema.css">
+  <link rel="stylesheet" href="css/sistema-perfil.css">
 </head>
 
 <body>
@@ -53,12 +54,151 @@
 
     <div class="masthead-right">
 
-      <div class="user-summary">
-        <small>SESIÓN ACTIVA</small>
-        <strong id="systemUserEmail">
-          Verificando sesión…
-        </strong>
-      </div>
+      
+<!-- GG_PERFIL_SISTEMA_V1 -->
+
+<div class="gg-profile" id="ggProfileHolder">
+
+    <button
+        class="gg-profile-button"
+        type="button"
+        id="ggProfileButton"
+        aria-expanded="false"
+        aria-controls="ggProfilePanel"
+        aria-label="Ver sesión iniciada y perfil laboral"
+    >
+
+        <span
+            class="gg-profile-avatar"
+            data-gg-avatar
+        >
+            <img alt="" decoding="async">
+
+            <span data-gg-initials>
+                GG
+            </span>
+        </span>
+
+        <span class="gg-profile-copy">
+
+            <span class="gg-profile-caption">
+                ● SESIÓN INICIADA
+            </span>
+
+            <strong id="systemUserEmail">
+                Verificando sesión…
+            </strong>
+
+            <small>
+                <span id="ggProfileName">
+                    Consultando RH…
+                </span>
+
+                ·
+
+                <span id="ggProfileRole">
+                    Puesto
+                </span>
+            </small>
+
+        </span>
+
+        <span
+            class="gg-profile-arrow"
+            aria-hidden="true"
+        >
+            ⌄
+        </span>
+
+    </button>
+
+    <section
+        class="gg-profile-panel"
+        id="ggProfilePanel"
+        hidden
+        aria-label="Mi perfil laboral"
+    >
+
+        <div class="gg-profile-panel-head">
+
+            <span
+                class="
+                    gg-profile-avatar
+                    gg-profile-avatar-lg
+                "
+                data-gg-avatar
+            >
+
+                <img alt="" decoding="async">
+
+                <span data-gg-initials>
+                    GG
+                </span>
+
+            </span>
+
+            <div>
+
+                <span class="gg-profile-caption">
+                    MI PERFIL · GRUPO GUTIÉRREZ
+                </span>
+
+                <strong id="ggProfileNamePanel">
+                    Cargando…
+                </strong>
+
+                <small id="ggProfileRolePanel">
+                    Puesto
+                </small>
+
+            </div>
+
+        </div>
+
+        <dl class="gg-profile-fields">
+
+            <div>
+                <dt>
+                    Correo de la cuenta
+                </dt>
+
+                <dd id="ggProfileEmailPanel">
+                    …
+                </dd>
+            </div>
+
+            <div>
+                <dt>
+                    Fecha de ingreso
+                </dt>
+
+                <dd id="ggProfileHire">
+                    Consultando…
+                </dd>
+            </div>
+
+            <div class="gg-profile-feature">
+                <dt>
+                    Antigüedad
+                </dt>
+
+                <dd id="ggProfileSeniority">
+                    Calculando…
+                </dd>
+            </div>
+
+        </dl>
+
+        <p
+            class="gg-profile-notice"
+            id="ggProfileNotice"
+            hidden
+        ></p>
+
+    </section>
+
+</div>
+
 
       <button
         id="systemLogoutButton"
@@ -364,6 +504,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/sistema.js"></script>
+  <script src="js/sistema-perfil.js"></script>
 
 </body>
 </html>
