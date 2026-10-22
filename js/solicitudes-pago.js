@@ -3001,7 +3001,30 @@
     // NUEVA SOLICITUD
     // =====================================================
 
-    function openNewRequestModal() {
+    async function openNewRequestModal() {
+
+        // Consultar las reglas más recientes
+        // antes de construir el formulario.
+
+        try {
+
+            await fin.loadRules();
+
+        } catch (error) {
+
+            console.error(
+                "[FINANZAS] No se pudieron actualizar las reglas",
+                error
+            );
+
+            fin.toast(
+                "No se pudo actualizar el catálogo " +
+                "de flujos. Intenta de nuevo.",
+                true
+            );
+
+            return;
+        }
 
 
         const group =

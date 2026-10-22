@@ -1,0 +1,312 @@
+
+
+/* ==============================================
+   GRUPO GUTIÉRREZ
+   CATÁLOGO DE FLUJOS - CONTROL FINANCIERO
+============================================== */
+
+.ggfr-panel {
+    min-height: 480px;
+}
+
+.ggfr-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.ggfr-heading h2 {
+    margin: 9px 0;
+    font-size: 22px;
+}
+
+.ggfr-heading p {
+    line-height: 1.65;
+    max-width: 760px;
+}
+
+.ggfr-actions {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+.ggfr-alert {
+    margin: 15px 0;
+    padding: 13px 16px;
+
+    border: 1px solid rgba(74,145,188,.20);
+    border-radius: 13px;
+
+    background: rgba(77,151,201,.07);
+    color: #bed2df;
+
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.ggfr-filters {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.ggfr-filters input,
+.ggfr-filters select,
+.ggfr-form input:not([type=checkbox]),
+.ggfr-form select {
+    min-height: 42px;
+    padding: 10px 13px;
+
+    border: 1px solid rgba(176,205,222,.18);
+    border-radius: 10px;
+
+    background: #111c26;
+    color: #e8f0f6;
+
+    font: inherit;
+    font-size: 12px;
+    outline: none;
+    min-width: 0;
+}
+
+.ggfr-filters input {
+    flex: 1;
+    min-width: 210px;
+}
+
+.ggfr-filters strong {
+    font-size: 11px;
+    color: #8fa8b9;
+    margin-left: auto;
+}
+
+.ggfr-table-wrap {
+    overflow-x: auto;
+    max-height: 550px;
+    overflow-y: auto;
+
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+
+    background: rgba(9,16,23,.35);
+}
+
+.ggfr-table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 980px;
+    font-size: 11px;
+}
+
+.ggfr-table th,
+.ggfr-table td {
+    text-align: left;
+    padding: 13px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    vertical-align: middle;
+}
+
+.ggfr-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    color: #91a8b8;
+    background: #192530;
+
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.ggfr-table tbody tr:hover {
+    background: rgba(255,255,255,.035);
+}
+
+.ggfr-table small {
+    display: block;
+    color: #8c9eaa;
+    margin-top: 5px;
+}
+
+.ggfr-badge {
+    padding: 5px 8px;
+    border-radius: 100px;
+
+    font-size: 10px;
+    font-weight: 750;
+}
+
+.ggfr-on {
+    background: rgba(66,155,109,.15);
+    color: #a2debd;
+}
+
+.ggfr-off {
+    background: rgba(189,108,71,.13);
+    color: #dcb29d;
+}
+
+.ggfr-buttons {
+    white-space: nowrap;
+}
+
+.ggfr-buttons button {
+    margin: 2px;
+    padding: 9px;
+    font-size: 10px;
+}
+
+.ggfr-error {
+    margin: 10px 0;
+    padding: 12px;
+
+    border: 1px solid #925459;
+    border-radius: 10px;
+
+    color: #ffbcc3;
+    font-size: 12px;
+
+    overflow-wrap: anywhere;
+}
+
+.ggfr-form[hidden] {
+    display: none !important;
+}
+
+.ggfr-form {
+    margin-top: 20px;
+    padding: 20px;
+    scroll-margin-top: 20px;
+
+    border: 1px solid rgba(119,175,209,.24);
+    border-radius: 17px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(48,83,110,.19),
+        rgba(13,25,35,.58)
+    );
+}
+
+.ggfr-form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 17px;
+}
+
+.ggfr-form h3 {
+    font-size: 18px;
+    margin: 5px 0;
+    color: #eaf1f6;
+}
+
+.ggfr-form-grid {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 14px;
+}
+
+.ggfr-form-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    font-size: 11px;
+    font-weight: 700;
+    color: #b6c8d6;
+    min-width: 0;
+}
+
+.ggfr-form-grid input[hidden] {
+    display: none !important;
+}
+
+.ggfr-form input:focus,
+.ggfr-form select:focus {
+    border-color: #66a7cb;
+    box-shadow: 0 0 0 2px rgba(102,167,203,.13);
+}
+
+.ggfr-check {
+    display: flex !important;
+    align-items: center;
+    flex-direction: row !important;
+
+    gap: 8px;
+    padding-top: 23px;
+
+    cursor: pointer;
+}
+
+.ggfr-check input {
+    accent-color: #66a7cb;
+    min-width: 18px;
+    min-height: 18px;
+}
+
+.ggfr-note {
+    font-size: 11px;
+    color: #97afbd;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+/* TABLET */
+
+@media (max-width: 980px) {
+
+    .ggfr-form-grid {
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+}
+
+/* CELULAR */
+
+@media (max-width: 650px) {
+
+    .ggfr-panel {
+        padding: 13px !important;
+    }
+
+    .ggfr-form {
+        padding: 13px;
+    }
+
+    .ggfr-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ggfr-actions {
+        width: 100%;
+    }
+
+    .ggfr-actions button {
+        flex: 1;
+    }
+
+    .ggfr-filters input {
+        min-width: 100%;
+    }
+
+    .ggfr-filters select {
+        flex: 1;
+    }
+
+    .ggfr-filters strong {
+        margin-left: 0;
+    }
+
+    .ggfr-heading h2 {
+        font-size: 19px;
+    }
+}
+
