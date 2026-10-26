@@ -47,7 +47,13 @@
         href="css/control-financiero.css"
     >
 
-    <link rel="stylesheet" href="css/finanzas-ajustes.css">
+    
+<link rel="stylesheet" href="css/finanzas-ajustes.css">
+
+<link
+    rel="stylesheet"
+    href="css/control-financiero-proyectos.css"
+>
     <link rel="stylesheet" href="css/finanzas-reglas-admin.css"> <!-- GG_CATALOGO_FLUJOS_V1 -->
 
 </head>
@@ -232,11 +238,21 @@
                         Análisis financiero
                     </button>
 
-                </nav>
+                
+    <button
+        type="button"
+        class="finance-tab"
+        data-finance-tab="proyectos"
+    >
+        <span class="finance-tab-dot"></span>
+        Proyectos
+    </button>
 
+    </nav>
 
-                <!-- =========================================
-                     SOLICITUDES
+    <!-- =========================================
+         SOLICITUDES
+    
                 ========================================== -->
 
                 <section
@@ -832,11 +848,290 @@
                 </section>
 
 
-            </section>
+<!-- GG_CF_PROYECTOS_20261026 -->
 
+<section
+    class="finance-panel ggp"
+    data-finance-panel="proyectos"
+>
+
+    <div class="ggp-hero">
+
+        <div>
+
+            <span class="ggp-eyebrow">
+                CONCILIACIÓN · GRUPO GUTIÉRREZ × INGENIERÍA LO
+            </span>
+
+            <h2>
+                Control de Proyectos
+            </h2>
+
+            <p>
+                Solicitudes efectivamente pagadas contra
+                gasto real de LO. Cruce por folio definitivo
+                de Administración, sin crear relaciones
+                entre solicitudes y proyectos.
+            </p>
 
         </div>
 
+        <div class="ggp-hero-actions">
+
+            <button
+                type="button"
+                class="ggp-button"
+                id="ggProjReload"
+            >
+                ↻ Sincronizar
+            </button>
+
+            <button
+                type="button"
+                class="ggp-button primary"
+                id="ggProjExcel"
+            >
+                ↓ Excel filtrado
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="ggp-legend">
+
+        <span>
+            <i class="ggp-dot"></i>
+            Control Financiero / Pagos
+        </span>
+
+        <span>
+            <i class="ggp-dot lo"></i>
+            Ingeniería LO / Gasto real
+        </span>
+
+        <span>
+            <i class="ggp-dot diff"></i>
+            Diferencia detectada (ambos importes)
+        </span>
+
+    </div>
+
+    <div
+        class="ggp-stats"
+        id="ggProjStats"
+    ></div>
+
+    <section class="ggp-filter-panel">
+
+        <div class="ggp-filter-title">
+            ⌕ Explorar, conciliar y filtrar
+        </div>
+
+        <div class="ggp-filters">
+
+            <label>
+                Buscar proyecto, folio o factura
+
+                <input
+                    id="ggProjSearch"
+                    type="search"
+                    placeholder="Buscar…"
+                >
+            </label>
+
+            <label>
+                Estatus del proyecto
+
+                <select id="ggProjStatus">
+                    <option value="">
+                        Todos los estatus
+                    </option>
+
+                    <option>Proceso</option>
+                    <option>Remisionado</option>
+                    <option>Terminado</option>
+                </select>
+            </label>
+
+            <label>
+                Año de PAGO
+
+                <select id="ggProjYear">
+                    <option value="">
+                        Todos los años
+                    </option>
+                </select>
+            </label>
+
+            <label>
+                Mes de PAGO
+
+                <select id="ggProjMonth">
+                    <option value="">
+                        Todos los meses
+                    </option>
+                </select>
+            </label>
+
+            <label>
+                Pago desde
+
+                <input
+                    id="ggProjFrom"
+                    type="date"
+                >
+            </label>
+
+            <label>
+                Pago hasta
+
+                <input
+                    id="ggProjTo"
+                    type="date"
+                >
+            </label>
+
+            <label>
+                Actividad de pago
+
+                <select id="ggProjMovement">
+
+                    <option value="">
+                        Con y sin pagos
+                    </option>
+
+                    <option value="yes">
+                        Con pagos
+                    </option>
+
+                    <option value="no">
+                        Sin pagos
+                    </option>
+
+                </select>
+            </label>
+
+            <label>
+                Conciliación
+
+                <select id="ggProjReconcile">
+
+                    <option value="">
+                        Todos
+                    </option>
+
+                    <option value="diff">
+                        Con diferencias
+                    </option>
+
+                    <option value="ok">
+                        Sin diferencias
+                    </option>
+
+                    <option value="unmapped">
+                        Campos o rubros por revisar
+                    </option>
+
+                </select>
+            </label>
+
+            <label>
+                Ordenar
+
+                <select id="ggProjSort">
+
+                    <option value="">
+                        Folio
+                    </option>
+
+                    <option value="total">
+                        Mayor monto pagado
+                    </option>
+
+                    <option value="balance">
+                        Menor saldo
+                    </option>
+
+                    <option value="difference">
+                        Diferencias primero
+                    </option>
+
+                    <option value="recent">
+                        Alta en Administración (reciente)
+                    </option>
+
+                </select>
+            </label>
+
+        </div>
+
+        <div class="ggp-filter-bottom">
+
+            <span id="ggProjLastSync">
+                Aún sin sincronizar
+            </span>
+
+            <button
+                type="button"
+                class="ggp-button"
+                id="ggProjClear"
+            >
+                Limpiar filtros
+            </button>
+
+        </div>
+
+    </section>
+
+    <div
+        class="ggp-inline-note"
+        id="ggProjMessage"
+    >
+        Abre esta pestaña para sincronizar los datos.
+    </div>
+
+    <section class="ggp-table-surface">
+
+        <div class="ggp-table-head">
+
+            <div>
+
+                <strong>
+                    Comparativo por folio definitivo
+                </strong>
+
+                <small>
+                    Haz clic en una fila para ver los pagos
+                    confirmados de ese proyecto.
+                </small>
+
+            </div>
+
+            <strong id="ggProjCount">
+                —
+            </strong>
+
+        </div>
+
+        <div
+            class="ggp-scroll"
+            id="ggProjTable"
+        >
+
+            <div class="ggp-noresults">
+                Cargando módulo…
+            </div>
+
+        </div>
+
+    </section>
+
+</section>
+
+
+            </section>
+        </div>
 
         <footer class="finance-footer">
 
@@ -880,7 +1175,10 @@
 
     <script src="js/finanzas-ajustes.js"></script>
 
-    <script src="js/finanzas-graficas-fix.js"></script>
+    
+<script src="js/finanzas-graficas-fix.js"></script>
+
+<script src="js/control-financiero-proyectos.js"></script>
     <script src="js/finanzas-reglas-admin.js"></script>
 
 
