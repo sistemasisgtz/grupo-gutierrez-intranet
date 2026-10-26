@@ -1,0 +1,889 @@
+
+/* ==========================================================
+   GRUPO GUTIÉRREZ
+   CONTROL FINANCIERO · PROYECTOS
+
+   FINANZAS = VIOLETA
+   INGENIERÍA LO = CIAN
+   DIFERENCIAS = AMARILLO
+
+   Archivo:
+   css/control-financiero-proyectos.css
+========================================================== */
+
+.finance-tab[data-finance-tab="proyectos"] {
+    color: #e2edff;
+}
+
+.finance-tab[data-finance-tab="proyectos"].active {
+    color: #fff;
+}
+
+.ggp {
+    --ggp-ink: #ecf4fd;
+    --ggp-muted: #9eb5cb;
+    --ggp-line: #263849;
+    --ggp-violet: #cbb5ff;
+    --ggp-cyan: #72dbe4;
+
+    color: var(--ggp-ink);
+    font-size: 13px;
+}
+
+.ggp * {
+    box-sizing: border-box;
+}
+
+/* ==========================================================
+   HERO PRINCIPAL
+========================================================== */
+
+.ggp-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 23px 25px;
+    margin: 0 0 15px;
+
+    border: 1px solid #405173;
+    border-radius: 18px;
+
+    background:
+        radial-gradient(
+            circle at 88% 20%,
+            #3b2b65 0%,
+            transparent 42%
+        ),
+        linear-gradient(
+            115deg,
+            #142b3d,
+            #1c1f39
+        );
+}
+
+.ggp-hero h2 {
+    font:
+        800 clamp(22px, 2.2vw, 31px)/1.2
+        Manrope, Inter, sans-serif;
+
+    margin: 5px 0 8px;
+    color: #fff;
+}
+
+.ggp-hero p {
+    font-size: 12px;
+    color: #b9cadd;
+
+    line-height: 1.65;
+    max-width: 740px;
+    margin: 0;
+}
+
+.ggp-eyebrow {
+    font:
+        800 10px
+        Inter, sans-serif;
+
+    letter-spacing: .14em;
+    color: #85dfef;
+}
+
+.ggp-hero-actions {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+/* ==========================================================
+   BOTONES
+========================================================== */
+
+.ggp-button {
+    appearance: none;
+
+    border: 1px solid #465b72;
+    background: #24374b;
+    color: #eff8ff;
+
+    border-radius: 10px;
+
+    min-height: 41px;
+    padding: 10px 14px;
+
+    font:
+        750 12px
+        Inter, sans-serif;
+
+    cursor: pointer;
+    white-space: nowrap;
+
+    transition:
+        transform .14s,
+        background .14s;
+}
+
+.ggp-button:hover {
+    transform: translateY(-1px);
+    background: #344e67;
+}
+
+.ggp-button.primary {
+    background: linear-gradient(
+        130deg,
+        #5e55b6,
+        #7551bb
+    );
+
+    border-color: #8e74d0;
+    color: #fff;
+}
+
+.ggp-button:disabled {
+    opacity: .55;
+    cursor: wait;
+}
+
+/* ==========================================================
+   LEYENDA DE COLORES
+========================================================== */
+
+.ggp-legend {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 15px;
+    margin: 8px 0 15px;
+
+    color: #b8c9db;
+    font-size: 11px;
+}
+
+.ggp-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.ggp-dot {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 3px;
+    background: #a99aff;
+}
+
+.ggp-dot.lo {
+    background: #62dbe8;
+}
+
+.ggp-dot.diff {
+    background: #ffce55;
+}
+
+/* ==========================================================
+   INDICADORES SUPERIORES
+========================================================== */
+
+.ggp-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+
+    gap: 10px;
+    margin: 0 0 16px;
+}
+
+.ggp-stat {
+    padding: 16px 14px;
+
+    border: 1px solid #304558;
+
+    background: linear-gradient(
+        145deg,
+        #1a2a39,
+        #14212e
+    );
+
+    border-radius: 14px;
+    min-width: 0;
+}
+
+.ggp-stat > span {
+    display: block;
+
+    color: #a5b7c9;
+
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.4;
+
+    text-transform: uppercase;
+    letter-spacing: .035em;
+}
+
+.ggp-stat > strong {
+    display: block;
+
+    font:
+        800 clamp(15px, 1.3vw, 20px)/1.35
+        Manrope, Inter, sans-serif;
+
+    margin-top: 8px;
+
+    overflow-wrap: anywhere;
+    color: #f3f8ff;
+}
+
+.ggp-stat-pay strong {
+    color: #cdb6ff;
+}
+
+.ggp-stat-lo strong {
+    color: #81e8f3;
+}
+
+.ggp-stat-warning strong {
+    color: #ffd16f;
+}
+
+/* ==========================================================
+   PANEL DE FILTROS
+========================================================== */
+
+.ggp-filter-panel {
+    border: 1px solid #304759;
+    border-radius: 16px;
+
+    background: #142434;
+
+    padding: 16px;
+    margin-bottom: 15px;
+}
+
+.ggp-filter-title {
+    font-size: 11px;
+    font-weight: 850;
+
+    text-transform: uppercase;
+    letter-spacing: .09em;
+
+    color: #9ddce5;
+    margin-bottom: 13px;
+}
+
+.ggp-filters {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 11px;
+}
+
+.ggp-filters label {
+    display: grid;
+    gap: 6px;
+
+    color: #b2c6d5;
+
+    font:
+        750 11px
+        Inter, sans-serif;
+
+    min-width: 0;
+}
+
+.ggp-filters input,
+.ggp-filters select,
+.ggp-form input,
+.ggp-form select {
+    display: block;
+
+    width: 100%;
+    height: 40px;
+    min-width: 0;
+
+    padding: 0 11px;
+
+    border: 1px solid #40576d;
+    border-radius: 9px;
+
+    background: #0e1d2a;
+    color: #f0f7ff;
+
+    font:
+        600 12px
+        Inter, sans-serif;
+
+    outline: none;
+}
+
+.ggp-filters input:focus,
+.ggp-filters select:focus,
+.ggp-form input:focus,
+.ggp-form select:focus {
+    border-color: #7fcbde;
+
+    box-shadow:
+        0 0 0 3px #57c9e426;
+}
+
+.ggp-filters input[type="date"] {
+    color-scheme: dark;
+}
+
+.ggp-filter-bottom {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+    margin-top: 13px;
+
+    color: #8fadbe;
+    font-size: 11px;
+}
+
+.ggp-inline-note {
+    padding: 11px 14px;
+    margin-bottom: 12px;
+
+    border: 1px solid #3b556b;
+    border-radius: 10px;
+
+    background: #192c40;
+    color: #b9d4df;
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* ==========================================================
+   TABLA PRINCIPAL
+========================================================== */
+
+.ggp-table-surface {
+    border: 1px solid #34485c;
+    border-radius: 16px;
+
+    background: #10202e;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 15px 36px #040a1140;
+}
+
+.ggp-table-head {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+    padding: 15px 18px;
+
+    border-bottom: 1px solid #32495a;
+
+    background: linear-gradient(
+        100deg,
+        #1e3043,
+        #182637
+    );
+}
+
+.ggp-table-head strong {
+    font-size: 14px;
+    color: #fff;
+}
+
+.ggp-table-head small {
+    display: block;
+
+    font-size: 11px;
+    color: #9bafbf;
+
+    margin-top: 4px;
+}
+
+/* Desplazamiento horizontal y vertical */
+
+.ggp-scroll {
+    max-width: 100%;
+
+    overflow: auto;
+
+    max-height: min(74vh, 800px);
+
+    scrollbar-color:
+        #58788f #13212f;
+
+    scrollbar-width: thin;
+}
+
+.ggp-table {
+    width: max-content;
+    min-width: 100%;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+/* Encabezados fijos */
+
+.ggp-table thead th {
+    position: sticky;
+
+    top: 0;
+    z-index: 3;
+
+    background: #233849;
+    color: #c1d1e1;
+
+    font-weight: 850;
+
+    padding: 13px 12px;
+
+    white-space: normal;
+
+    min-width: 108px;
+    max-width: 160px;
+
+    text-align: right;
+
+    border-bottom:
+        1px solid #496076;
+
+    border-right:
+        1px solid #334b60;
+}
+
+.ggp-table thead th:nth-child(1) {
+    min-width: 140px;
+    text-align: left;
+}
+
+.ggp-table thead th:nth-child(2) {
+    min-width: 190px;
+    text-align: left;
+}
+
+/* Celdas */
+
+.ggp-table tbody td {
+    padding: 11px 12px;
+
+    border-bottom:
+        1px solid #2b3f50;
+
+    border-right:
+        1px solid #243b4d;
+
+    color: #e0ebf5;
+
+    text-align: right;
+    white-space: nowrap;
+
+    background: #142535;
+}
+
+.ggp-table tbody tr:nth-child(even) td {
+    background: #172b3b;
+}
+
+.ggp-table tbody tr:hover td {
+    background: #254058;
+    cursor: pointer;
+}
+
+.ggp-table .ggp-left {
+    text-align: left;
+    white-space: normal;
+}
+
+.ggp-table .ggp-folio strong {
+    display: block;
+
+    color: #fff;
+    font-weight: 850;
+    font-size: 12px;
+
+    letter-spacing: .02em;
+}
+
+.ggp-table .ggp-folio small {
+    display: block;
+
+    color: #8ea8bd;
+    font-size: 10px;
+
+    max-width: 210px;
+    margin-top: 5px;
+
+    white-space: normal;
+}
+
+/* ==========================================================
+   IMPORTES FINANZAS
+========================================================== */
+
+.ggp-table .ggp-num {
+    font-variant-numeric: tabular-nums;
+
+    font-weight: 800;
+    min-width: 127px;
+
+    color: #e0cfff;
+}
+
+/* ==========================================================
+   IMPORTES LO EN CIAN
+========================================================== */
+
+.ggp-table .ggp-lo {
+    background: #12303d !important;
+    color: #8bedf6 !important;
+}
+
+.ggp-table tbody tr:nth-child(even) .ggp-lo {
+    background: #163844 !important;
+}
+
+.ggp-table tbody tr:hover .ggp-lo {
+    background: #275263 !important;
+}
+
+.ggp-table thead th.ggp-lo {
+    background: #20505d;
+    color: #a9f6fc;
+}
+
+/* ==========================================================
+   DIFERENCIAS
+   AMBOS VALORES EN AMARILLO
+========================================================== */
+
+.ggp-table .ggp-diff,
+.ggp-table tbody tr:nth-child(even) .ggp-diff,
+.ggp-table tbody tr:hover .ggp-diff {
+    background: #5c4a20 !important;
+
+    color: #ffe39a !important;
+
+    box-shadow:
+        inset 0 0 0 1px #e7bd4a70;
+}
+
+.ggp-table .ggp-diff.ggp-lo,
+.ggp-table tbody tr:nth-child(even) .ggp-diff.ggp-lo {
+    background: #5c4a20 !important;
+    color: #ffe39a !important;
+}
+
+/* ==========================================================
+   FACTURA Y FOLIO FIJOS
+   AL DESPLAZARSE HORIZONTALMENTE
+========================================================== */
+
+.ggp-table thead th:first-child,
+.ggp-table tbody td:first-child {
+    position: sticky;
+    left: 0;
+
+    z-index: 2;
+}
+
+.ggp-table thead th:nth-child(2),
+.ggp-table tbody td:nth-child(2) {
+    position: sticky;
+    left: 140px;
+
+    z-index: 2;
+
+    box-shadow:
+        3px 0 8px #07111c58;
+}
+
+.ggp-table thead th:first-child,
+.ggp-table thead th:nth-child(2) {
+    z-index: 5;
+}
+
+/* ==========================================================
+   ESTATUS
+========================================================== */
+
+.ggp-table .ggp-status {
+    display: inline-block;
+
+    padding: 7px 9px;
+    border-radius: 999px;
+
+    color: #bde0ff;
+
+    background: #254362;
+    border: 1px solid #426f92;
+
+    font-size: 10px;
+    font-weight: 850;
+}
+
+.ggp-table .ggp-status.is-billed {
+    color: #ead0ff;
+
+    background: #493061;
+    border-color: #6e4b92;
+}
+
+.ggp-table .ggp-status.is-finished {
+    color: #b3ebc4;
+
+    background: #234936;
+    border-color: #467c5c;
+}
+
+/* ==========================================================
+   ALERTAS / BADGES
+========================================================== */
+
+.ggp-badge {
+    display: inline-block;
+
+    padding: 4px 7px;
+    border-radius: 6px;
+
+    background: #22425c;
+    color: #c4dced;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.ggp-badge.ggp-warn {
+    margin-top: 6px;
+
+    background: #57451c;
+    color: #ffe09c;
+}
+
+.ggp-table .ggp-empty {
+    color: #7e94a5;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.ggp-icon-button {
+    border: 1px solid #526783;
+
+    background: #263e58;
+    color: #f0f5fb;
+
+    border-radius: 8px;
+
+    padding: 8px 10px;
+
+    cursor: pointer;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.ggp-icon-button:hover {
+    background: #3a5a78;
+}
+
+.ggp-noresults {
+    padding: 60px 20px;
+
+    text-align: center;
+    color: #b2c5d4;
+
+    font-size: 13px;
+}
+
+/* ==========================================================
+   POPUP INFORMATIVO
+========================================================== */
+
+.ggp-modal-kpis {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.ggp-modal-kpis > div {
+    padding: 13px;
+
+    border: 1px solid #3e5265;
+
+    background: #1d3040;
+    border-radius: 11px;
+}
+
+.ggp-modal-kpis small {
+    display: block;
+
+    color: #9fc6d6;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.ggp-modal-kpis strong {
+    display: block;
+
+    color: #f3faff;
+    font-size: 17px;
+
+    margin-top: 5px;
+}
+
+.ggp-modal-note {
+    color: #b9cbd7;
+
+    font-size: 12px;
+    line-height: 1.6;
+
+    margin: 10px 0 15px;
+}
+
+.ggp-modal-scroll {
+    overflow: auto;
+    max-height: 55vh;
+}
+
+.ggp-modal-scroll .ggp-table {
+    min-width: 1250px;
+}
+
+.ggp-modal-scroll .ggp-table th,
+.ggp-modal-scroll .ggp-table td {
+    position: static !important;
+    box-shadow: none !important;
+}
+
+.ggp-modal-scroll .ggp-table thead th {
+    position: sticky !important;
+    top: 0 !important;
+}
+
+.ggp-alert {
+    color: #ffde9f;
+
+    padding: 10px 13px;
+
+    background: #523d173c;
+    border: 1px solid #92743e;
+
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+/* ==========================================================
+   FORMULARIO DE EDICIÓN
+========================================================== */
+
+.ggp-form {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+.ggp-form label {
+    display: grid;
+    gap: 7px;
+
+    font-size: 12px;
+    color: #c2d3e1;
+
+    font-weight: 800;
+}
+
+.ggp-form #ggpEditMessage,
+.ggp-form .ggp-modal-note {
+    grid-column: 1 / -1;
+}
+
+.ggp-form #ggpEditMessage {
+    font-size: 12px;
+    color: #ffc877;
+
+    margin: 0;
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 1200px) {
+
+    .ggp-stats {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .ggp-filters {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+
+    .ggp-hero {
+        flex-direction: column;
+        align-items: stretch;
+
+        padding: 18px;
+    }
+
+    .ggp-stats {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .ggp-filters {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .ggp-modal-kpis {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .ggp-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 470px) {
+
+    .ggp-stats,
+    .ggp-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .ggp-filter-bottom,
+    .ggp-table-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

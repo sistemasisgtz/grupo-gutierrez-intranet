@@ -338,7 +338,26 @@
                         </select>
 
 
-                        <select id="financeRequestPaidFilter">
+                        <select
+      id="financeRequestProjectFilter"
+      aria-label="Con proyecto asignado"
+  >
+
+    <option value="">
+      Con proyecto: Todos
+    </option>
+
+    <option value="yes">
+      Con proyecto: Sí
+    </option>
+
+    <option value="no">
+      Con proyecto: No
+    </option>
+
+  </select>
+
+  <select id="financeRequestPaidFilter">
 
                             <option value="">
                                 Todos los pagos
@@ -944,14 +963,40 @@
                 Estatus del proyecto
 
                 <select id="ggProjStatus">
-                    <option value="">
-                        Todos los estatus
-                    </option>
 
-                    <option>Proceso</option>
-                    <option>Remisionado</option>
-                    <option>Terminado</option>
-                </select>
+    <option value="">
+      Todos los estatus LO
+    </option>
+
+    <option value="EN PROCESO">
+      EN PROCESO
+    </option>
+
+    <option value="TERMINADO">
+      TERMINADO
+    </option>
+
+    <option value="FAVOR">
+      FAVOR
+    </option>
+
+    <option value="PENDIENTE POR ADMINISTRACION">
+      PENDIENTE POR ADMINISTRACION
+    </option>
+
+    <option value="REMISION">
+      REMISION
+    </option>
+
+    <option value="CANCELADO">
+      CANCELADO
+    </option>
+
+    <option value="SIN ESTATUS">
+      SIN ESTATUS
+    </option>
+
+  </select>
             </label>
 
             <label>
@@ -1182,6 +1227,7 @@
     <script src="js/finanzas-reglas-admin.js"></script>
 
 
+<!-- GG_CF_AJUSTES_20261026_V2 -->
 </body>
 
 </html>

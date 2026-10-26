@@ -291,6 +291,7 @@
             "financeRequestAuthFilter",
 
             "financeRequestPaidFilter",
+            "financeRequestProjectFilter",
 
             "financeRequestDateFrom",
 
@@ -722,6 +723,9 @@
                 "financeRequestPaidFilter"
             );
 
+        const assigned =
+            value("financeRequestProjectFilter");
+
 
         const from =
             value(
@@ -735,8 +739,26 @@
             );
 
 
-        return state.requests.filter(
-            request => {
+        return state.requests.filter(request => {
+
+            const hasProject =
+                typeof request.project === 'string' &&
+                request.project.trim().length > 0;
+
+            if (
+                assigned === 'yes' &&
+                !hasProject
+            ) {
+                return false;
+            }
+
+            if (
+                assigned === 'no' &&
+                hasProject
+            ) {
+                return false;
+            }
+
 
 
                 if (
@@ -4512,3 +4534,4 @@
     }
 
 })();
+// GG_CF_AJUSTES_20261026_V2

@@ -887,3 +887,35 @@
         align-items: flex-start;
     }
 }
+
+
+/* =================================================
+   GG_CF_AJUSTES_20261026_V2
+   AJUSTES DE ESTATUS Y FILTRO PROYECTOS
+================================================= */
+
+.ggp-table .ggp-status.is-finished {
+
+  background: #214d3c;
+
+  border-color: #4b916f;
+
+  color: #b9f4ce;
+
+}
+
+.ggp-table .ggp-status.is-billed {
+
+  background: #483565;
+
+  border-color: #8062a6;
+
+  color: #e7d2ff;
+
+}
+
+.finance-toolbar #financeRequestProjectFilter {
+
+  min-width: 155px;
+
+}

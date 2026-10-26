@@ -86,7 +86,7 @@
       return 'materiales';
     }
 
-    return 'otros';
+    return 'materiales';
   }
 
   // ==================================================
@@ -159,19 +159,13 @@
         0
       );
 
-    const others = requests.filter(
-      r => categoryOf(r) === 'otros'
-    );
+    const others = [];
 
     const investment =
       p.authorized_investment == null
         ? null
         : number(p.authorized_investment);
 
-    const quote =
-      p.quote_manual == null
-        ? null
-        : number(p.quote_manual);
 
     const moLo = number(p.labor_lo);
     const matLo = number(p.materials_lo);
@@ -209,10 +203,7 @@
         investment != null &&
         Math.abs(balance - balanceLo) > .01,
 
-      quote:
-        quote != null &&
-        quoteLo != null &&
-        Math.abs(quote - quoteLo) > .01
+      quote: false
     };
 
     return {
@@ -227,7 +218,6 @@
       total,
       totalLo,
       investment,
-      quote,
       quoteLo,
       balance,
       balanceLo,
@@ -350,7 +340,31 @@
         );
       }
 
-      snapshot = data;
+      const { data: loStatuses, error: loStatusError } =
+        await fin.db.rpc('gg_cf_project_status_map');
+
+      if (loStatusError) {
+        throw loStatusError;
+      }
+
+      const statusByFolio = new Map(
+        (loStatuses || []).map(item => [
+          key(item.folio),
+          item.administrative_status || 'SIN ESTATUS'
+        ])
+      );
+
+      snapshot = {
+        ...data,
+
+        projects: data.projects.map(project => ({
+          ...project,
+
+          project_status:
+            statusByFolio.get(key(project.folio))
+            || 'SIN ESTATUS'
+        }))
+      };
       loaded = true;
 
       initializePeriods();
@@ -456,9 +470,7 @@
         if (
           reconcile === 'unmapped' &&
           !(
-            p.others.length ||
-            p.investment == null ||
-            p.quote == null
+            p.investment == null
           )
         ) {
           return false;
@@ -591,9 +603,9 @@
           <span class="
             ggp-status
             ${
-              p.project_status === 'Terminado'
+              normalized(p.project_status) === 'TERMINADO'
                 ? 'is-finished'
-                : p.project_status === 'Remisionado'
+                : normalized(p.project_status) === 'REMISION'
                   ? 'is-billed'
                   : ''
             }
@@ -602,9 +614,7 @@
           </span>
         </td>
 
-        ${cell(p.quote, d.quote)}
-
-        ${cell(p.quoteLo, d.quote, 'ggp-lo')}
+        ${cell(p.quoteLo, false, 'ggp-lo')}
 
         <td class="ggp-actions">
           <button
@@ -748,7 +758,6 @@
                 <th>Saldo restante</th>
                 <th class="ggp-lo">Saldo restante LO</th>
                 <th>Estatus proyecto</th>
-                <th>Cotización proyecto</th>
                 <th class="ggp-lo">Cotización proyecto LO</th>
                 <th>Acción</th>
               </tr>
@@ -822,7 +831,7 @@
                   categoryOf(r) === 'mo'
                     ? 'MO'
                     : categoryOf(r) === 'materiales'
-                      ? 'Materiales/Subcontratos'
+                      ? 'Materiales / otros'
                       : 'Sin clasificar'
                 )
               }
@@ -1033,49 +1042,6 @@
             >
           </label>
 
-          <label>
-            Cotización proyecto ($)
-
-            <input
-              name="quote"
-              type="number"
-              min="0"
-              step="0.01"
-              value="${p.quote ?? ''}"
-              placeholder="Sin capturar"
-            >
-          </label>
-
-          <label>
-            Estatus proyecto
-
-            <select name="status">
-
-              ${
-                [
-                  'Proceso',
-                  'Remisionado',
-                  'Terminado'
-                ]
-                .map(
-                  v => `
-                    <option
-                      ${
-                        p.project_status === v
-                          ? 'selected'
-                          : ''
-                      }
-                    >
-                      ${v}
-                    </option>
-                  `
-                )
-                .join('')
-              }
-
-            </select>
-          </label>
-
           <p class="ggp-modal-note">
             Estos datos son independientes de LO.
 
@@ -1158,11 +1124,8 @@
               const investment =
                 parse('investment');
 
-              const quote =
-                parse('quote');
-
               if (
-                [investment, quote].some(
+                [investment].some(
                   v =>
                     v != null &&
                     (
@@ -1188,7 +1151,7 @@
                 const { error } =
                   await fin.db.rpc(
 
-                    'gg_cf_project_save',
+                    'gg_cf_project_save_v2',
 
                     {
                       p_folio:
@@ -1197,14 +1160,7 @@
                       p_invoice:
                         inv,
 
-                      p_authorized_investment:
-                        investment,
-
-                      p_quote_manual:
-                        quote,
-
-                      p_project_status:
-                        form.elements.status.value
+                      p_authorized_investment: investment
                     }
                   );
 
@@ -1396,9 +1352,6 @@
 
           'Estatus proyecto':
             p.project_status,
-
-          'Cotización proyecto':
-            p.quote ?? '',
 
           'Cotización proyecto LO':
             p.quoteLo ?? '',
@@ -1668,3 +1621,5 @@
   );
 
 })();
+
+// GG_CF_AJUSTES_20261026_V2
