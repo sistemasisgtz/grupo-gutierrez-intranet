@@ -1132,3 +1132,37 @@ svg {
     scroll-behavior: auto !important;
   }
 }
+
+
+/* GG_MI_PERFIL_NOTIFICACIONES_V2 */
+
+.slot-profile-notif {
+  grid-column: span 12;
+  min-height: 180px;
+}
+
+.card-profile-notif {
+  background:
+    radial-gradient(
+      ellipse at 92% 28%,
+      rgba(140,185,224,.18),
+      transparent 48%
+    ),
+    linear-gradient(
+      110deg,
+      rgba(255,255,255,.09),
+      rgba(255,255,255,.02)
+    ),
+    rgba(34,43,52,.26);
+}
+
+.card-profile-notif .card-title {
+  font-size: clamp(22px,2.5vw,32px);
+}
+
+@media (max-width:1040px) {
+
+  .slot-profile-notif {
+    grid-column: span 12 !important;
+  }
+}

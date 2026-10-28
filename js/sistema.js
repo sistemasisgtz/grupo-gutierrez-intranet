@@ -40,6 +40,10 @@
       url: "control-financiero.html",
       finance: true
     },
+    "mi-perfil-notificaciones": {
+      name: "Mi Perfil y Notificaciones",
+      url: "mi-perfil-notificaciones.html"
+    },
 
     cobranza: {
       name: "Cobranza",

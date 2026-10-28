@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Mi Perfil y Notificaciones · Grupo Gutiérrez</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="css/sistema.css">
+  <link rel="stylesheet" href="css/mi-perfil-notificaciones.css">
+</head>
+
+<body class="gmp-page">
+
+  <div class="atmosphere" aria-hidden="true">
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+    <div class="atmosphere-noise"></div>
+  </div>
+
+  <main class="gmp-wrap">
+
+    <header class="gmp-top">
+
+      <a class="gmp-brand" href="sistema.html">
+        <b>GG✳</b>
+        <span>
+          GRUPO GUTIÉRREZ
+          <small>SISTEMA CENTRAL</small>
+        </span>
+      </a>
+
+      <div class="gmp-top-actions">
+
+        <a class="gmp-btn" href="sistema.html">
+          ← Volver a módulos
+        </a>
+
+        <button
+          class="gmp-btn"
+          type="button"
+          id="gmpTheme"
+        >
+          ☀ Modo claro
+        </button>
+
+      </div>
+
+    </header>
+
+    <section class="gmp-hero">
+
+      <span class="gmp-eyebrow">
+        MI ESPACIO · SISTEMA CENTRAL
+      </span>
+
+      <h1>
+        Mi Perfil <em>y Notificaciones</em>
+      </h1>
+
+      <p>
+        Tu ficha de Recursos Humanos y todas tus
+        notificaciones en un solo lugar.
+      </p>
+
+    </section>
+
+    <div class="gmp-layout">
+
+      <aside class="gmp-profile">
+
+        <section class="gmp-card gmp-person">
+
+          <div class="gmp-overline">
+            IDENTIDAD DE LA SESIÓN
+            <span class="gmp-online">● ACTIVA</span>
+          </div>
+
+          <div class="gmp-avatar">
+
+            <img
+              id="gmpPhoto"
+              alt="Fotografía de RH"
+              hidden
+            >
+
+            <span id="gmpInitials">GG</span>
+
+          </div>
+
+          <h2 id="gmpName">
+            Cargando perfil…
+          </h2>
+
+          <p class="gmp-job" id="gmpJob">
+            Consultando Recursos Humanos…
+          </p>
+
+          <span class="gmp-linked" id="gmpLinked">
+            Verificando vinculación con RH
+          </span>
+
+          <div class="gmp-rule"></div>
+
+          <div class="gmp-field">
+            <small>CORREO DE LA CUENTA</small>
+            <strong id="gmpEmail">Cargando…</strong>
+          </div>
+
+          <div class="gmp-field">
+            <small>FECHA DE INGRESO</small>
+            <strong id="gmpHire">—</strong>
+          </div>
+
+          <p class="gmp-note" id="gmpProfileNote">
+            El nombre, puesto y fotografía se consultan
+            a partir del correo vinculado por RH.
+          </p>
+
+        </section>
+
+        <section class="gmp-card gmp-info">
+
+          <span class="gmp-overline">
+            CENTRO DE ACTIVIDAD
+          </span>
+
+          <h3>Tu espacio de trabajo</h3>
+
+          <p>
+            Este módulo está listo para recibir avisos
+            y autorizaciones desde Finanzas, RH, Ventas
+            y otros módulos.
+
+            Las autorizaciones se completarán en
+            su módulo de origen.
+          </p>
+
+        </section>
+
+      </aside>
+
+      <section class="gmp-card gmp-inbox">
+
+        <div class="gmp-inbox-heading">
+
+          <div>
+
+            <span class="gmp-overline">
+              CENTRO DE ACTIVIDAD
+            </span>
+
+            <h2>Notificaciones</h2>
+
+            <p>
+              Solo los avisos enviados a tu cuenta.
+            </p>
+
+          </div>
+
+          <span class="gmp-unread" id="gmpUnread">
+            0 sin leer
+          </span>
+
+        </div>
+
+        <div class="gmp-kpis">
+
+          <div>
+            <b id="gmpTotal">0</b>
+            <small>En el filtro</small>
+          </div>
+
+          <div>
+            <b id="gmpUnreadCount">0</b>
+            <small>Sin leer</small>
+          </div>
+
+          <div>
+            <b id="gmpPending">0</b>
+            <small>Autorizaciones pendientes</small>
+          </div>
+
+        </div>
+
+        <div class="gmp-toolbar">
+
+          <div class="gmp-tabs">
+
+            <button
+              class="active"
+              type="button"
+              data-gmp-tab="all"
+            >
+              Todas
+            </button>
+
+            <button
+              type="button"
+              data-gmp-tab="unread"
+            >
+              Sin leer
+            </button>
+
+            <button
+              type="button"
+              data-gmp-tab="approval"
+            >
+              Autorizaciones
+            </button>
+
+          </div>
+
+          <div class="gmp-toolbar-actions">
+
+            <button
+              class="gmp-btn"
+              type="button"
+              id="gmpRefresh"
+            >
+              ↻ Actualizar
+            </button>
+
+            <button
+              class="gmp-btn"
+              type="button"
+              id="gmpReadAll"
+            >
+              ✓ Marcar todas leídas
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="gmp-filters">
+
+          <input
+            id="gmpSearch"
+            type="search"
+            placeholder="Buscar aviso, contenido o módulo…"
+            aria-label="Buscar notificaciones"
+          >
+
+          <label>
+            Desde
+            <input id="gmpFrom" type="date">
+          </label>
+
+          <label>
+            Hasta
+            <input id="gmpTo" type="date">
+          </label>
+
+        </div>
+
+        <p
+          id="gmpMessage"
+          class="gmp-message"
+          role="status"
+        >
+          Conectando con la bandeja…
+        </p>
+
+        <div class="gmp-list" id="gmpList"></div>
+
+        <div class="gmp-foot">
+
+          <span id="gmpPagination">—</span>
+
+          <button
+            class="gmp-btn"
+            id="gmpMore"
+            type="button"
+            hidden
+          >
+            Mostrar más ↓
+          </button>
+
+        </div>
+
+      </section>
+
+    </div>
+
+    <footer class="gmp-footer">
+      GRUPO GUTIÉRREZ ✳ SISTEMA CENTRAL
+      <span>Perfil privado · Notificaciones</span>
+    </footer>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/mi-perfil-notificaciones.js"></script>
+
+</body>
+</html>

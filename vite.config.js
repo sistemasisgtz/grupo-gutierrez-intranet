@@ -32,7 +32,9 @@ export default defineConfig({
                     resolve(
                         __dirname,
                         "yo.html"
-                    )
+                    ),
+
+                miPerfilNotificaciones: resolve(__dirname, "mi-perfil-notificaciones.html")
 
             }
 
