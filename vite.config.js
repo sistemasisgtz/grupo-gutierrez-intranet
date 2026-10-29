@@ -33,6 +33,7 @@ export default defineConfig({
                         __dirname,
                         "yo.html"
                     ),
+                xmlFacturas: resolve(__dirname,"xml-facturas.html"),
 
                 miPerfilNotificaciones: resolve(__dirname, "mi-perfil-notificaciones.html")
 

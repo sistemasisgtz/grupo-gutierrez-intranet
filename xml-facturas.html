@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1">
+
+  <title>XML y Facturas · Grupo Gutiérrez</title>
+
+  <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="css/sistema.css">
+  <link rel="stylesheet" href="css/xml-facturas.css">
+</head>
+
+<body class="gxf-page">
+
+  <div class="atmosphere" aria-hidden="true">
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+    <div class="atmosphere-noise"></div>
+  </div>
+
+  <main class="gxf-shell">
+
+    <header class="gxf-top">
+
+      <a href="sistema.html" class="gxf-back">
+        ← Sistema Central
+      </a>
+
+      <span>
+        GRUPO GUTIÉRREZ · CONTROL DOCUMENTAL
+      </span>
+
+      <button id="gxfTheme"
+              class="gxf-btn"
+              type="button">
+        ☀ Modo claro
+      </button>
+
+    </header>
+
+    <section class="gxf-hero">
+
+      <div>
+        <span class="gxf-eyebrow">
+          CFDI · ARCHIVO DIGITAL
+        </span>
+
+        <h1>
+          XML <em>y Facturas.</em>
+        </h1>
+
+        <p>
+          Importa facturas emitidas, revisa todos
+          sus datos fiscales y partidas, y consérvalas
+          para los siguientes módulos del sistema.
+        </p>
+      </div>
+
+      <button id="gxfAdd"
+              class="gxf-btn gxf-primary"
+              type="button">
+        ＋ Agregar factura
+      </button>
+
+    </section>
+
+    <div id="gxfStats" class="gxf-stats"></div>
+
+    <section class="gxf-panel">
+
+      <div class="gxf-panel-head">
+        <div>
+          <span class="gxf-eyebrow">
+            HISTORIAL ORGANIZADO
+          </span>
+          <h2>Registro de facturas</h2>
+        </div>
+
+        <button id="gxfRefresh"
+                class="gxf-btn"
+                type="button">
+          ↻ Actualizar
+        </button>
+      </div>
+
+      <div class="gxf-tabs">
+
+        <button type="button"
+                class="active"
+                data-gxf-section="active">
+          Activas
+        </button>
+
+        <button type="button"
+                data-gxf-section="hidden">
+          Ocultas
+        </button>
+
+      </div>
+
+      <div class="gxf-filters">
+
+        <label>
+          Buscar folio, UUID, cliente, RFC o correo
+          <input id="gxfSearch"
+                 type="search"
+                 placeholder="Buscar en el registro...">
+        </label>
+
+        <label>
+          Cargadas desde
+          <input id="gxfFrom" type="date">
+        </label>
+
+        <label>
+          Cargadas hasta
+          <input id="gxfTo" type="date">
+        </label>
+
+        <button type="button"
+                id="gxfClear"
+                class="gxf-btn">
+          Limpiar
+        </button>
+
+      </div>
+
+      <p id="gxfMessage"
+         class="gxf-message"
+         role="status">
+        Consultando tu sesión…
+      </p>
+
+      <div class="gxf-table-wrap">
+        <table class="gxf-table">
+
+          <thead>
+            <tr>
+              <th>Factura</th>
+              <th>Receptor</th>
+              <th>RFC receptor</th>
+              <th>Emisión</th>
+              <th>Total fiscal</th>
+              <th>Fecha de carga</th>
+              <th>Cargada por</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody id="gxfRows"></tbody>
+
+        </table>
+      </div>
+
+      <div class="gxf-pagination">
+
+        <span id="gxfPageText">—</span>
+
+        <div>
+          <button id="gxfPrev"
+                  class="gxf-btn"
+                  type="button">
+            ← Anterior
+          </button>
+
+          <button id="gxfNext"
+                  class="gxf-btn"
+                  type="button">
+            Siguiente →
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <footer class="gxf-footer">
+      GRUPO GUTIÉRREZ · El XML fiscal original
+      se conserva sin alteraciones
+    </footer>
+
+  </main>
+
+  <dialog id="gxfImportDialog"
+          class="gxf-dialog"
+          aria-label="Importar factura XML">
+
+    <div class="gxf-dialog-body">
+
+      <header class="gxf-dialog-head">
+
+        <div>
+          <span class="gxf-eyebrow">
+            NUEVA IMPORTACIÓN
+          </span>
+
+          <h2>Agregar factura</h2>
+        </div>
+
+        <button type="button"
+                class="gxf-btn"
+                data-gxf-close="import">
+          ✕ Cerrar
+        </button>
+
+      </header>
+
+      <div id="gxfDrop"
+           class="gxf-drop"
+           role="button"
+           tabindex="0">
+
+        <span class="gxf-drop-icon">⇧</span>
+
+        <strong>
+          Arrastra aquí tu XML CFDI
+        </strong>
+
+        <small>
+          O haz clic para seleccionar un archivo ·
+          Máximo 2 MB · CFDI de ingreso 3.3/4.0
+        </small>
+
+        <input id="gxfFile"
+               type="file"
+               accept=".xml,text/xml,application/xml"
+               hidden>
+
+      </div>
+
+      <div id="gxfPreview" hidden></div>
+
+      <p id="gxfImportMessage"
+         class="gxf-message"
+         role="status"></p>
+
+      <div class="gxf-dialog-actions">
+
+        <button id="gxfSave"
+                type="button"
+                class="gxf-btn gxf-primary"
+                disabled>
+          Guardar factura y partidas
+        </button>
+
+      </div>
+
+    </div>
+
+  </dialog>
+
+  <dialog id="gxfDetailDialog"
+          class="gxf-dialog"
+          aria-label="Detalle de factura">
+
+    <div class="gxf-dialog-body">
+
+      <header class="gxf-dialog-head">
+
+        <div>
+          <span class="gxf-eyebrow">
+            CONSULTA DEL REGISTRO
+          </span>
+
+          <h2>Detalle de factura</h2>
+        </div>
+
+        <button class="gxf-btn"
+                data-gxf-close="detail"
+                type="button">
+          ✕ Cerrar
+        </button>
+
+      </header>
+
+      <div id="gxfDetail"></div>
+
+      <div class="gxf-dialog-actions">
+
+        <button id="gxfDownloadXml"
+                class="gxf-btn"
+                type="button">
+          ↓ Descargar XML original
+        </button>
+
+      </div>
+
+    </div>
+
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/xml-facturas.js"></script>
+
+</body>
+</html>

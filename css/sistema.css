@@ -1166,3 +1166,38 @@ svg {
     grid-column: span 12 !important;
   }
 }
+
+
+/* GG_XML_FACTURAS_20261028_V1 */
+
+.slot-xml {
+  grid-column:span 6;
+  min-height:255px;
+}
+
+.card-xml {
+  background:
+    radial-gradient(
+      circle at 90% 15%,
+      rgba(95,171,202,.18),
+      transparent 53%
+    ),
+    rgba(27,43,56,.28);
+}
+
+.card-xml .card-title {
+  font-size:clamp(23px,2.4vw,31px);
+}
+
+@media(max-width:1040px) {
+  .slot-xml {
+    grid-column:auto;
+    min-height:255px;
+  }
+}
+
+@media(max-width:690px) {
+  .slot-xml {
+    min-height:230px;
+  }
+}
