@@ -1,0 +1,258 @@
+
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  min-height:100vh;
+  color:#f6f6f3;
+  background:
+    radial-gradient(ellipse at 18% 15%,#83d9ed12,transparent 42%),
+    radial-gradient(ellipse at 85% 85%,#f28b4310,transparent 45%),
+    #090b0e;
+  font-family:"DM Sans",sans-serif;
+}
+
+button,input,select {font:inherit}
+a {color:inherit;text-decoration:none}
+
+.sys-top,
+.sys-wrap {
+  width:min(1300px,calc(100% - 48px));
+  margin:auto;
+}
+
+.sys-top {
+  padding:27px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid #ffffff20;
+}
+
+.sys-top>a:last-child {
+  color:#aebac5;
+  font-size:12px;
+}
+
+.sys-brand {
+  font:800 24px Manrope,sans-serif;
+  letter-spacing:-.06em;
+}
+
+.sys-brand span,
+.sys-hero h1 span {color:#f28b43}
+
+.sys-brand small {
+  font:500 10px "DM Sans",sans-serif;
+  color:#aab6c4;
+  letter-spacing:.13em;
+  margin-left:13px;
+}
+
+.sys-hero {padding:57px 0 38px}
+
+.sys-hero small {
+  letter-spacing:.2em;
+  color:#83d9ed;
+  font-size:10px;
+}
+
+.sys-hero h1 {
+  margin:10px 0 12px;
+  font:800 clamp(48px,7vw,84px)/1.05
+    Manrope,sans-serif;
+  letter-spacing:-.07em;
+}
+
+.sys-hero p {color:#aab5c0}
+
+.sys-tabs {
+  border-bottom:1px solid #ffffff25;
+  margin-bottom:24px;
+}
+
+.sys-tabs button {
+  background:none;
+  border:0;
+  color:white;
+  border-bottom:2px solid #f28b43;
+  padding:16px 4px;
+  font-weight:700;
+}
+
+.sys-panel {
+  border:1px solid #ffffff20;
+  border-radius:22px;
+  padding:26px;
+  margin-bottom:24px;
+  background:linear-gradient(
+    135deg,#ffffff0d,#ffffff04
+  );
+  backdrop-filter:blur(18px);
+}
+
+.sys-controls {
+  display:grid;
+  grid-template-columns:1fr 1fr auto;
+  align-items:end;
+  gap:16px;
+}
+
+.sys-controls label {
+  display:grid;
+  gap:9px;
+  font-size:10px;
+  letter-spacing:.15em;
+  color:#b1c0cd;
+}
+
+.sys-controls input,
+.sys-controls select {
+  padding:13px;
+  border:1px solid #ffffff28;
+  border-radius:11px;
+  background:#171b20;
+  color:white;
+  width:100%;
+}
+
+.sys-controls button {
+  border:0;
+  border-radius:11px;
+  background:#f28b43;
+  color:#14171a;
+  font-weight:700;
+  padding:14px 22px;
+}
+
+.sys-controls button:disabled {
+  opacity:.5;
+}
+
+.sys-note {
+  color:#9dabb8;
+  font-size:12px;
+  line-height:1.6;
+  margin:23px 0;
+}
+
+.sys-roles {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+
+.sys-role {
+  min-width:0;
+  border:1px solid #ffffff1d;
+  border-radius:17px;
+  padding:17px;
+  background:#15191edb;
+}
+
+.sys-role h3 {
+  margin:0 0 5px;
+  font-size:18px;
+}
+
+.sys-role>small {
+  color:#83d9ed;
+  font-size:11px;
+}
+
+.sys-users {
+  max-height:390px;
+  overflow:auto;
+  margin-top:13px;
+}
+
+.sys-user {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:10px 3px;
+  border-bottom:1px solid #ffffff0d;
+  cursor:pointer;
+  font-size:11px;
+  overflow-wrap:anywhere;
+}
+
+.sys-user input {
+  flex:none;
+  accent-color:#83d9ed;
+}
+
+#sysMessage {
+  margin:20px 0 0;
+  color:#83d9ed;
+  font-size:12px;
+}
+
+.sys-heading,
+.sys-request {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.sys-heading h2 {font-size:21px}
+
+.sys-heading button,
+.sys-request button {
+  background:#ffffff0d;
+  border:1px solid #ffffff2a;
+  border-radius:9px;
+  padding:10px 13px;
+  color:white;
+  cursor:pointer;
+}
+
+.sys-request {
+  border-top:1px solid #ffffff20;
+  padding:17px 0;
+}
+
+.sys-request strong,
+.sys-request small {
+  display:block;
+  overflow-wrap:anywhere;
+}
+
+.sys-request small {
+  color:#96a6b6;
+  margin-top:5px;
+}
+
+.sys-request>div:last-child {
+  display:flex;
+  gap:8px;
+}
+
+@media(max-width:1050px) {
+  .sys-roles {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:700px) {
+  .sys-top,.sys-wrap {
+    width:calc(100% - 28px);
+  }
+
+  .sys-brand small {display:none}
+
+  .sys-controls,
+  .sys-roles {
+    grid-template-columns:1fr;
+  }
+
+  .sys-panel {padding:17px}
+
+  .sys-users {max-height:210px}
+
+  .sys-request {
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}

@@ -227,6 +227,7 @@
       `;
 
       target.append(node);
+window.ggSistemasNotificationRender?.(node,item);
     }
   }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="gg-gate-pending">
 
 <head>
 
@@ -43,6 +43,7 @@
 
     <link rel="stylesheet" href="css/finanzas-ajustes.css">
 
+<link rel="stylesheet" href="css/gg-sistemas.css">
 </head>
 
 
@@ -615,12 +616,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="js/supabase-client.js"></script>
+<script src="js/gg-module-guard.js" data-gg-module="solicitudes-pago"></script>
 
-    <script src="js/finanzas-core.js"></script>
+    <script type="text/gg-protected" src="js/finanzas-core.js"></script>
 
-    <script src="js/solicitudes-pago.js"></script>
+    <script type="text/gg-protected" src="js/solicitudes-pago.js"></script>
 
-    <script src="js/finanzas-ajustes.js"></script>
+    <script type="text/gg-protected" src="js/finanzas-ajustes.js"></script>
 
 
 </body>

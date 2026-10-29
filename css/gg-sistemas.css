@@ -1,0 +1,231 @@
+
+/* GG SISTEMAS · ORBITAL 9 */
+
+body .workspace {
+  min-height: 930px;
+}
+
+body .workspace .module-shell {
+  position: absolute !important;
+  left: var(--gx) !important;
+  top: var(--gy) !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: clamp(175px,17vw,228px) !important;
+  height: 130px !important;
+  min-height: 0 !important;
+  transform: translate(-50%,-50%) !important;
+  pointer-events: auto;
+}
+
+body .workspace .module-card {
+  height: 100%;
+  min-width: 0;
+  padding: 15px 17px;
+}
+
+body .workspace .card-title {
+  font-size: clamp(13px,1.3vw,18px) !important;
+  line-height: 1.17 !important;
+  overflow-wrap: anywhere;
+}
+
+body .workspace .slot-sales {
+  --gx: 23%; --gy: 27%;
+}
+body .workspace .slot-people {
+  --gx: 50%; --gy: 12%;
+}
+body .workspace .slot-warehouse {
+  --gx: 77%; --gy: 27%;
+}
+body .workspace .slot-payments {
+  --gx: 88%; --gy: 48%;
+}
+body .workspace .slot-finance {
+  --gx: 76%; --gy: 69%;
+}
+body .workspace .slot-collections {
+  --gx: 62%; --gy: 87%;
+}
+body .workspace .slot-profile-notif {
+  --gx: 38%; --gy: 87%;
+}
+body .workspace .slot-xml {
+  --gx: 12%; --gy: 48%;
+}
+body .workspace .slot-sistemas {
+  --gx: 24%; --gy: 69%;
+}
+
+body .slot-sistemas .module-card {
+  border-color: #83d9ed55;
+  background:
+    linear-gradient(135deg,#83d9ed14,#ffffff05),
+    #171b20ed;
+}
+
+body .slot-sistemas .card-icon {
+  color: #83d9ed;
+}
+
+/* Bloqueo mientras se verifica acceso */
+html.gg-gate-pending body {
+  visibility: hidden !important;
+}
+
+/* Pantalla de acceso denegado */
+.gg-denied-page {
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  color: #f7f7f5;
+  font-family: "DM Sans",sans-serif;
+  background:
+    radial-gradient(ellipse at center,#222831,#090a0d 75%);
+}
+
+.gg-denied-content,
+.gg-access-panel {
+  width: min(460px,calc(100vw - 32px));
+  text-align: center;
+  border: 1px solid #ffffff24;
+  background: #1b2026f2;
+  border-radius: 24px;
+  padding: 36px;
+  box-shadow: 0 25px 90px #0008;
+}
+
+.gg-denied-content h1,
+.gg-access-panel h2 {
+  font-family: Manrope,sans-serif;
+  letter-spacing: -.06em;
+  font-size: 32px;
+}
+
+.gg-denied-content p,
+.gg-access-panel p {
+  color: #acb8c4;
+  line-height: 1.6;
+}
+
+.gg-denied-content button,
+.gg-access-panel button {
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 18px;
+  background: #f28b43;
+  color: #101318;
+  font: 700 13px "DM Sans",sans-serif;
+  cursor: pointer;
+}
+
+.gg-denied-content button:disabled,
+.gg-access-panel button:disabled {
+  opacity: .55;
+}
+
+.gg-denied-content a,
+.gg-access-panel a {
+  display: block;
+  margin-top: 18px;
+  color: #b8cad8;
+  text-decoration: none;
+}
+
+.gg-denied-content small,
+.gg-access-panel small {
+  display: block;
+  color: #83d9ed;
+  margin-top: 15px;
+  line-height: 1.5;
+}
+
+.gg-access-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  backdrop-filter: blur(18px);
+  background: #07080cdc;
+}
+
+.gg-access-panel .gg-close {
+  background: #ffffff18;
+  color: #eee;
+  margin-top: 10px;
+}
+
+.gg-sistemas-approval {
+  border: 1px solid #83d9ed66 !important;
+}
+
+/* Responsivo */
+@media(max-width:1150px) {
+  body .workspace {
+    min-height: 0;
+    padding-top: 300px;
+  }
+
+  body .workspace .hero {
+    position: absolute !important;
+    top: 140px !important;
+    left: 50% !important;
+    width: min(500px,90%) !important;
+    transform: translateX(-50%) !important;
+  }
+
+  body .workspace .gg-orbit {
+    inset: 0 0 auto !important;
+    height: 280px;
+    opacity: .65;
+  }
+
+  body .workspace .module-grid {
+    position: relative !important;
+    inset: auto !important;
+    display: grid !important;
+    grid-template-columns:
+      repeat(3,minmax(0,1fr)) !important;
+    gap: 14px !important;
+  }
+
+  body .workspace .module-shell {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 132px !important;
+  }
+}
+
+@media(max-width:700px) {
+  body .workspace {
+    padding-top: 280px;
+  }
+
+  body .workspace .module-grid {
+    grid-template-columns:
+      repeat(2,minmax(0,1fr)) !important;
+  }
+
+  body .workspace .card-title {
+    font-size: 14px !important;
+  }
+}
+
+@media(max-width:420px) {
+  body .workspace .module-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body .workspace .module-shell {
+    height: 112px !important;
+  }
+}

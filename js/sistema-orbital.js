@@ -17,7 +17,7 @@
 
     const modules = [...grid.querySelectorAll("[data-module]")];
 
-    if (modules.length !== 8) {
+    if (modules.length !== 9) {
       console.warn(
         "[GG Orbital] Cantidad inesperada de módulos."
       );

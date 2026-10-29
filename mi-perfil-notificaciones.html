@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" class="gg-gate-pending">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -15,6 +15,7 @@
 
   <link rel="stylesheet" href="css/sistema.css">
   <link rel="stylesheet" href="css/mi-perfil-notificaciones.css">
+<link rel="stylesheet" href="css/gg-sistemas.css">
 </head>
 
 <body class="gmp-page">
@@ -300,7 +301,9 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-client.js"></script>
-  <script src="js/mi-perfil-notificaciones.js"></script>
+<script src="js/gg-module-guard.js" data-gg-module="mi-perfil-notificaciones"></script>
+  <script type="text/gg-protected" src="js/gg-sistemas-notificaciones.js"></script>
+<script type="text/gg-protected" src="js/mi-perfil-notificaciones.js"></script>
 
 </body>
 </html>

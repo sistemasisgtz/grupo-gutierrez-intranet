@@ -1,0 +1,97 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
+<title>Sistemas · Grupo Gutiérrez</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet">
+<link rel="stylesheet" href="css/sistemas-panel.css">
+</head>
+<body>
+<header class="sys-top">
+  <a href="sistema.html" class="sys-brand">
+    GG<span>✳</span> <small>GRUPO GUTIÉRREZ</small>
+  </a>
+  <a href="sistema.html">← Volver a módulos</a>
+</header>
+
+<main class="sys-wrap">
+  <section class="sys-hero">
+    <small>ADMINISTRACIÓN CENTRAL · GRUPO GUTIÉRREZ</small>
+    <h1>Sistemas<span>.</span></h1>
+    <p>Accesos y jerarquías desde un solo lugar.</p>
+  </section>
+
+  <nav class="sys-tabs">
+    <button type="button">Flujos permisos</button>
+  </nav>
+
+  <section class="sys-panel">
+    <div class="sys-controls">
+      <label>
+        MÓDULO
+        <select id="sysModule">
+          <option value="almacen">Almacén</option>
+          <option value="recursos-humanos">
+            Recursos Humanos
+          </option>
+          <option value="solicitudes-pago">
+            Solicitudes de Pago
+          </option>
+          <option value="ventas">Ventas</option>
+          <option value="control-financiero">
+            Control Financiero
+          </option>
+          <option value="xml-facturas">
+            XML y Facturas
+          </option>
+          <option value="mi-perfil-notificaciones">
+            Mi Perfil y Notificaciones
+          </option>
+        </select>
+      </label>
+
+      <label>
+        BUSCAR CORREO
+        <input id="sysSearch"
+               type="search"
+               placeholder="Buscar usuarios...">
+      </label>
+
+      <button id="sysSave" type="button" disabled>
+        Guardar permisos
+      </button>
+    </div>
+
+    <p class="sys-note">
+      Acceso permite entrar al módulo. Padre,
+      Sub-Padre e Hijo se guardan para los flujos
+      futuros y todavía no otorgan privilegios.
+    </p>
+
+    <div id="sysRoles" class="sys-roles"></div>
+
+    <p id="sysMessage" role="status">
+      Consultando Supabase...
+    </p>
+  </section>
+
+  <section class="sys-panel">
+    <div class="sys-heading">
+      <h2>Autorizaciones pendientes</h2>
+      <button id="sysRefresh" type="button">
+        Actualizar ↻
+      </button>
+    </div>
+    <div id="sysRequests"></div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/sistemas-panel.js"></script>
+</body>
+</html>
