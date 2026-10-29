@@ -56,3 +56,65 @@
     init();
   }
 })();
+
+
+
+
+
+
+/* GG ENERGY 2.1 START */
+(() => {
+  "use strict";
+
+  function refine() {
+    const orbit = document.querySelector(".gg-orbit");
+    const workspace = document.querySelector(".workspace");
+    if (!orbit || !workspace) return;
+
+    // Eliminar ondas
+    orbit.querySelectorAll(".gg-shockwave")
+      .forEach(el => el.remove());
+
+    // Conservar solo dos partículas
+    orbit.querySelectorAll(".gg-particle-track")
+      .forEach((el, index) => {
+        if (index >= 2) el.remove();
+        else {
+          el.style.setProperty(
+            "--speed",
+            index === 0 ? "22s" : "30s"
+          );
+        }
+      });
+
+    // Conservar un filamento
+    orbit.querySelectorAll(".gg-filament")
+      .forEach((el, index) => {
+        if (index > 0) el.remove();
+      });
+
+    // Desactivar el parallax anterior para evitar
+    // dos controladores compitiendo entre sí.
+    const inner = orbit.querySelector(".gg-orbit-inner");
+
+    if (inner) {
+      inner.style.setProperty(
+        "--mouse-x", "0px"
+      );
+      inner.style.setProperty(
+        "--mouse-y", "0px"
+      );
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      refine,
+      { once: true }
+    );
+  } else {
+    refine();
+  }
+})();
+/* GG ENERGY 2.1 END */

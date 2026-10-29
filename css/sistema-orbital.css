@@ -564,3 +564,129 @@ body::before {
     font-size: 15px !important;
   }
 }
+
+
+
+
+
+
+/* GG ENERGY 2.1 START */
+
+/* Movimiento ambiental, no protagonista */
+.gg-energy {
+  opacity: .62;
+  filter: blur(19px);
+  animation:
+    ggRefinedRotate 24s linear infinite,
+    ggRefinedGlow 6s ease-in-out infinite;
+}
+
+.gg-energy.second {
+  opacity: .42;
+  filter: blur(23px);
+  animation:
+    ggRefinedReverse 34s linear infinite,
+    ggRefinedGlow 8s ease-in-out infinite;
+}
+
+.gg-orbit-core {
+  opacity: .55;
+  animation: ggRefinedCore 7s ease-in-out infinite;
+}
+
+/* Un solo filamento discreto */
+.gg-filament {
+  width: min(54vw, 580px);
+  border-width: 1px;
+  opacity: .28;
+  filter: drop-shadow(0 0 5px #83d9ed33);
+  animation: ggRefinedRotate 28s linear infinite;
+}
+
+.gg-filament.second {
+  display: none;
+}
+
+/* Partículas delicadas */
+.gg-particle-track {
+  animation-duration: 22s;
+}
+
+.gg-particle-track:nth-of-type(even) {
+  animation-duration: 30s;
+}
+
+.gg-particle {
+  width: 4px;
+  height: 4px;
+  opacity: .55;
+  box-shadow:
+    0 0 6px var(--particle-color),
+    0 0 13px var(--particle-color);
+  animation: ggRefinedTwinkle 4s ease-in-out infinite;
+}
+
+/* Dos partículas en vez de cuatro */
+.gg-particle-track:nth-of-type(n+6) {
+  display: none;
+}
+
+/* Eliminamos ondas expansivas */
+.gg-shockwave {
+  display: none !important;
+}
+
+/* Parallax más contenido */
+.gg-orbit-inner {
+  transition: transform .7s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes ggRefinedRotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ggRefinedReverse {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes ggRefinedGlow {
+  0%, 100% { opacity: .42; }
+  50% { opacity: .68; }
+}
+
+@keyframes ggRefinedCore {
+  0%, 100% {
+    opacity: .4;
+    scale: .98;
+  }
+  50% {
+    opacity: .65;
+    scale: 1.035;
+  }
+}
+
+@keyframes ggRefinedTwinkle {
+  0%, 100% { opacity: .3; }
+  50% { opacity: .65; }
+}
+
+@media (max-width: 760px) {
+  .gg-energy { opacity: .5; }
+  .gg-energy.second { opacity: .32; }
+  .gg-filament { opacity: .2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gg-energy,
+  .gg-energy.second,
+  .gg-orbit-core,
+  .gg-filament,
+  .gg-particle-track,
+  .gg-particle {
+    animation: none !important;
+  }
+
+  .gg-orbit-inner { transform: none !important; }
+}
+
+/* GG ENERGY 2.1 END */
