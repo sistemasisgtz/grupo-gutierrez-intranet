@@ -13,7 +13,8 @@
     "xml-facturas": "xml-facturas.html",
     "mi-perfil-notificaciones":
       "mi-perfil-notificaciones.html",
-    sistemas: "sistemas.html"
+    sistemas: "sistemas.html",
+    direccion: "direccion.html"
   };
 
   let busy = false;

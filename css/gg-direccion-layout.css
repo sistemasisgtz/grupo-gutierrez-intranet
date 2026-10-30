@@ -1,0 +1,94 @@
+
+/* DIRECCIÓN · REACOMODO RESPONSIVE GG */
+body .workspace {
+  min-height:0!important;
+  padding:335px 0 40px!important;
+}
+body .workspace .workspace-heading {
+  top:8px!important;
+}
+body .workspace .workspace-side {
+  top:55px!important;
+}
+body .workspace .hero {
+  position:absolute!important;
+  left:50%!important;
+  top:145px!important;
+  width:min(520px,90%)!important;
+  transform:translateX(-50%)!important;
+  text-align:center!important;
+}
+body .workspace .gg-orbit {
+  inset:0 0 auto!important;
+  height:300px!important;
+  opacity:.48;
+}
+body .workspace .module-grid {
+  position:relative!important;
+  inset:auto!important;
+  width:100%;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:15px!important;
+  pointer-events:auto!important;
+}
+body .workspace .module-shell,
+body .workspace .module-shell:nth-child(n) {
+  position:relative!important;
+  inset:auto!important;
+  left:auto!important;right:auto!important;
+  top:auto!important;bottom:auto!important;
+  transform:none!important;
+  translate:none!important;
+  margin:0!important;
+  width:100%!important;
+  min-width:0!important;
+  height:155px!important;
+  grid-column:auto!important;
+  grid-row:auto!important;
+}
+body .workspace .module-card {
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+}
+body .workspace .card-title {
+  font-size:clamp(13px,1.3vw,19px)!important;
+  overflow-wrap:anywhere;
+}
+body .workspace .slot-direccion .module-card {
+  border-color:#80D1F077;
+  background:
+    linear-gradient(135deg,#69C4EA1E,#F28B4317),
+    #141A21;
+}
+@media(max-width:1250px) {
+  body .workspace .module-grid {
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:950px) {
+  body .workspace .module-grid {
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:700px) {
+  body .workspace {padding-top:290px!important}
+  body .workspace .hero {top:90px!important}
+  body .workspace .module-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  body .workspace .module-shell,
+  body .workspace .module-shell:nth-child(n) {
+    height:135px!important;
+  }
+}
+@media(max-width:430px) {
+  body .workspace .module-grid {
+    grid-template-columns:1fr!important;
+  }
+  body .workspace .module-shell,
+  body .workspace .module-shell:nth-child(n) {
+    height:120px!important;
+  }
+}

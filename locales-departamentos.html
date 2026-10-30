@@ -1,0 +1,55 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+ content="width=device-width,initial-scale=1">
+<title>Locales y Departamentos</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+ rel="stylesheet">
+<link rel="stylesheet" href="css/ld-ui.css">
+<link rel="stylesheet" href="css/ld-fixes-v3.css">
+<link rel="stylesheet" href="css/ld-filtros-v4.css">
+</head>
+<body class="ld-body" data-mode="gg">
+<header class="ld-header">
+  <div class="ld-wrap ld-header-inner">
+    <a class="ld-brand" href="direccion.html">
+      GG<span>✳</span>
+      <small style="font-size:12px;font-weight:500">
+        LOCALES Y DEPARTAMENTOS
+      </small>
+    </a>
+    <a class="ld-back" href="direccion.html">
+      ← Volver al menú
+    </a>
+  </div>
+</header>
+<main class="ld-wrap ld-main">
+  <section class="ld-hero">
+    <div>
+      <div class="ld-eyebrow">
+        DIRECCIÓN · PATRIMONIO
+      </div>
+      <h1>Locales y Departamentos<span
+       style="color:#ED975B">.</span></h1>
+      <p>Tus bienes, responsables y tareas en un solo lugar.</p>
+    </div>
+    <div aria-hidden="true" style="font-size:65px">🏘️</div>
+  </section>
+
+  <div id="ldApp" aria-live="polite">
+    <div class="ld-empty">
+      Conectando con Supabase...
+    </div>
+  </div>
+</main>
+<div id="ldModalHost"></div>
+<div id="ldToastHost"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/ld-app.js"></script>
+<script src="js/ld-filtros-v4.js"></script>
+</body>
+</html>

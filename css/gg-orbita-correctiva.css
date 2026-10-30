@@ -1,0 +1,242 @@
+
+/* GG · 10 MÓDULOS · ÓRBITA RESPONSIVE V2 */
+
+body .workspace {
+  position: relative !important;
+  min-height: 940px !important;
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+body .workspace .module-grid {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  transform: none !important;
+  pointer-events: none !important;
+}
+
+body .workspace .module-shell,
+body .workspace .module-shell:nth-child(n) {
+  position: absolute !important;
+  left: var(--ox) !important;
+  top: var(--oy) !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  grid-area: auto !important;
+  translate: none !important;
+  transform: translate(-50%, -50%) !important;
+  width: clamp(155px, 16vw, 215px) !important;
+  height: 126px !important;
+  min-height: 0 !important;
+  pointer-events: auto !important;
+  z-index: 9 !important;
+}
+
+body .workspace .module-shell .module-card {
+  height: 100% !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  padding: 14px !important;
+}
+
+body .workspace .module-shell .card-title {
+  font-size: clamp(13px, 1.3vw, 18px) !important;
+  line-height: 1.2 !important;
+  overflow-wrap: anywhere;
+}
+
+body .workspace .hero {
+  position: absolute !important;
+  top: 51% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+  width: min(420px, 43%) !important;
+  text-align: center !important;
+  z-index: 4 !important;
+  pointer-events: none !important;
+}
+
+body .workspace .workspace-heading {
+  position: absolute !important;
+  top: 4px !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 12 !important;
+}
+
+body .workspace .gg-orbit {
+  position: absolute !important;
+  inset: 6% 7% !important;
+  width: auto !important;
+  height: auto !important;
+  opacity: .55 !important;
+  pointer-events: none !important;
+}
+
+/* Posiciones alrededor del título central */
+
+body .workspace .slot-sales {
+  --ox: 50%;
+  --oy: 8%;
+}
+
+body .workspace .slot-people {
+  --ox: 74%;
+  --oy: 17%;
+}
+
+body .workspace .slot-warehouse {
+  --ox: 88%;
+  --oy: 37%;
+}
+
+body .workspace .slot-payments {
+  --ox: 88%;
+  --oy: 63%;
+}
+
+body .workspace .slot-finance {
+  --ox: 74%;
+  --oy: 83%;
+}
+
+body .workspace .slot-collections {
+  --ox: 50%;
+  --oy: 92%;
+}
+
+body .workspace .slot-profile-notif {
+  --ox: 26%;
+  --oy: 83%;
+}
+
+body .workspace .slot-xml {
+  --ox: 12%;
+  --oy: 63%;
+}
+
+body .workspace .slot-sistemas {
+  --ox: 12%;
+  --oy: 37%;
+}
+
+body .workspace .slot-direccion {
+  --ox: 26%;
+  --oy: 17%;
+}
+
+body .workspace .slot-direccion .module-card {
+  border: 1px solid #80d8f477 !important;
+  background:
+    linear-gradient(
+      125deg,
+      #7dd8ef22,
+      #ffb87e16
+    ),
+    #17202a !important;
+}
+
+/* Ventanas medianas: órbita ovalada */
+
+@media (max-width: 1020px) {
+  body .workspace {
+    min-height: 1050px !important;
+  }
+
+  body .workspace .module-shell,
+  body .workspace .module-shell:nth-child(n) {
+    width: min(43vw, 245px) !important;
+    height: 120px !important;
+  }
+
+  body .workspace .hero {
+    top: 55% !important;
+    width: min(500px, 88%) !important;
+  }
+
+  body .workspace .slot-sales {
+    --ox: 27%;
+    --oy: 9%;
+  }
+
+  body .workspace .slot-people {
+    --ox: 73%;
+    --oy: 9%;
+  }
+
+  body .workspace .slot-warehouse {
+    --ox: 27%;
+    --oy: 24%;
+  }
+
+  body .workspace .slot-payments {
+    --ox: 73%;
+    --oy: 24%;
+  }
+
+  body .workspace .slot-finance {
+    --ox: 27%;
+    --oy: 38%;
+  }
+
+  body .workspace .slot-collections {
+    --ox: 73%;
+    --oy: 38%;
+  }
+
+  body .workspace .slot-profile-notif {
+    --ox: 27%;
+    --oy: 75%;
+  }
+
+  body .workspace .slot-xml {
+    --ox: 73%;
+    --oy: 75%;
+  }
+
+  body .workspace .slot-sistemas {
+    --ox: 27%;
+    --oy: 90%;
+  }
+
+  body .workspace .slot-direccion {
+    --ox: 73%;
+    --oy: 90%;
+  }
+}
+
+@media (max-width: 500px) {
+  body .workspace {
+    min-height: 1010px !important;
+  }
+
+  body .workspace .module-shell,
+  body .workspace .module-shell:nth-child(n) {
+    height: 109px !important;
+    padding: 0 !important;
+  }
+
+  body .workspace .module-shell .module-card {
+    padding: 10px !important;
+  }
+
+  body .workspace .module-shell .card-title {
+    font-size: 13px !important;
+  }
+
+  body .workspace .module-shell .card-description {
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+  }
+
+  body .workspace .hero {
+    top: 55% !important;
+    width: 94% !important;
+  }
+}
