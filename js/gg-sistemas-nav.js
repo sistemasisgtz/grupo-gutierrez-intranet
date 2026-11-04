@@ -5,6 +5,7 @@
   const db = window.ggSupabase;
 
   const paths = {
+    tecnologias: "tecnologias.html",
     ventas: "ventas.html",
     "recursos-humanos": "recursos-humanos.html",
     almacen: "almacen.html",
@@ -102,10 +103,9 @@
         throw Error("Inicia sesión nuevamente.");
       }
 
-      const {data,error} = await db.rpc(
-        "gg_module_access",
-        {p_module:module}
-      );
+      const {data,error} = module === "tecnologias"
+        ? await db.rpc("gg_tec_has_access")
+        : await db.rpc("gg_module_access",{p_module:module});
 
       if (error) throw error;
 
@@ -115,7 +115,7 @@
           module === "sistemas"
             ? "Solo sistemas@isgtz.com puede entrar."
             : "No tienes acceso a este módulo. Solicita autorización a Sistemas.",
-          module !== "sistemas"
+          module !== "sistemas" && module !== "tecnologias"
         );
         return;
       }

@@ -31,6 +31,15 @@
     );
   }
 
+  /* GG_TEC_SISTEMAS_V1 */
+  async function loadTechRoles() {
+    const {data,error}=await db.rpc("gg_tec_roles_snapshot");
+    if(error){note("Tecnologías: "+error.message);return;}
+    snapshot.roles=snapshot.roles.filter(r=>r.module!=="tecnologias")
+      .concat(Array.isArray(data)?data:[]);
+    render();
+  }
+
   function render() {
     if (!loaded) return;
 
@@ -226,7 +235,8 @@
     edited = false;
     $("sysSave").disabled = false;
 
-    render();
+    if ($("sysModule").value === "tecnologias") await loadTechRoles();
+    else render();
     renderRequests();
     note("Permisos sincronizados.");
   }
@@ -246,7 +256,7 @@
     }
 
     active = next;
-    render();
+    if (next === "tecnologias") loadTechRoles(); else render();
   };
 
   $("sysSearch").oninput = render;
@@ -264,7 +274,7 @@
     $("sysSave").disabled = true;
 
     const {error} = await db.rpc(
-      "gg_sistemas_save_roles",
+      module === "tecnologias" ? "gg_tec_save_roles" : "gg_sistemas_save_roles",
       {
         p_module:module,
         p_roles:payload

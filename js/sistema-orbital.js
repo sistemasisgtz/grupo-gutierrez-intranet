@@ -17,7 +17,7 @@
 
     const modules = [...grid.querySelectorAll("[data-module]")];
 
-    if (modules.length !== 10) {
+    if (modules.length < 3) {
       console.warn(
         "[GG Orbital] Cantidad inesperada de módulos."
       );
@@ -41,7 +41,7 @@
 
     const hint = document.createElement("span");
     hint.className = "gg-orbit-hint";
-    hint.textContent = "OCHO ESPACIOS · UNA SOLA PLATAFORMA";
+    hint.textContent = "ESPACIOS · UNA SOLA PLATAFORMA";
     workspace.append(hint);
 
     // Los botones originales permanecen intactos.

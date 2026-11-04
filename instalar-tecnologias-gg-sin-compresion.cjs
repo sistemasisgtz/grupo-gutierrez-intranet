@@ -1,0 +1,678 @@
+'use strict';
+/* GRUPO GUTIÉRREZ · INSTALADOR TECNOLOGÍAS V1
+   node instalar-tecnologias-gg.cjs
+   SQL por separado. No crea .bak ni carpetas de backup.
+   Validación previa, escritura con rollback en memoria si algo falla. */
+const fs=require('node:fs');
+const path=require('node:path');
+const vm=require('node:vm');
+const ROOT=process.cwd();
+const MARK='GG_TEC_INSTALADO_V1';
+const writes=new Map();
+const previous=new Map();
+const full=name=>path.resolve(ROOT,name);
+const read=name=>{
+  if(!fs.existsSync(full(name)))throw Error('No existe '+name+' en '+ROOT);
+  return fs.readFileSync(full(name),'utf8');
+};
+const change=(file,find,replacement)=>{
+  const current=writes.has(file)?writes.get(file):read(file);
+  if(!current.includes(find))throw Error('Cambió la estructura de '+file+'. No se aplicó ningún parche. Falta: '+find.slice(0,80));
+  writes.set(file,current.replace(find,replacement));
+};
+function insertOnce(file,anchor,text){
+  const current=writes.has(file)?writes.get(file):read(file);
+  if(current.includes(text.trim()))return;
+  if(!current.includes(anchor))throw Error('Falta ancla '+anchor+' en '+file);
+  writes.set(file,current.replace(anchor,text+'\n'+anchor));
+}
+function update(file,callback){writes.set(file,callback(writes.get(file)??read(file)));}
+function appendCard(source,card){
+  if(source.includes('data-module="tecnologias"'))return source;
+  const open=source.search(/<div\s+class=["']module-grid["']/i);
+  if(open<0)throw Error('No se encontró .module-grid en sistema.html');
+  const tag=/<\/?div\b[^>]*>/gi;tag.lastIndex=open;
+  let depth=0,close=-1,match;
+  while((match=tag.exec(source))){
+    if(/^<div\b/i.test(match[0]))depth++;else depth--;
+    if(depth===0){close=match.index;break;}
+  }
+  if(close<0)throw Error('No se encontró el cierre de la órbita');
+  return source.slice(0,close)+card+'\n'+source.slice(close);
+}
+const card=`
+<!-- GG_TEC_INSTALADO_V1 -->
+<div class="module-shell slot-tecnologias" style="--delay:.73s">
+  <button type="button" data-module="tecnologias" class="module-card card-tecnologias">
+    <span class="card-top"><span class="card-icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="14" height="11" rx="2"/><path d="M10 15v3M5 18h10"/><rect x="17" y="8" width="5" height="12" rx="1"/></svg>
+    </span><span class="card-serial">11 / 11</span></span>
+    <span class="card-content"><span class="card-eyebrow">INFRAESTRUCTURA DIGITAL</span>
+      <strong class="card-title">tecnologías</strong>
+      <span class="card-description">Equipos, telefonía y capacitaciones.</span></span>
+    <span class="card-footer"><span class="card-meta">TECNOLOGÍA</span><span class="card-arrow">↗</span></span>
+  </button>
+</div>`;
+
+const files={
+  'tecnologias.html':String.raw`<!doctype html>
+<html lang="es" class="gg-tech-locked">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b11">
+  <title>Tecnologías · Grupo Gutiérrez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tecnologias.css">
+</head>
+<body>
+  <div class="t-ambient" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="t-topbar">
+    <a href="sistema.html" class="t-brand"><span>GG<span class="t-brand-spark">✳</span></span><span>Grupo Gutiérrez<small>SISTEMA CENTRAL / TECNOLOGÍAS</small></span></a>
+    <div class="t-topright"><span class="t-live"><i></i> SISTEMA ACTIVO</span><button type="button" id="tBack" class="t-button t-button-quiet" hidden>← Categorías</button><a class="t-button t-button-quiet" href="sistema.html">Salir ↗</a></div>
+  </header>
+  <main id="tApp" hidden>
+    <section id="tHub" class="t-hub">
+      <div class="t-hub-head"><span class="t-overline">ECOSISTEMA / 2026</span><h1>Tecnologías<span>.</span></h1><p>Todo conectado. Todo bajo control.</p></div>
+      <div class="t-floating-hub">
+        <button type="button" data-open="computo" class="t-hub-card t-hub-computo"><span class="t-hub-symbol">⌘</span><small>01 / INVENTARIO</small><strong>Equipos<br>de cómputo</strong><span class="t-hub-arrow">↗</span></button>
+        <button type="button" data-open="telefonia" class="t-hub-card t-hub-phone"><span class="t-hub-symbol">▯</span><small>02 / LÍNEAS</small><strong>Equipos<br>de telefonía</strong><span class="t-hub-arrow">↗</span></button>
+        <button type="button" data-open="capacitaciones" class="t-hub-card t-hub-learn"><span class="t-hub-symbol">✳</span><small>03 / PERSONAS</small><strong>Capacitaciones</strong><span class="t-hub-arrow">↗</span></button>
+        <div class="t-hub-orbit" aria-hidden="true"></div>
+      </div>
+      <div class="t-hub-foot">ARRASTRA IDEAS, CONECTA PERSONAS, ORGANIZA EQUIPOS</div>
+    </section>
+    <section id="tBoard" class="t-board" hidden>
+      <div class="t-board-toolbar">
+        <div class="t-board-heading"><span class="t-overline" id="tBoardCaption">INVENTARIO</span><h2 id="tBoardTitle">Equipos</h2></div>
+        <div class="t-toolbar-actions">
+          <label class="t-search"><span>⌕</span><input id="tSearch" type="search" placeholder="Buscar equipo, empleado..." autocomplete="off"></label>
+          <button id="tDepartments" class="t-button" type="button">◈ Departamentos</button>
+          <button id="tExcel" class="t-button" type="button">↓ Excel</button>
+          <button id="tNew" class="t-button t-button-primary" type="button">＋ Agregar</button>
+        </div>
+      </div>
+      <div class="t-board-meta"><span id="tCounter">0 equipos</span><span><i class="t-dot"></i> Responsiva adjunta <i class="t-dot t-dot-red"></i> Sin responsiva</span></div>
+      <div id="tViewport" class="t-viewport" tabindex="0" aria-label="Espacio arrastrable de equipos. Usa rueda para zoom, arrastra fondo para desplazarte.">
+        <div id="tWorld" class="t-world"></div>
+        <div id="tEmpty" class="t-empty" hidden><span>✳</span><strong>Un lienzo para organizarlo todo.</strong><small>Agrega tu primer equipo con el botón superior.</small></div>
+        <div class="t-map-hint">⤧ ARRASTRA PARA MOVER · RUEDA PARA ZOOM</div>
+        <div class="t-zoom"><button type="button" id="tZoomOut" aria-label="Alejar">−</button><span id="tZoomLabel">100%</span><button type="button" id="tZoomIn" aria-label="Acercar">＋</button><button type="button" id="tZoomReset" aria-label="Centrar lienzo">⌖</button></div>
+      </div>
+    </section>
+    <section id="tTraining" class="t-training" hidden><span class="t-overline">FORMACIÓN CONTINUA</span><h2>Capacitaciones<span>.</span></h2><p>El acceso ya está preparado. El flujo de cursos, sesiones y evidencias se definirá en la siguiente etapa.</p><div class="t-training-icon">✳</div></section>
+  </main>
+  <section id="tDenied" class="t-denied" hidden><span>GG ✳</span><h1>Acceso restringido.</h1><p id="tDeniedMessage">Verificando tus permisos...</p><a href="sistema.html" class="t-button t-button-primary">← Volver a Sistema</a></section>
+  <div id="tModal" class="t-modal" hidden>
+    <div class="t-modal-scrim" data-close="modal"></div>
+    <section class="t-sheet" role="dialog" aria-modal="true" aria-labelledby="tModalTitle">
+      <div class="t-sheet-top"><div><span class="t-overline" id="tModalEyebrow">NUEVO ACTIVO</span><h2 id="tModalTitle">Agregar equipo</h2></div><button type="button" class="t-icon-button" data-close="modal" aria-label="Cerrar">×</button></div>
+      <div id="tSteps" class="t-steps"><span class="active">01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span></div>
+      <form id="tAssetForm" novalidate>
+        <div data-step="1" class="t-step"><h3>Selecciona un tipo</h3><p>Elige la categoría visual del equipo.</p><div id="tTypeOptions" class="t-types"></div></div>
+        <div data-step="2" class="t-step" hidden><h3>Datos del equipo</h3><p>Completa solo los campos que necesites.</p>
+          <div id="tComputerFields" class="t-fields">
+            <label class="t-full">Descripción<input name="description" maxlength="240" placeholder="Ej. MacBook Pro para diseño"></label>
+            <label>Marca<input name="brand" maxlength="100" placeholder="Ej. Dell"></label>
+            <label>Modelo<input name="model" maxlength="100" placeholder="Ej. Latitude 5440"></label>
+            <label>Identificador<input name="identifier" maxlength="120" placeholder="Serie o inventario"></label>
+            <label>Código grupo<input name="group_code" maxlength="120" placeholder="Código interno"></label>
+            <label class="t-full">Observaciones<textarea name="observations" rows="3" maxlength="1200" placeholder="Notas opcionales..."></textarea></label>
+          </div>
+          <div id="tPhoneFields" class="t-fields" hidden>
+            <label class="t-full">Número telefónico<input name="phone_number" maxlength="35" placeholder="Ej. 81 1234 5678" inputmode="tel"></label>
+            <label>Tipo de línea<select name="phone_plan"><option value="">Sin especificar</option><option value="prepago">Prepago</option><option value="plan">Plan</option></select></label>
+            <label>Marca<input name="phone_brand" maxlength="100" placeholder="Ej. Apple"></label>
+            <label>Modelo<input name="phone_model" maxlength="100" placeholder="Ej. iPhone 16"></label>
+            <label>Identificador<input name="phone_identifier" maxlength="120" placeholder="IMEI o inventario"></label>
+            <label class="t-full">Código grupo<input name="phone_group_code" maxlength="120" placeholder="Código interno"></label>
+          </div>
+        </div>
+        <div data-step="3" class="t-step" hidden><h3>Usuario asignado</h3><p>Opcional · conectado con Recursos Humanos.</p>
+          <label class="t-full">Selecciona empleado<select name="employee_id" id="tEmployee"><option value="">Sin asignar</option></select></label>
+          <div id="tEmployeePreview" class="t-employee-preview" hidden></div>
+          <label class="t-full">Departamento<select name="department_id" id="tDepartmentSelect"><option value="">Sin departamento</option></select></label>
+        </div>
+        <div data-step="4" class="t-step" hidden><h3>Responsiva</h3><p>Adjunta el documento PDF firmado si existe.</p>
+          <label class="t-file-drop"><input id="tPdf" name="responsiva" type="file" accept="application/pdf,.pdf"><span>⇧</span><strong id="tPdfLabel">Seleccionar PDF</strong><small>Hasta 10 MB · Opcional</small></label>
+          <div id="tExistingPdf" hidden><span>● Responsiva ya adjunta</span><button id="tViewExisting" type="button" class="t-button">Ver PDF ↗</button><button id="tRemovePdf" type="button" class="t-button">Quitar</button></div>
+        </div>
+        <div class="t-sheet-footer"><button type="button" id="tDelete" class="t-button t-danger" hidden>Eliminar</button><span class="t-grow"></span><button type="button" id="tPrev" class="t-button">Atrás</button><button type="button" id="tNext" class="t-button t-button-primary">Siguiente →</button><button type="submit" id="tSave" class="t-button t-button-primary" hidden>Guardar equipo</button></div>
+      </form>
+    </section>
+  </div>
+  <div id="tDeptModal" class="t-modal" hidden><div class="t-modal-scrim" data-close="dept"></div><section class="t-sheet t-small-sheet" role="dialog" aria-modal="true" aria-labelledby="tDeptTitle"><div class="t-sheet-top"><div><span class="t-overline">ORGANIZACIÓN</span><h2 id="tDeptTitle">Departamentos</h2></div><button type="button" class="t-icon-button" data-close="dept">×</button></div><form id="tDeptForm" class="t-dept-form"><input id="tDeptName" maxlength="100" required placeholder="Nombre del departamento"><button class="t-button t-button-primary" type="submit">＋ Agregar</button></form><div id="tDeptList" class="t-dept-list"></div></section></div>
+  <div id="tToast" class="t-toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="js/tecnologias.js"></script>
+</body>
+</html>
+`,
+  'css/tecnologias.css':String.raw`:root{color-scheme:dark;--bg:#080b11;--panel:#121925;--glass:#141c29db;--line:#ffffff1b;--ink:#f5f6fa;--muted:#9ca8bb;--aqua:#91e8e6;--warm:#e6af88}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.43;cursor:not-allowed}a{color:inherit;text-decoration:none}[hidden]{display:none!important}body{overflow-x:hidden}body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 45% 20%,#1b2b3b 0,#090d16 46%,#07090d 100%);pointer-events:none}.gg-tech-locked body{visibility:hidden}.t-ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden}.t-ambient i{position:absolute;width:35vw;aspect-ratio:1;min-width:300px;border-radius:50%;filter:blur(95px);opacity:.12;background:var(--aqua);top:10%;left:-14%;animation:t-drift 23s ease-in-out infinite alternate}.t-ambient i:nth-child(2){background:#947ade;left:75%;top:30%;animation-delay:-10s}.t-ambient i:nth-child(3){background:#d88b66;left:37%;top:80%;animation-delay:-16s}@keyframes t-drift{to{transform:translate(9vw,-7vh) scale(1.28)}}.t-topbar{position:relative;z-index:3;display:flex;justify-content:space-between;gap:18px;align-items:center;min-height:82px;padding:15px clamp(22px,4vw,80px);border-bottom:1px solid var(--line)}.t-brand{display:flex;align-items:center;gap:18px;font:700 15px Manrope,sans-serif;letter-spacing:-.04em}.t-brand>span:first-child{font-size:28px;letter-spacing:-.16em}.t-brand-spark{color:var(--aqua);margin-left:3px}.t-brand small{display:block;color:var(--muted);font:600 9px 'DM Sans',sans-serif;letter-spacing:.19em;margin-top:5px}.t-topright{display:flex;gap:10px;align-items:center}.t-live{white-space:nowrap;font-size:9px;font-weight:700;letter-spacing:.18em;color:#bacbd0;margin-right:12px}.t-live i,.t-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#8dedbc;box-shadow:0 0 12px #8dedbc82;margin-right:7px}.t-dot-red{background:#ff8e85;box-shadow:0 0 12px #ff8e8582;margin-left:12px}.t-button{border:1px solid #ffffff27;border-radius:12px;background:#ffffff0b;color:var(--ink);padding:11px 15px;font-size:12px;font-weight:700;white-space:nowrap;transition:.25s}.t-button:hover{border-color:#a2eae48c;background:#ffffff16;transform:translateY(-2px)}.t-button-primary{background:linear-gradient(120deg,#d8f3ef,#9cdedd);color:#0c1b22;border-color:transparent;box-shadow:0 8px 25px #9ce2dd19}.t-button-primary:hover{background:#f0fffc;color:#0c1b22}.t-button-quiet{background:transparent}.t-overline{color:var(--aqua);font-weight:700;font-size:10px;letter-spacing:.24em}.t-hub{position:relative;min-height:calc(100dvh - 82px);max-width:1300px;margin:0 auto;padding:72px 36px 30px}.t-hub-head{text-align:center;position:relative;z-index:2;animation:t-appear .9s both}.t-hub-head h1,.t-training h2{font:800 clamp(54px,8vw,112px)/1.02 Manrope,sans-serif;letter-spacing:-.09em;margin:18px 0;background:linear-gradient(120deg,#fff 12%,#a8dcde 32%,#fff 53%,#cae5f0 67%,#fff 84%);background-size:280% 100%;color:transparent;background-clip:text;animation:t-liquid 13s ease-in-out infinite alternate}.t-hub-head h1 span,.t-training h2 span{color:var(--aqua);-webkit-text-fill-color:var(--aqua)}@keyframes t-liquid{to{background-position:100% 0}}.t-hub-head p{font-size:15px;color:var(--muted)}.t-floating-hub{height:min(58vh,490px);min-height:400px;position:relative;max-width:980px;margin:auto}.t-hub-orbit{pointer-events:none;position:absolute;border:1px solid #ffffff10;width:min(75%,670px);height:270px;border-radius:50%;left:50%;top:49%;transform:translate(-50%,-50%) rotate(-12deg);box-shadow:0 0 80px #82d7ea08,inset 0 0 65px #82d7ea08}.t-hub-card{position:absolute;z-index:2;width:clamp(184px,22vw,246px);min-height:191px;padding:22px;text-align:left;border:1px solid #ffffff2a;border-radius:24px;color:var(--ink);background:linear-gradient(145deg,#27384dba,#101824d9 65%);box-shadow:0 24px 60px #0006, inset 0 1px #ffffff1a;backdrop-filter:blur(28px);display:flex;flex-direction:column;align-items:flex-start;transition:background .3s,border-color .3s,box-shadow .3s,scale .3s;animation:t-float 7s ease-in-out infinite alternate}.t-hub-card:hover{scale:1.07;border-color:#9be8e394;box-shadow:0 32px 75px #0008,0 0 35px #89d9eb1a}.t-hub-card small{font-size:9px;color:var(--muted);letter-spacing:.18em;margin:12px 0 10px}.t-hub-card strong{font:750 clamp(19px,2vw,25px)/1.1 Manrope,sans-serif;letter-spacing:-.05em}.t-hub-symbol{font-size:32px;line-height:1;color:var(--aqua)}.t-hub-arrow{position:absolute;right:20px;bottom:18px;color:var(--aqua)}.t-hub-computo{left:9%;top:15%;rotate:-7deg}.t-hub-phone{right:8%;top:2%;rotate:6deg;animation-delay:-2s}.t-hub-learn{left:42%;bottom:3%;rotate:2deg;animation-delay:-4s}@keyframes t-float{to{transform:translateY(-17px) translateX(5px)}}@keyframes t-appear{from{opacity:0;transform:translateY(20px);filter:blur(8px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}.t-hub-foot{text-align:center;font-size:9px;letter-spacing:.2em;color:#728396}.t-board{height:calc(100dvh - 82px);min-height:550px;display:flex;flex-direction:column;padding:16px clamp(12px,2vw,34px) 20px;animation:t-appear .55s both}.t-board-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.t-board-heading h2{font:800 clamp(22px,3vw,33px) Manrope,sans-serif;letter-spacing:-.06em;margin:0}.t-toolbar-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.t-search{display:flex;align-items:center;gap:9px;background:#ffffff0c;border:1px solid var(--line);border-radius:12px;padding:0 12px;color:var(--aqua)}.t-search input{background:none;border:0;outline:0;color:var(--ink);height:39px;width:clamp(140px,17vw,230px);font-size:12px}.t-board-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;gap:12px;margin:12px 4px;flex-wrap:wrap}.t-viewport{flex:1;min-height:300px;position:relative;overflow:hidden;touch-action:none;cursor:grab;border:1px solid #ffffff1b;border-radius:20px;background-color:#0b111b;background-image:radial-gradient(circle,#a2c3d51d 1px,transparent 1px);background-size:24px 24px;box-shadow:inset 0 0 100px #030507d2,0 16px 60px #0005}.t-viewport.is-panning{cursor:grabbing}.t-world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}.t-asset{position:absolute;width:240px;min-height:164px;border-radius:20px;border:1px solid #ffffff27;background:linear-gradient(145deg,#26344aef,#111924f2 65%);box-shadow:0 22px 45px #0007,inset 0 1px #ffffff1b;backdrop-filter:blur(20px);padding:17px;color:var(--ink);text-align:left;cursor:grab;user-select:none;touch-action:none;transition:border-color .2s,box-shadow .2s}.t-asset:hover{border-color:#96e8e295;box-shadow:0 28px 65px #0008,0 0 26px #8de7dc21}.t-asset.is-dragging{z-index:10;cursor:grabbing;border-color:#93e9e4;box-shadow:0 36px 80px #000b}.t-asset-inner{animation:t-card-breathe 8s ease-in-out infinite alternate;pointer-events:none}.t-asset:nth-child(3n) .t-asset-inner{animation-delay:-3s}@keyframes t-card-breathe{to{transform:translateY(-4px)}}.t-asset-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.t-device-icon{display:flex;align-items:center;justify-content:center;width:45px;height:39px;color:var(--aqua);border:1px solid #a1e7e42d;border-radius:12px;background:#9de5df10}.t-device-icon svg{width:30px;height:30px;stroke:currentColor;stroke-width:1.55;fill:none;stroke-linecap:round;stroke-linejoin:round}.t-asset-state{font-size:9px;color:#d2dee6}.t-asset-state i{width:8px;height:8px;border-radius:50%;background:#ed7f7b;display:inline-block;margin-right:5px;box-shadow:0 0 12px #ef817861}.t-asset-state.has-pdf i{background:#75dfa8;box-shadow:0 0 12px #75dfa885}.t-asset h3{font:750 16px/1.22 Manrope,sans-serif;letter-spacing:-.045em;margin:12px 0 5px;overflow-wrap:anywhere}.t-asset p{font-size:11px;color:var(--muted);margin:0 0 12px;overflow-wrap:anywhere}.t-asset-badge{font-size:9px;letter-spacing:.09em;color:#a8c6d5}.t-person{position:absolute;top:35px;left:calc(100% + 10px);width:158px;background:#111b29e8;border:1px solid #ffffff24;border-radius:15px;display:flex;align-items:center;gap:9px;padding:9px;box-shadow:0 12px 25px #0007;pointer-events:none}.t-person img,.t-person .t-avatar{width:33px;height:33px;border-radius:10px;object-fit:cover;background:#334358;display:grid;place-items:center;color:#d9f4f3;font-size:12px;flex-shrink:0}.t-person strong{font-size:10px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:93px}.t-person small{display:block;font-size:9px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:93px;margin-top:3px}.t-empty{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;pointer-events:none}.t-empty span{font-size:50px;color:var(--aqua)}.t-empty strong{font:700 17px Manrope,sans-serif}.t-empty small{color:var(--muted)}.t-map-hint{position:absolute;left:20px;bottom:18px;font-size:9px;color:#a9bfd1;letter-spacing:.16em;pointer-events:none}.t-zoom{position:absolute;right:14px;bottom:12px;display:flex;align-items:center;gap:4px;background:#0b1320e8;padding:5px;border:1px solid #ffffff25;border-radius:13px}.t-zoom button{background:none;border:0;color:#d7f2f3;font-size:19px;width:29px;height:30px;border-radius:7px}.t-zoom button:hover{background:#ffffff18}.t-zoom span{font-size:10px;color:var(--muted);min-width:40px;text-align:center}.t-modal{position:fixed;inset:0;z-index:20;display:flex;justify-content:flex-end}.t-modal-scrim{position:absolute;inset:0;background:#030609ad;backdrop-filter:blur(7px)}.t-sheet{position:relative;width:min(450px,100vw);height:100dvh;overflow:auto;background:linear-gradient(160deg,#182331,#0b111c 60%);border-left:1px solid #ffffff25;padding:24px;box-shadow:-25px 0 80px #0008;animation:t-sheet-in .32s both}.t-small-sheet{width:min(400px,100vw)}@keyframes t-sheet-in{from{opacity:0;transform:translateX(25px)}to{opacity:1;transform:none}}.t-sheet-top{display:flex;justify-content:space-between;gap:10px;align-items:start}.t-sheet h2{font:750 27px Manrope,sans-serif;letter-spacing:-.065em;margin:7px 0 20px}.t-icon-button{border:1px solid var(--line);border-radius:10px;background:#ffffff12;color:var(--ink);font-size:24px;width:36px;height:36px}.t-steps{display:flex;align-items:center;gap:7px;margin-bottom:28px}.t-steps span{width:32px;height:32px;display:grid;place-items:center;border:1px solid #ffffff24;border-radius:50%;font:700 10px Manrope,sans-serif;color:var(--muted)}.t-steps span.active{background:#c5ebe6;color:#10202a}.t-steps span.done{border-color:#88dfd1;color:#88dfd1}.t-steps i{height:1px;background:#ffffff25;flex:1}.t-step h3{font:750 18px Manrope,sans-serif;letter-spacing:-.04em;margin:0 0 5px}.t-step>p{font-size:12px;color:var(--muted);margin:0 0 21px}.t-types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.t-type{height:124px;border:1px solid #ffffff2a;background:#ffffff09;border-radius:16px;color:var(--ink);display:flex;gap:9px;flex-direction:column;align-items:center;justify-content:center;transition:.2s}.t-type:hover,.t-type.active{background:#90ece313;border-color:#9eece0}.t-type svg{height:50px;width:55px;stroke:#b4ece8;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.t-type span{font-size:12px;font-weight:700}.t-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.t-step label:not(.t-file-drop),.t-dept-form{display:block;font-size:11px;font-weight:700;color:#afc0d1}.t-step label.t-full{grid-column:1/-1}.t-step input,.t-step select,.t-step textarea,.t-dept-form input{width:100%;color:var(--ink);background:#ffffff0d;border:1px solid #ffffff25;outline:none;border-radius:11px;padding:11px;font-size:12px;margin-top:7px;resize:vertical}.t-step input:focus,.t-step select:focus,.t-step textarea:focus,.t-dept-form input:focus{border-color:#9ce7e1}.t-step select option{background:#151d2a}.t-employee-preview{margin:14px 0 22px;padding:13px;border-radius:14px;border:1px solid #ffffff25;display:flex;gap:12px;align-items:center}.t-employee-preview img,.t-employee-preview .t-avatar{width:49px;height:49px;object-fit:cover;border-radius:13px;background:#32465a;display:grid;place-items:center}.t-employee-preview strong{font-size:13px;display:block}.t-employee-preview small{font-size:11px;color:var(--muted);display:block;margin-top:4px}.t-file-drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;border:1px dashed #98ddde79;border-radius:17px;padding:44px 15px;cursor:pointer;background:#a7e9e20b;text-align:center}.t-file-drop input{display:none}.t-file-drop span{font-size:32px;color:var(--aqua)}.t-file-drop strong{font-size:13px}.t-file-drop small{font-size:10px;color:var(--muted)}#tExistingPdf{margin-top:18px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:11px}#tExistingPdf span{width:100%;color:#95dabb}.t-sheet-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px;margin-top:26px}.t-grow{flex:1}.t-danger{color:#ffaaa2;border-color:#ff97943e}.t-dept-form{display:flex;gap:8px}.t-dept-form input{margin:0;min-width:0}.t-dept-list{display:grid;gap:9px;margin-top:20px}.t-dept-row{border:1px solid #ffffff23;border-radius:12px;padding:12px;display:flex;align-items:center;gap:8px}.t-dept-row strong{font-size:12px;flex:1;overflow-wrap:anywhere}.t-dept-row button{border:1px solid var(--line);border-radius:8px;background:#ffffff0c;color:var(--muted);padding:7px;font-size:11px}.t-toast{position:fixed;z-index:40;bottom:24px;left:50%;transform:translate(-50%,30px);border:1px solid #ffffff35;background:#192735;color:#fff;padding:13px 19px;border-radius:13px;font-size:12px;box-shadow:0 15px 50px #000a;opacity:0;pointer-events:none;transition:.3s;max-width:min(90vw,640px);text-align:center}.t-toast.visible{opacity:1;transform:translate(-50%,0)}.t-denied,.t-training{position:relative;min-height:65vh;max-width:700px;margin:auto;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;padding:30px}.t-denied>span{font-size:30px;color:var(--aqua)}.t-denied h1{font:800 clamp(38px,6vw,70px) Manrope,sans-serif;letter-spacing:-.08em;margin:10px 0}.t-denied p,.t-training p{color:var(--muted);line-height:1.8}.t-training h2{font-size:clamp(45px,7vw,75px)}.t-training-icon{font-size:75px;color:var(--aqua);animation:t-drift 10s infinite alternate}@media(max-width:850px){.t-live{display:none}.t-hub-card{width:205px}.t-hub-computo{left:1%}.t-hub-phone{right:0}.t-hub-learn{left:36%}.t-board-toolbar{align-items:start}.t-search input{width:155px}}@media(max-width:540px){.t-topbar{padding:12px 15px;min-height:67px}.t-brand{font-size:12px}.t-brand small{font-size:7px}.t-topright .t-button{padding:8px;font-size:10px}.t-hub{padding:70px 14px 25px;min-height:calc(100dvh - 67px)}.t-hub-head h1{font-size:53px}.t-hub-head p{font-size:12px}.t-floating-hub{height:650px}.t-hub-card{width:190px;min-height:165px;padding:16px}.t-hub-card strong{font-size:19px}.t-hub-computo{left:0;top:10%}.t-hub-phone{right:0;top:36%}.t-hub-learn{left:1%;top:65%;bottom:auto}.t-hub-foot{font-size:8px}.t-board{height:calc(100dvh - 67px);padding:12px}.t-board-heading h2{font-size:21px}.t-toolbar-actions{width:100%;gap:6px}.t-toolbar-actions .t-button{font-size:10px;padding:9px}.t-search{flex:1}.t-search input{width:100%}.t-map-hint{font-size:7px;bottom:55px}.t-asset{width:200px}.t-person{width:130px}.t-person strong,.t-person small{max-width:68px}.t-sheet{padding:17px}.t-steps{margin-bottom:18px}.t-step h3{font-size:16px}.t-step input,.t-step select,.t-step textarea{padding:9px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+`,
+  'js/tecnologias.js':String.raw`/* GG TECNOLOGÍAS · SPA con persistencia real en Supabase. */
+(() => {
+  'use strict';
+  const db = window.ggSupabase;
+  const $ = id => document.getElementById(id);
+  const BUCKET = 'gg-tec-responsivas';
+  const ICONS = {
+    laptop: '<rect x="3" y="5" width="18" height="13" rx="2"/><path d="M1 21h22l-2-3H3z"/>',
+    pc: '<rect x="4" y="3" width="12" height="17" rx="2"/><circle cx="10" cy="16" r="1"/><rect x="18" y="5" width="4" height="13" rx="1"/>',
+    monitor: '<rect x="2" y="3" width="20" height="15" rx="2"/><path d="M12 18v4M7 22h10"/>',
+    celular: '<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 5h4M11 19h2"/>'
+  };
+  const ICON = type => '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONS[type] + '</svg>';
+  const state = { category:null, assets:[], employees:[], departments:[], current:null, type:null,
+    step:1, removePdf:false, busy:false, zoom:.88, panX:0, panY:0, drag:null, toastTimer:0 };
+  const typeNames = {laptop:'Laptop',pc:'PC',monitor:'Monitor',celular:'Celular'};
+  const safe = value => String(value == null ? '' : value).trim();
+  const fail = (err) => { console.error('[Tecnologías]',err); toast(err?.message || String(err)); };
+  const photo = employee => employee?.photo_path ? db.storage.from('employee-photos').getPublicUrl(employee.photo_path).data?.publicUrl : '';
+  const findEmployee = id => state.employees.find(e => e.id === id);
+  const findDept = id => state.departments.find(d => d.id === id);
+  const label = a => safe(a.description) || [safe(a.brand),safe(a.model)].filter(Boolean).join(' ') || (a.category === 'computo' ? typeNames[a.subtype] : 'Teléfono celular');
+  function toast(message) {
+    const box=$('tToast');box.textContent=message;box.classList.add('visible');
+    clearTimeout(state.toastTimer);state.toastTimer=setTimeout(()=>box.classList.remove('visible'),3600);
+  }
+  function showSection(which) {
+    $('tHub').hidden=which!=='hub'; $('tBoard').hidden=which!=='board';$('tTraining').hidden=which!=='training';
+    $('tBack').hidden=which==='hub';
+  }
+  function avatar(employee,size) {
+    const url=photo(employee);
+    if(url){
+      const img=document.createElement('img');img.src=url;img.alt='Fotografía de '+employee.full_name;
+      img.loading='lazy';img.onerror=()=>{const next=document.createElement('span');next.className='t-avatar';next.textContent=initials(employee.full_name);img.replaceWith(next);};
+      return img;
+    }
+    const fallback=document.createElement('span');fallback.className='t-avatar';fallback.textContent=initials(employee?.full_name);return fallback;
+  }
+  function initials(value){return safe(value).split(/\s+/).filter(Boolean).slice(0,2).map(v=>v[0]).join('').toUpperCase()||'GG';}
+  async function queryAssets() {
+    const {data,error}=await db.from('gg_tec_assets').select('*').eq('category',state.category).order('created_at',{ascending:true}).limit(1000);
+    if(error)throw error;state.assets=data||[];renderAssets();
+  }
+  async function refreshCatalogs() {
+    const [departments,employees] = await Promise.all([
+      db.from('gg_tec_departments').select('id,name').order('name'),db.rpc('gg_tec_employee_catalog')
+    ]);
+    if(departments.error)throw departments.error;if(employees.error)throw employees.error;
+    state.departments=departments.data||[];state.employees=employees.data||[];
+    populateCatalogs();
+  }
+  function populateCatalogs() {
+    const employee=$('tEmployee'),dept=$('tDepartmentSelect');
+    const oldEmployee=employee.value,oldDept=dept.value;
+    employee.replaceChildren(new Option('Sin asignar',''));
+    state.employees.forEach(item=>employee.add(new Option(item.full_name+' · '+(item.position||'Sin puesto'),item.id)));
+    dept.replaceChildren(new Option('Sin departamento',''));
+    state.departments.forEach(item=>dept.add(new Option(item.name,item.id)));
+    if([...employee.options].some(x=>x.value===oldEmployee))employee.value=oldEmployee;
+    if([...dept.options].some(x=>x.value===oldDept))dept.value=oldDept;
+  }
+  async function openCategory(category){
+    if(category==='capacitaciones'){state.category=null;showSection('training');return;}
+    state.category=category;showSection('board');
+    $('tBoardTitle').textContent=category==='computo'?'Equipos de cómputo':'Equipos de telefonía';
+    $('tBoardCaption').textContent=category==='computo'?'INVENTARIO / HARDWARE':'INVENTARIO / MOVILIDAD';
+    $('tSearch').value='';resetView();
+    try {await refreshCatalogs();await queryAssets();}catch(error){fail(error);}
+  }
+  function renderAssets(){
+    const root=$('tWorld');root.replaceChildren();
+    const term=safe($('tSearch').value).toLocaleLowerCase('es');
+    const visible=state.assets.filter(a=>[
+      a.description,a.brand,a.model,a.identifier,a.group_code,a.phone_number,a.observations,
+      findEmployee(a.employee_id)?.full_name,findDept(a.department_id)?.name
+    ].some(v=>safe(v).toLocaleLowerCase('es').includes(term)));
+    visible.forEach(a=>root.append(assetNode(a)));
+    $('tCounter').textContent=visible.length+' de '+state.assets.length+' equipos';
+    $('tEmpty').hidden=state.assets.length>0 || !!term;
+  }
+  function assetNode(a){
+    const card=document.createElement('div');card.className='t-asset';card.dataset.assetId=a.id;
+    card.style.left=Number(a.pos_x||0)+'px';card.style.top=Number(a.pos_y||0)+'px';
+    card.setAttribute('role','button');card.tabIndex=0;card.setAttribute('aria-label','Editar '+label(a));
+    const inner=document.createElement('div');inner.className='t-asset-inner';
+    const top=document.createElement('div');top.className='t-asset-top';
+    const icon=document.createElement('span');icon.className='t-device-icon';icon.innerHTML=ICON(a.subtype);
+    const stateNode=document.createElement('span');stateNode.className='t-asset-state'+(a.responsiva_path?' has-pdf':'');
+    const dot=document.createElement('i');stateNode.append(dot,document.createTextNode(a.responsiva_path?'Con responsiva':'Sin responsiva'));
+    top.append(icon,stateNode);
+    const title=document.createElement('h3');title.textContent=label(a);
+    const sub=document.createElement('p');sub.textContent=[typeNames[a.subtype],safe(a.identifier)||safe(a.phone_number)].filter(Boolean).join(' · ');
+    const badge=document.createElement('div');badge.className='t-asset-badge';badge.textContent=[safe(a.group_code),findDept(a.department_id)?.name].filter(Boolean).join('  /  ')||'GRUPO GUTIÉRREZ';
+    inner.append(top,title,sub,badge);card.append(inner);
+    const employee=findEmployee(a.employee_id);
+    if(employee){const person=document.createElement('div');person.className='t-person';
+      const detail=document.createElement('span'),name=document.createElement('strong'),role=document.createElement('small');
+      name.textContent=employee.full_name;role.textContent=employee.position||'Sin puesto';detail.append(name,role);person.append(avatar(employee),detail);card.append(person);
+    }
+    card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openWizard(a);}};
+    return card;
+  }
+  function applyCamera(){
+    $('tWorld').style.transform='translate('+state.panX+'px,'+state.panY+'px) scale('+state.zoom+')';
+    $('tZoomLabel').textContent=Math.round(state.zoom*100)+'%';
+    $('tViewport').style.backgroundSize=(24*state.zoom)+'px '+(24*state.zoom)+'px';
+    $('tViewport').style.backgroundPosition=state.panX+'px '+state.panY+'px';
+  }
+  function resetView(){
+    const rect=$('tViewport').getBoundingClientRect();state.zoom=rect.width<600?.66:.88;
+    state.panX=rect.width/2-120*state.zoom;state.panY=rect.height/2-70*state.zoom;applyCamera();
+  }
+  function zoomBy(factor,cx,cy){
+    const rect=$('tViewport').getBoundingClientRect();cx=cx??rect.width/2;cy=cy??rect.height/2;
+    const next=Math.max(.3,Math.min(2.5,state.zoom*factor));
+    state.panX=cx-(cx-state.panX)*next/state.zoom;
+    state.panY=cy-(cy-state.panY)*next/state.zoom;
+    state.zoom=next;applyCamera();
+  }
+  function setupPointer(){
+    const viewport=$('tViewport');
+    viewport.addEventListener('pointerdown',event=>{
+      if(event.button!==0||state.drag)return;
+      const node=event.target.closest('.t-asset');
+      const asset=node&&state.assets.find(a=>a.id===node.dataset.assetId);
+      state.drag={pointer:event.pointerId,kind:asset?'asset':'pan',asset,node,startX:event.clientX,startY:event.clientY,
+        left:asset?Number(asset.pos_x):state.panX,top:asset?Number(asset.pos_y):state.panY,moved:false};
+      viewport.setPointerCapture(event.pointerId);
+      if(!asset)viewport.classList.add('is-panning');else node.classList.add('is-dragging');
+    });
+    viewport.addEventListener('pointermove',event=>{
+      const d=state.drag;if(!d||d.pointer!==event.pointerId)return;
+      const dx=event.clientX-d.startX,dy=event.clientY-d.startY;
+      if(Math.hypot(dx,dy)>5)d.moved=true;
+      if(!d.moved)return;
+      if(d.kind==='pan'){state.panX=d.left+dx;state.panY=d.top+dy;applyCamera();}
+      else{d.node.style.left=(d.left+dx/state.zoom)+'px';d.node.style.top=(d.top+dy/state.zoom)+'px';}
+    });
+    async function finish(event){
+      const d=state.drag;if(!d||d.pointer!==event.pointerId)return;
+      state.drag=null;viewport.classList.remove('is-panning');d.node?.classList.remove('is-dragging');
+      if(d.kind==='asset'&&d.moved){
+        const pos_x=parseFloat(d.node.style.left),pos_y=parseFloat(d.node.style.top);
+        try{
+          const {error}=await db.from('gg_tec_assets').update({pos_x,pos_y}).eq('id',d.asset.id);
+          if(error)throw error;d.asset.pos_x=pos_x;d.asset.pos_y=pos_y;
+        }catch(error){d.node.style.left=d.left+'px';d.node.style.top=d.top+'px';fail(error);}
+      }else if(d.kind==='asset'&&!d.moved&&event.type!=='pointercancel'){openWizard(d.asset);}
+    }
+    viewport.addEventListener('pointerup',finish);
+    viewport.addEventListener('pointercancel',finish);
+    viewport.addEventListener('wheel',event=>{
+      event.preventDefault();const rect=viewport.getBoundingClientRect();
+      zoomBy(Math.exp(-event.deltaY*.0014),event.clientX-rect.left,event.clientY-rect.top);
+    },{passive:false});
+    $('tZoomIn').onclick=()=>zoomBy(1.2);$('tZoomOut').onclick=()=>zoomBy(1/1.2);
+    $('tZoomReset').onclick=resetView;
+  }
+  function nextPosition(){
+    const n=state.assets.length;const angle=n*2.39996;const radius=90*Math.sqrt(n);
+    return {pos_x:Math.round(Math.cos(angle)*radius),pos_y:Math.round(Math.sin(angle)*radius)};
+  }
+  function openWizard(asset=null){
+    state.current=asset;state.step=1;state.type=asset?.subtype||(state.category==='telefonia'?'celular':null);state.removePdf=false;
+    $('tAssetForm').reset();
+    $('tModalTitle').textContent=asset?'Editar equipo':'Agregar equipo';
+    $('tModalEyebrow').textContent=asset?'ACTUALIZAR / INVENTARIO':'NUEVO / INVENTARIO';
+    $('tDelete').hidden=!asset;
+    const props=['description','brand','model','identifier','observations','group_code','phone_number','phone_plan'];
+    if(asset){props.forEach(k=>{const field=$('tAssetForm').elements.namedItem(k);if(field)field.value=asset[k]||'';});
+      $('tAssetForm').elements.namedItem('phone_brand').value=asset.brand||'';
+      $('tAssetForm').elements.namedItem('phone_model').value=asset.model||'';
+      $('tAssetForm').elements.namedItem('phone_identifier').value=asset.identifier||'';
+      $('tAssetForm').elements.namedItem('phone_group_code').value=asset.group_code||'';
+      $('tEmployee').value=asset.employee_id||'';$('tDepartmentSelect').value=asset.department_id||'';
+    }
+    $('tPdf').value='';$('tPdfLabel').textContent='Seleccionar PDF';
+    $('tExistingPdf').hidden=!asset?.responsiva_path;
+    $('tModal').hidden=false;renderTypes();renderEmployee();renderStep();
+    $('tModal').querySelector('.t-icon-button').focus();
+  }
+  function closeWizard(){if(state.busy)return;$('tModal').hidden=true;}
+  function renderTypes(){
+    const types=state.category==='computo'?['laptop','pc','monitor']:['celular'];
+    const root=$('tTypeOptions');root.replaceChildren();
+    types.forEach(type=>{
+      const b=document.createElement('button');b.type='button';b.className='t-type'+(state.type===type?' active':'');
+      b.innerHTML=ICON(type);const text=document.createElement('span');text.textContent=typeNames[type];b.append(text);
+      b.onclick=()=>{state.type=type;renderTypes();};root.append(b);
+    });
+  }
+  function renderStep(){
+    document.querySelectorAll('[data-step]').forEach(el=>el.hidden=Number(el.dataset.step)!==state.step);
+    $('tSteps').querySelectorAll('span').forEach((el,i)=>{el.classList.toggle('active',i+1===state.step);el.classList.toggle('done',i+1<state.step);});
+    $('tComputerFields').hidden=state.category==='telefonia';$('tPhoneFields').hidden=state.category!=='telefonia';
+    $('tPrev').hidden=state.step===1;$('tNext').hidden=state.step===4;$('tSave').hidden=state.step!==4;
+  }
+  function renderEmployee(){
+    const employee=findEmployee($('tEmployee').value),panel=$('tEmployeePreview');panel.replaceChildren();panel.hidden=!employee;
+    if(!employee)return;
+    const detail=document.createElement('div'),name=document.createElement('strong'),role=document.createElement('small');
+    name.textContent=employee.full_name;role.textContent=employee.position||'Puesto sin especificar';detail.append(name,role);panel.append(avatar(employee),detail);
+  }
+  function readForm(){
+    const f=$('tAssetForm').elements,pick=k=>safe(f.namedItem(k).value)||null;
+    const phone=state.category==='telefonia';
+    const data={category:state.category,subtype:state.type,description:phone?null:pick('description'),
+      brand:pick(phone?'phone_brand':'brand'),model:pick(phone?'phone_model':'model'),
+      identifier:pick(phone?'phone_identifier':'identifier'),group_code:pick(phone?'phone_group_code':'group_code'),
+      observations:phone?null:pick('observations'),phone_number:phone?pick('phone_number'):null,
+      phone_plan:phone?pick('phone_plan'):null,employee_id:pick('employee_id'),department_id:pick('department_id')};
+    return data;
+  }
+  async function saveAsset(event){
+    event.preventDefault();if(state.busy)return;
+    if(!state.type){toast('Primero selecciona un tipo de equipo.');state.step=1;renderStep();return;}
+    const file=$('tPdf').files[0];
+    if(file){
+      if(file.size>10485760){toast('El PDF excede 10 MB.');return;}
+      if(!file.name.toLowerCase().endsWith('.pdf')||await file.slice(0,5).text()!=='%PDF-'){toast('Selecciona un archivo PDF válido.');return;}
+    }
+    const old=state.current;const id=old?.id||crypto.randomUUID();const position=old?{pos_x:old.pos_x,pos_y:old.pos_y}:nextPosition();
+    const payload={id,...position,...readForm(),responsiva_path:old?.responsiva_path||null};
+    const path=(await db.auth.getUser()).data?.user?.id+'/'+id+'-'+Date.now()+'.pdf';
+    if(!path||path.startsWith('undefined')){toast('Sesión no válida.');return;}
+    state.busy=true;$('tSave').disabled=true;
+    let uploaded=false;
+    try{
+      if(file){
+        const {error}=await db.storage.from(BUCKET).upload(path,file,{upsert:false,contentType:'application/pdf',cacheControl:'60'});
+        if(error)throw error;uploaded=true;payload.responsiva_path=path;
+      }else if(state.removePdf)payload.responsiva_path=null;
+      const {error}=await db.from('gg_tec_assets').upsert(payload).select('id').single();if(error)throw error;
+      if(old?.responsiva_path&&old.responsiva_path!==payload.responsiva_path){
+        const {error:removeError}=await db.storage.from(BUCKET).remove([old.responsiva_path]);
+        if(removeError)console.warn('PDF antiguo pendiente de retirar',removeError);
+      }
+      $('tModal').hidden=true;await queryAssets();toast(old?'Equipo actualizado.':'Equipo añadido al lienzo.');
+    }catch(error){
+      if(uploaded)await db.storage.from(BUCKET).remove([path]).catch(()=>{});
+      fail(error);
+    }finally{state.busy=false;$('tSave').disabled=false;}
+  }
+  async function deleteAsset(){
+    const asset=state.current;if(!asset||state.busy)return;
+    if(!confirm('¿Eliminar este equipo del inventario? Esta acción no se puede deshacer.'))return;
+    state.busy=true;
+    try{
+      const {error}=await db.from('gg_tec_assets').delete().eq('id',asset.id);if(error)throw error;
+      if(asset.responsiva_path){const {error:storageError}=await db.storage.from(BUCKET).remove([asset.responsiva_path]);if(storageError)console.warn(storageError);}
+      $('tModal').hidden=true;await queryAssets();toast('Equipo eliminado.');
+    }catch(error){fail(error);}finally{state.busy=false;}
+  }
+  async function viewPdf(){
+    if(!state.current?.responsiva_path)return;
+    const {data,error}=await db.storage.from(BUCKET).createSignedUrl(state.current.responsiva_path,60);
+    if(error){fail(error);return;}window.open(data.signedUrl,'_blank','noopener,noreferrer');
+  }
+  function renderDepartments(){
+    const root=$('tDeptList');root.replaceChildren();
+    if(!state.departments.length){const p=document.createElement('p');p.textContent='Todavía no hay departamentos.';root.append(p);}
+    state.departments.forEach(dept=>{
+      const row=document.createElement('div');row.className='t-dept-row';
+      const name=document.createElement('strong');name.textContent=dept.name;
+      const edit=document.createElement('button');edit.type='button';edit.textContent='Editar';
+      edit.onclick=()=>{
+        const input=document.createElement('input');input.value=dept.name;input.maxLength=100;
+        input.style.cssText='flex:1;min-width:0;background:#ffffff0c;color:white;border:1px solid #99e8e1;border-radius:8px;padding:8px';
+        row.replaceChild(input,name);edit.textContent='Guardar';input.focus();input.select();
+        const save=async()=>{
+          if(!safe(input.value)){toast('Escribe un nombre válido.');return;}
+          edit.disabled=true;
+          const {error}=await db.from('gg_tec_departments').update({name:safe(input.value)}).eq('id',dept.id);
+          if(error){edit.disabled=false;fail(error);return;}
+          await refreshCatalogs();renderDepartments();if(state.category)renderAssets();toast('Departamento actualizado.');
+        };
+        edit.onclick=save;input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();save();}if(e.key==='Escape')renderDepartments();};
+      };
+      const del=document.createElement('button');del.type='button';del.textContent='Eliminar';
+      del.onclick=async()=>{
+        if(!confirm('¿Eliminar '+dept.name+'? Los equipos conservarán sus datos pero quedarán sin departamento.'))return;
+        const {error}=await db.from('gg_tec_departments').delete().eq('id',dept.id);
+        if(error){fail(error);return;}await refreshCatalogs();renderDepartments();await queryAssets();toast('Departamento eliminado.');
+      };
+      row.append(name,edit,del);root.append(row);
+    });
+  }
+  async function addDepartment(event){
+    event.preventDefault();const name=safe($('tDeptName').value);if(!name)return;
+    const {error}=await db.from('gg_tec_departments').insert({name});
+    if(error){fail(error);return;}$('tDeptName').value='';await refreshCatalogs();renderDepartments();toast('Departamento añadido.');
+  }
+  async function allAssets(){
+    let all=[],from=0;
+    while(true){const {data,error}=await db.from('gg_tec_assets').select('*').order('created_at').range(from,from+999);
+      if(error)throw error;all=all.concat(data||[]);if(!data||data.length<1000)break;from+=1000;
+    }return all;
+  }
+  async function exportExcel(){
+    if(!window.XLSX){toast('No cargó la librería de Excel. Revisa tu conexión.');return;}
+    try{
+      const data=await allAssets();const book=XLSX.utils.book_new();
+      [['computo','Cómputo'],['telefonia','Telefonía']].forEach(([category,sheet])=>{
+        const rows=data.filter(a=>a.category===category).map(a=>({
+          Tipo:typeNames[a.subtype],Descripción:a.description||'',Marca:a.brand||'',Modelo:a.model||'',
+          Identificador:a.identifier||'','Código grupo':a.group_code||'',Observaciones:a.observations||'',
+          'Número telefónico':a.phone_number||'','Tipo de línea':a.phone_plan||'',
+          Usuario:findEmployee(a.employee_id)?.full_name||'','Puesto':findEmployee(a.employee_id)?.position||'',
+          Departamento:findDept(a.department_id)?.name||'',Responsiva:a.responsiva_path?'Sí':'No',
+          'Fecha de alta':a.created_at?new Date(a.created_at).toLocaleDateString('es-MX'):'',
+          'Posición X':a.pos_x,'Posición Y':a.pos_y
+        }));
+        const ws=XLSX.utils.json_to_sheet(rows.length?rows:[{'Sin registros':''}]);
+        ws['!cols']=Object.keys(rows[0]||{'Sin registros':''}).map(k=>({wch:Math.min(36,Math.max(14,k.length+6))}));
+        XLSX.utils.book_append_sheet(book,ws,sheet);
+      });
+      XLSX.writeFile(book,'Grupo_Gutierrez_Tecnologias_'+new Date().toISOString().slice(0,10)+'.xlsx');
+      toast('Exportación de equipos lista.');
+    }catch(error){fail(error);}
+  }
+  function bindEvents(){
+    document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openCategory(b.dataset.open));
+    $('tBack').onclick=()=>{if(state.busy)return;state.category=null;showSection('hub');};
+    $('tNew').onclick=()=>openWizard();$('tSearch').oninput=renderAssets;
+    $('tDepartments').onclick=()=>{$('tDeptModal').hidden=false;renderDepartments();$('tDeptName').focus();};
+    $('tExcel').onclick=exportExcel;
+    document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{
+      if(b.dataset.close==='dept')$('tDeptModal').hidden=true;else closeWizard();
+    });
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('tModal').hidden)closeWizard();else $('tDeptModal').hidden=true;}});
+    $('tEmployee').onchange=renderEmployee;
+    $('tPdf').onchange=()=>{$('tPdfLabel').textContent=$('tPdf').files[0]?.name||'Seleccionar PDF';};
+    $('tPrev').onclick=()=>{state.step=Math.max(1,state.step-1);renderStep();};
+    $('tNext').onclick=()=>{if(state.step===1&&!state.type){toast('Selecciona el tipo de equipo.');return;}state.step=Math.min(4,state.step+1);renderStep();};
+    $('tAssetForm').onsubmit=saveAsset;$('tDelete').onclick=deleteAsset;
+    $('tViewExisting').onclick=viewPdf;
+    $('tRemovePdf').onclick=()=>{state.removePdf=true;$('tExistingPdf').hidden=true;toast('El PDF se quitará al guardar.');};
+    $('tDeptForm').onsubmit=addDepartment;
+    setupPointer();
+  }
+  async function init(){
+    try{
+      if(!db)throw Error('No se encontró el cliente de Supabase.');
+      const {data:auth,error:authError}=await db.auth.getUser();
+      if(authError||!auth?.user)throw Error('Tu sesión no está activa. Inicia sesión en Sistema Central.');
+      const {data:allowed,error}=await db.rpc('gg_tec_has_access');if(error)throw error;
+      if(allowed!==true)throw Error('Solicita a Sistemas el permiso Acceso para Tecnologías.');
+      document.documentElement.classList.remove('gg-tech-locked');$('tDenied').hidden=true;$('tApp').hidden=false;
+      bindEvents();showSection('hub');
+    }catch(error){document.documentElement.classList.remove('gg-tech-locked');$('tDenied').hidden=false;
+      $('tDeniedMessage').textContent=error.message||'No fue posible verificar el acceso.';}
+  }
+  document.addEventListener('DOMContentLoaded',init,{once:true});
+})();
+`,
+  'css/gg-tecnologias-orbit.css':String.raw`/* ÓRBITA V3 · 11 módulos · anulamos reglas estáticas de 10 posiciones */
+body .workspace{height:var(--gg-tec-orbit-height,960px)!important;min-height:var(--gg-tec-orbit-height,960px)!important;overflow:visible!important;position:relative!important}
+body .workspace .module-grid{position:absolute!important;inset:0!important;display:block!important;height:100%!important;pointer-events:none!important}
+body .workspace .module-shell,body .workspace .module-shell:nth-child(n){left:var(--ox,50%)!important;top:var(--oy,50%)!important;right:auto!important;bottom:auto!important;position:absolute!important;width:var(--gg-tec-card-width,205px)!important;height:var(--gg-tec-card-height,126px)!important;min-height:0!important;transform:translate(-50%,-50%)!important;translate:none!important;pointer-events:auto!important;transition:left .65s cubic-bezier(.22,1,.36,1),top .65s cubic-bezier(.22,1,.36,1),box-shadow .35s!important;z-index:7!important}
+body .workspace .module-shell .module-card{width:100%!important;height:100%!important;min-height:0!important;padding:clamp(9px,1.2vw,14px)!important}
+body .workspace .module-shell .card-description{font-size:clamp(9px,1vw,11px)!important;line-height:1.3!important}
+body .workspace .module-shell .card-title{font-size:clamp(12px,1.25vw,17px)!important;line-height:1.2!important}
+body .workspace .module-shell .card-eyebrow,body .workspace .module-shell .card-meta{font-size:9px!important}
+body .workspace .hero{position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;width:min(420px,40%)!important;pointer-events:none!important;z-index:4!important}
+body .workspace .hero h1{font-size:clamp(32px,4.5vw,70px)!important}
+body .workspace .gg-orbit{position:absolute!important;inset:9% 8%!important;opacity:.42!important;pointer-events:none!important}
+body .workspace .slot-tecnologias .module-card{border-color:#8be8de66!important;background:linear-gradient(130deg,#75e7e319,#e7a88713),#16212c!important}
+body .workspace .slot-tecnologias .card-icon{color:#9aece8!important}
+body .workspace .slot-tecnologias .card-title{background:linear-gradient(90deg,#fff,#92e9e0,#fff);background-size:220%;color:transparent!important;background-clip:text;animation:gg-tec-liquid 10s ease-in-out infinite alternate}
+@keyframes gg-tec-liquid{to{background-position:100%}}
+@media(max-width:800px){body .workspace .hero{width:32%!important}body .workspace .hero h1{font-size:clamp(20px,3.8vw,36px)!important}body .workspace .hero p,body .workspace .hero-footnote{display:none!important}body .workspace .module-shell .card-description{display:none!important}body .workspace .module-shell .card-title{font-size:12px!important}}
+@media(max-width:540px){body .workspace .hero{width:34%!important}body .workspace .hero h1{font-size:clamp(15px,4.3vw,23px)!important;overflow-wrap:anywhere!important}body .workspace .hero-overline{display:none!important}body .workspace .module-shell .module-card{padding:9px!important}body .workspace .module-shell .card-icon{width:25px!important;height:25px!important}body .workspace .module-shell .card-content{margin-top:0!important}body .workspace .module-shell .card-eyebrow{font-size:7px!important}body .workspace .module-shell .card-footer{margin-top:3px!important}body .workspace .module-shell .card-meta{font-size:7px!important}}
+@media(prefers-reduced-motion:reduce){body .workspace .module-shell{transition:none!important}body .workspace .slot-tecnologias .card-title{animation:none!important}}
+`,
+  'js/gg-tecnologias-orbit.js':String.raw`/* Distribución elíptica proporcional a la pantalla y al número real de módulos. */
+(() => {
+  'use strict';
+  function init(){
+    const board=document.querySelector('body .workspace');
+    const grid=board?.querySelector('.module-grid');
+    if(!grid)return;
+    const items=[...grid.querySelectorAll('.module-shell')];
+    function layout(){
+      const width=board.getBoundingClientRect().width;
+      if(!width)return;
+      const small=width<=540,medium=width<=800;
+      const cardW=small?146:medium?164:Math.min(210,Math.max(166,width*.155));
+      const cardH=small?104:medium?112:126;
+      const height=small?1940:medium?1530:width<1100?1120:960;
+      board.style.setProperty('--gg-tec-orbit-height',height+'px');
+      board.style.setProperty('--gg-tec-card-width',cardW+'px');
+      board.style.setProperty('--gg-tec-card-height',cardH+'px');
+      const rx=Math.max(0,(width-cardW)/2-(small?10:22));
+      const ry=(height-cardH)/2-(small?90:65);
+      const n=items.length;
+      items.forEach((item,i)=>{
+        const theta=-Math.PI/2 + i*Math.PI*2/n;
+        const x=width/2+Math.cos(theta)*rx;
+        const y=height/2+Math.sin(theta)*ry;
+        item.style.setProperty('--ox',x.toFixed(2)+'px');
+        item.style.setProperty('--oy',y.toFixed(2)+'px');
+      });
+      const hint=board.querySelector('.gg-orbit-hint');
+      if(hint)hint.textContent=n+' ESPACIOS · UNA SOLA PLATAFORMA';
+    }
+    layout();
+    if('ResizeObserver' in window)new ResizeObserver(layout).observe(board);
+    else window.addEventListener('resize',layout,{passive:true});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+`,
+};
+for(const [name,content] of Object.entries(files))writes.set(name,content);
+
+// Sistema Central: tarjeta 11, indicadores, hojas y algoritmo responsive.
+update('sistema.html',s=>{
+  s=appendCard(s,card);
+  s=s.replace(/(\b\d{2}\s*\/\s*)(?:08|09|10|11)(?=\s*<\/span>)/g,'$111');
+  return s;
+});
+insertOnce('sistema.html','</head>','<link rel="stylesheet" href="css/gg-tecnologias-orbit.css">');
+insertOnce('sistema.html','</body>','<script src="js/gg-tecnologias-orbit.js"></script>');
+
+// La órbita original estaba limitada rígidamente a 10 tarjetas.
+update('js/sistema-orbital.js',s=>{
+  if(s.includes('modules.length !== 10'))s=s.replace('modules.length !== 10','modules.length < 3');
+  return s.replace('OCHO ESPACIOS · UNA SOLA PLATAFORMA','ESPACIOS · UNA SOLA PLATAFORMA');
+});
+
+// Ruta de respaldo + navegación protegida por un RPC exclusivo del módulo.
+update('js/sistema.js',s=>{
+  if(s.includes('"tecnologias": {'))return s;
+  const anchor='const ROUTES = Object.freeze({';
+  if(!s.includes(anchor))throw Error('No encontré ROUTES en js/sistema.js');
+  return s.replace(anchor,anchor+'\n    "tecnologias": { name:"Tecnologías", url:"tecnologias.html" },');
+});
+update('js/gg-sistemas-nav.js',s=>{
+  if(!s.includes('tecnologias: "tecnologias.html"')){
+    const anchor='  const paths = {';
+    if(!s.includes(anchor))throw Error('No encontré paths en js/gg-sistemas-nav.js');
+    s=s.replace(anchor,anchor+'\n    tecnologias: "tecnologias.html",');
+  }
+  const before=`const {data,error} = await db.rpc(
+        "gg_module_access",
+        {p_module:module}
+      );`;
+  const after=`const {data,error} = module === "tecnologias"
+        ? await db.rpc("gg_tec_has_access")
+        : await db.rpc("gg_module_access",{p_module:module});`;
+  if(!s.includes(after)){
+    if(!s.includes(before))throw Error('Cambió el control de acceso de navegación.');
+    s=s.replace(before,after);
+  }
+  s=s.replace('module !== "sistemas"\n','module !== "sistemas" && module !== "tecnologias"\n');
+  return s;
+});
+
+// Sistemas / Accesos: conservamos los 4 niveles y el listado actual de usuarios.
+insertOnce('sistemas.html','</select>','          <option value="tecnologias">Tecnologías</option>');
+update('js/sistemas-panel.js',s=>{
+  if(s.includes('GG_TEC_SISTEMAS_V1'))return s;
+  const anchor='  function render() {';
+  if(!s.includes(anchor))throw Error('No encontré render() en sistemas-panel.js');
+  const helper=`  /* GG_TEC_SISTEMAS_V1 */
+  async function loadTechRoles() {
+    const {data,error}=await db.rpc("gg_tec_roles_snapshot");
+    if(error){note("Tecnologías: "+error.message);return;}
+    snapshot.roles=snapshot.roles.filter(r=>r.module!=="tecnologias")
+      .concat(Array.isArray(data)?data:[]);
+    render();
+  }
+
+`;
+  s=s.replace(anchor,helper+anchor);
+  const fullLoad='    render();\n    renderRequests();';
+  if(!s.includes(fullLoad))throw Error('Cambió load() de sistemas-panel.js');
+  s=s.replace(fullLoad,'    if ($("sysModule").value === "tecnologias") await loadTechRoles();\n    else render();\n    renderRequests();');
+  const selection='    active = next;\n    render();';
+  if(!s.includes(selection))throw Error('Cambió onchange de sistemas-panel.js');
+  s=s.replace(selection,'    active = next;\n    if (next === "tecnologias") loadTechRoles(); else render();');
+  const oldRpc='const {error} = await db.rpc(\n      "gg_sistemas_save_roles",';
+  if(!s.includes(oldRpc))throw Error('Cambió guardado de permisos en sistemas-panel.js');
+  s=s.replace(oldRpc,'const {error} = await db.rpc(\n      module === "tecnologias" ? "gg_tec_save_roles" : "gg_sistemas_save_roles",');
+  return s;
+});
+
+// La entrada Vite se agrega para que también exista en dist/.
+update('vite.config.js',s=>{
+  if(s.includes('tecnologias:'))return s;
+  const anchor='                sistema:';
+  if(!s.includes(anchor))throw Error('No se encontró la configuración de entradas Vite');
+  return s.replace(anchor,'                tecnologias: resolve(__dirname, "tecnologias.html"),\n\n'+anchor);
+});
+
+// Validación total antes de tocar archivos existentes.
+for(const [file,content] of writes){
+  if(!content.trim())throw Error('Archivo vacío: '+file);
+  if(file.endsWith('.js')&&!file.endsWith('vite.config.js'))new vm.Script(content,{filename:file});
+  if(file.endsWith('.html')&&!content.includes('</html>'))throw Error('HTML incompleto: '+file);
+}
+for(const [name] of writes){
+  if(fs.existsSync(full(name)))previous.set(name,fs.readFileSync(full(name)));
+  else previous.set(name,null);
+}
+let applied=[];
+try{
+  for(const [name,content] of writes){
+    fs.mkdirSync(path.dirname(full(name)),{recursive:true});
+    fs.writeFileSync(full(name),content,'utf8');applied.push(name);
+  }
+}catch(error){
+  for(const name of applied.reverse()){
+    const old=previous.get(name);
+    try{if(old===null)fs.rmSync(full(name),{force:true});else fs.writeFileSync(full(name),old);}catch(restoreError){console.error('No se pudo restaurar',name,restoreError);}
+  }
+  throw error;
+}
+console.log('\n✓ Tecnologías instalado: '+writes.size+' archivos nuevos/actualizados.');
+console.log('✓ Ruta, tarjeta orbital de 11, Sistemas/Accesos, wizard, RH, PDFs y Excel.');
+console.log('SIGUIENTE: Ejecuta 01_tecnologias.sql en Supabase y reinicia Vite.');

@@ -16,6 +16,8 @@ export default defineConfig({
                         "index.html"
                     ),
 
+                tecnologias: resolve(__dirname, "tecnologias.html"),
+
                 sistema:
                     resolve(
                         __dirname,

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es" class="gg-tech-locked">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b11">
+  <title>Tecnologías · Grupo Gutiérrez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tecnologias.css">
+</head>
+<body>
+  <div class="t-ambient" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="t-topbar">
+    <a href="sistema.html" class="t-brand"><span>GG<span class="t-brand-spark">✳</span></span><span>Grupo Gutiérrez<small>SISTEMA CENTRAL / TECNOLOGÍAS</small></span></a>
+    <div class="t-topright"><span class="t-live"><i></i> SISTEMA ACTIVO</span><button type="button" id="tBack" class="t-button t-button-quiet" hidden>← Categorías</button><a class="t-button t-button-quiet" href="sistema.html">Salir ↗</a></div>
+  </header>
+  <main id="tApp" hidden>
+    <section id="tHub" class="t-hub">
+      <div class="t-hub-head"><span class="t-overline">ECOSISTEMA / 2026</span><h1>Tecnologías<span>.</span></h1><p>Todo conectado. Todo bajo control.</p></div>
+      <div class="t-floating-hub">
+        <button type="button" data-open="computo" class="t-hub-card t-hub-computo"><span class="t-hub-symbol">⌘</span><small>01 / INVENTARIO</small><strong>Equipos<br>de cómputo</strong><span class="t-hub-arrow">↗</span></button>
+        <button type="button" data-open="telefonia" class="t-hub-card t-hub-phone"><span class="t-hub-symbol">▯</span><small>02 / LÍNEAS</small><strong>Equipos<br>de telefonía</strong><span class="t-hub-arrow">↗</span></button>
+        <button type="button" data-open="capacitaciones" class="t-hub-card t-hub-learn"><span class="t-hub-symbol">✳</span><small>03 / PERSONAS</small><strong>Capacitaciones</strong><span class="t-hub-arrow">↗</span></button>
+        <div class="t-hub-orbit" aria-hidden="true"></div>
+      </div>
+      <div class="t-hub-foot">ARRASTRA IDEAS, CONECTA PERSONAS, ORGANIZA EQUIPOS</div>
+    </section>
+    <section id="tBoard" class="t-board" hidden>
+      <div class="t-board-toolbar">
+        <div class="t-board-heading"><span class="t-overline" id="tBoardCaption">INVENTARIO</span><h2 id="tBoardTitle">Equipos</h2></div>
+        <div class="t-toolbar-actions">
+          <label class="t-search"><span>⌕</span><input id="tSearch" type="search" placeholder="Buscar equipo, empleado..." autocomplete="off"></label>
+          <button id="tDepartments" class="t-button" type="button">◈ Departamentos</button>
+          <button id="tExcel" class="t-button" type="button">↓ Excel</button>
+          <button id="tNew" class="t-button t-button-primary" type="button">＋ Agregar</button>
+        </div>
+      </div>
+      <div class="t-board-meta"><span id="tCounter">0 equipos</span><span><i class="t-dot"></i> Responsiva adjunta <i class="t-dot t-dot-red"></i> Sin responsiva</span></div>
+      <div id="tViewport" class="t-viewport" tabindex="0" aria-label="Espacio arrastrable de equipos. Usa rueda para zoom, arrastra fondo para desplazarte.">
+        <div id="tWorld" class="t-world"></div>
+        <div id="tEmpty" class="t-empty" hidden><span>✳</span><strong>Un lienzo para organizarlo todo.</strong><small>Agrega tu primer equipo con el botón superior.</small></div>
+        <div class="t-map-hint">⤧ ARRASTRA PARA MOVER · RUEDA PARA ZOOM</div>
+        <div class="t-zoom"><button type="button" id="tZoomOut" aria-label="Alejar">−</button><span id="tZoomLabel">100%</span><button type="button" id="tZoomIn" aria-label="Acercar">＋</button><button type="button" id="tZoomReset" aria-label="Centrar lienzo">⌖</button></div>
+      </div>
+    </section>
+    <section id="tTraining" class="t-training" hidden><span class="t-overline">FORMACIÓN CONTINUA</span><h2>Capacitaciones<span>.</span></h2><p>El acceso ya está preparado. El flujo de cursos, sesiones y evidencias se definirá en la siguiente etapa.</p><div class="t-training-icon">✳</div></section>
+  </main>
+  <section id="tDenied" class="t-denied" hidden><span>GG ✳</span><h1>Acceso restringido.</h1><p id="tDeniedMessage">Verificando tus permisos...</p><a href="sistema.html" class="t-button t-button-primary">← Volver a Sistema</a></section>
+  <div id="tModal" class="t-modal" hidden>
+    <div class="t-modal-scrim" data-close="modal"></div>
+    <section class="t-sheet" role="dialog" aria-modal="true" aria-labelledby="tModalTitle">
+      <div class="t-sheet-top"><div><span class="t-overline" id="tModalEyebrow">NUEVO ACTIVO</span><h2 id="tModalTitle">Agregar equipo</h2></div><button type="button" class="t-icon-button" data-close="modal" aria-label="Cerrar">×</button></div>
+      <div id="tSteps" class="t-steps"><span class="active">01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span></div>
+      <form id="tAssetForm" novalidate>
+        <div data-step="1" class="t-step"><h3>Selecciona un tipo</h3><p>Elige la categoría visual del equipo.</p><div id="tTypeOptions" class="t-types"></div></div>
+        <div data-step="2" class="t-step" hidden><h3>Datos del equipo</h3><p>Completa solo los campos que necesites.</p>
+          <div id="tComputerFields" class="t-fields">
+            <label class="t-full">Descripción<input name="description" maxlength="240" placeholder="Ej. MacBook Pro para diseño"></label>
+            <label>Marca<input name="brand" maxlength="100" placeholder="Ej. Dell"></label>
+            <label>Modelo<input name="model" maxlength="100" placeholder="Ej. Latitude 5440"></label>
+            <label>Identificador<input name="identifier" maxlength="120" placeholder="Serie o inventario"></label>
+            <label>Código grupo<input name="group_code" maxlength="120" placeholder="Código interno"></label>
+            <label class="t-full">Observaciones<textarea name="observations" rows="3" maxlength="1200" placeholder="Notas opcionales..."></textarea></label>
+          </div>
+          <div id="tPhoneFields" class="t-fields" hidden>
+            <label class="t-full">Número telefónico<input name="phone_number" maxlength="35" placeholder="Ej. 81 1234 5678" inputmode="tel"></label>
+            <label>Tipo de línea<select name="phone_plan"><option value="">Sin especificar</option><option value="prepago">Prepago</option><option value="plan">Plan</option></select></label>
+            <label>Marca<input name="phone_brand" maxlength="100" placeholder="Ej. Apple"></label>
+            <label>Modelo<input name="phone_model" maxlength="100" placeholder="Ej. iPhone 16"></label>
+            <label>Identificador<input name="phone_identifier" maxlength="120" placeholder="IMEI o inventario"></label>
+            <label class="t-full">Código grupo<input name="phone_group_code" maxlength="120" placeholder="Código interno"></label>
+          </div>
+        </div>
+        <div data-step="3" class="t-step" hidden><h3>Usuario asignado</h3><p>Opcional · conectado con Recursos Humanos.</p>
+          <label class="t-full">Selecciona empleado<select name="employee_id" id="tEmployee"><option value="">Sin asignar</option></select></label>
+          <div id="tEmployeePreview" class="t-employee-preview" hidden></div>
+          <label class="t-full">Departamento<select name="department_id" id="tDepartmentSelect"><option value="">Sin departamento</option></select></label>
+        </div>
+        <div data-step="4" class="t-step" hidden><h3>Responsiva</h3><p>Adjunta el documento PDF firmado si existe.</p>
+          <label class="t-file-drop"><input id="tPdf" name="responsiva" type="file" accept="application/pdf,.pdf"><span>⇧</span><strong id="tPdfLabel">Seleccionar PDF</strong><small>Hasta 10 MB · Opcional</small></label>
+          <div id="tExistingPdf" hidden><span>● Responsiva ya adjunta</span><button id="tViewExisting" type="button" class="t-button">Ver PDF ↗</button><button id="tRemovePdf" type="button" class="t-button">Quitar</button></div>
+        </div>
+        <div class="t-sheet-footer"><button type="button" id="tDelete" class="t-button t-danger" hidden>Eliminar</button><span class="t-grow"></span><button type="button" id="tPrev" class="t-button">Atrás</button><button type="button" id="tNext" class="t-button t-button-primary">Siguiente →</button><button type="submit" id="tSave" class="t-button t-button-primary" hidden>Guardar equipo</button></div>
+      </form>
+    </section>
+  </div>
+  <div id="tDeptModal" class="t-modal" hidden><div class="t-modal-scrim" data-close="dept"></div><section class="t-sheet t-small-sheet" role="dialog" aria-modal="true" aria-labelledby="tDeptTitle"><div class="t-sheet-top"><div><span class="t-overline">ORGANIZACIÓN</span><h2 id="tDeptTitle">Departamentos</h2></div><button type="button" class="t-icon-button" data-close="dept">×</button></div><form id="tDeptForm" class="t-dept-form"><input id="tDeptName" maxlength="100" required placeholder="Nombre del departamento"><button class="t-button t-button-primary" type="submit">＋ Agregar</button></form><div id="tDeptList" class="t-dept-list"></div></section></div>
+  <div id="tToast" class="t-toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="js/tecnologias.js"></script>
+</body>
+</html>
