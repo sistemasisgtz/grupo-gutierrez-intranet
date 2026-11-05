@@ -1,0 +1,241 @@
+/* GG_YO_PAYROLL_CSS_FIX_V2 */
+
+/*
+  El encabezado de YO tiene una animacion
+  transform que crea un stacking context.
+
+  Subir solo el popup NO es suficiente.
+  Debemos subir el encabezado completo.
+*/
+
+.yo-shell .yo-header {
+  position: relative !important;
+  z-index: 2100 !important;
+  overflow: visible !important;
+}
+
+.yo-shell .yo-content,
+.yo-shell .yo-footer,
+.yo-shell .yo-loading {
+  position: relative;
+  z-index: 1;
+}
+
+.yo-shell .yo-notification-wrap {
+  position: relative;
+  z-index: 2200;
+}
+
+/* PANEL SOLIDO Y SOBRE EL CONTENIDO */
+
+.yo-shell #yoNotificationsPanel {
+  z-index: 2300 !important;
+
+  width:
+    min(370px, calc(100vw - 28px))
+    !important;
+
+  max-height: min(72vh, 650px);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border:
+    1px solid #38516a !important;
+
+  background:
+    #101c2b !important;
+
+  color:
+    #eff7ff !important;
+
+  backdrop-filter:
+    none !important;
+
+  -webkit-backdrop-filter:
+    none !important;
+
+  box-shadow:
+    0 26px 76px #000a,
+    0 0 0 1px #ffffff0a !important;
+
+  pointer-events: none;
+}
+
+.yo-shell #yoNotificationsPanel.open {
+  pointer-events: auto !important;
+}
+
+/* SCROLL INTERNO */
+
+.yo-shell #yoNotificationsList {
+  min-height: 0;
+
+  max-height: min(62vh, 540px);
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  overscroll-behavior: contain;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    #45647d #101c2b;
+
+  background:
+    #101c2b !important;
+}
+
+.yo-shell #yoNotificationsPanel
+.yo-notification-header {
+  background:
+    #101c2b !important;
+
+  flex-shrink: 0;
+}
+
+/* TARJETAS DE NOMINA */
+
+.gg-payroll-yo {
+  padding: 8px 10px 12px;
+}
+
+.gg-payroll-yo-title {
+  margin: 7px 5px 12px;
+
+  color: #94dfff;
+
+  font:
+    800 10px/1.5
+    Inter, system-ui, sans-serif;
+
+  letter-spacing: .14em;
+}
+
+.gg-payroll-yo-item {
+  position: relative;
+
+  display: block;
+  width: 100%;
+
+  margin: 8px 0;
+  padding: 13px 14px;
+
+  text-align: left;
+
+  color: #eaf6ff;
+  background: #1b2b3d;
+
+  border:
+    1px solid #38516a;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  pointer-events: auto;
+  touch-action: manipulation;
+
+  transition:
+    transform .2s,
+    border-color .2s,
+    background .2s;
+}
+
+.gg-payroll-yo-item:hover,
+.gg-payroll-yo-item:focus-visible {
+  transform: translateY(-1px);
+
+  border-color: #71caff;
+  background: #233b50;
+
+  outline: none;
+}
+
+.gg-payroll-yo-item.unread {
+  border-left:
+    3px solid #54c7ff;
+}
+
+.gg-payroll-yo-item strong,
+.gg-payroll-yo-item small,
+.gg-payroll-yo-item span {
+  display: block;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+.gg-payroll-yo-item strong {
+  font-size: 12px;
+}
+
+.gg-payroll-yo-item small {
+  margin-top: 5px;
+
+  font-size: 11px;
+  color: #adc0d4;
+}
+
+.gg-payroll-yo-item
+.gg-payroll-yo-action {
+  margin-top: 10px;
+
+  color: #7cd7ff;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.gg-payroll-yo-item:disabled {
+  opacity: .7;
+  cursor: progress;
+}
+
+/* ERRORES VISIBLES */
+
+.gg-payroll-yo-feedback {
+  margin: 9px 4px;
+  padding: 12px;
+
+  border:
+    1px solid #af6168;
+
+  border-radius: 12px;
+
+  background: #371c26;
+  color: #ffe0e0;
+
+  font-size: 12px;
+  line-height: 1.5;
+
+  white-space: pre-wrap;
+}
+
+.gg-payroll-yo-feedback[hidden] {
+  display: none !important;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+  .yo-shell #yoNotificationsPanel {
+    width:
+      min(350px, calc(100vw - 24px))
+      !important;
+
+    right: 0 !important;
+  }
+}
+
+/* ACCESIBILIDAD */
+
+@media (prefers-reduced-motion: reduce) {
+  .gg-payroll-yo-item {
+    transition: none;
+  }
+}

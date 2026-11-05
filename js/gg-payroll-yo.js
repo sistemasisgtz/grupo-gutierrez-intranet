@@ -1,216 +1,609 @@
-/*
-  Recibos privados en YO.
-  No utiliza la identidad de auth.uid()
-  porque YO tiene otra sesión.
-*/
+/* GG_YO_PAYROLL_FIX_V2 */
+
 (() => {
-"use strict";
+  "use strict";
 
-const db = window.ggSupabase;
-const token = () => sessionStorage.getItem(
-  "gg_intranet_token"
-);
+  if (window.__ggYoPayrollFixV2) return;
+  window.__ggYoPayrollFixV2 = true;
 
-const esc = value => String(value ?? "")
-  .replace(/[&<>"']/g,c => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  }[c]));
+  const db = window.ggSupabase;
+  const $ = id => document.getElementById(id);
 
-let loading = false;
-let items = [];
+  const token = () =>
+    sessionStorage.getItem("gg_intranet_token");
 
-function render() {
-  const box = document.getElementById(
-    "yoNotificationsList"
-  );
+  let loading = false;
+  let receipts = [];
+  let initialOtherCount = null;
 
-  if (!box) return;
+  function labelDate(value) {
+    if (!value) return "";
 
-  let holder = document.getElementById(
-    "ggPayrollYoList"
-  );
+    const date = new Date(value);
 
-  if (!holder) {
-    holder = document.createElement("section");
-    holder.id = "ggPayrollYoList";
-    holder.className = "gg-payroll-yo";
-    box.append(holder);
+    return Number.isNaN(date.getTime())
+      ? ""
+      : date.toLocaleDateString("es-MX", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        });
   }
 
-  holder.replaceChildren();
+  // ================================================
+  // CONTADOR DE NOTIFICACIONES
+  // ================================================
 
-  if (!items.length) return;
+  function setBadge() {
+    const badge = $("yoNotificationBadge");
+    if (!badge) return;
 
-  box.querySelector(
-    ".yo-notifications-empty"
-  )?.remove();
+    if (initialOtherCount === null) {
+      const parsed = Number.parseInt(
+        badge.textContent, 10
+      );
 
-  const heading = document.createElement("p");
-  heading.textContent = "RECIBOS DE NÓMINA";
-  heading.className = "gg-payroll-yo-title";
-  holder.append(heading);
+      initialOtherCount =
+        Number.isFinite(parsed) ? parsed : 0;
+    }
 
-  for (const item of items) {
-    const button = document.createElement(
-      "button"
+    const unread = receipts.filter(
+      r => !r.read_at
+    ).length;
+
+    const total = initialOtherCount + unread;
+
+    badge.textContent =
+      total > 99 ? "99+" : String(total);
+
+    badge.classList.toggle(
+      "empty",
+      total === 0
+    );
+  }
+
+  // ================================================
+  // BANDEJA
+  // ================================================
+
+  function ensureHolder() {
+    const list = $("yoNotificationsList");
+    if (!list) return null;
+
+    let holder = $("ggPayrollYoList");
+
+    if (!holder) {
+      holder = document.createElement("section");
+      holder.id = "ggPayrollYoList";
+      holder.className = "gg-payroll-yo";
+
+      list.append(holder);
+    }
+
+    return holder;
+  }
+
+  function showNotice(text, type = "error") {
+    const holder = ensureHolder();
+    if (!holder) return;
+
+    let el = $("ggPayrollYoFeedback");
+
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "ggPayrollYoFeedback";
+      el.setAttribute("role", "status");
+
+      holder.prepend(el);
+    }
+
+    el.className =
+      "gg-payroll-yo-feedback " + type;
+
+    el.textContent = text;
+    el.hidden = !text;
+  }
+
+  // ================================================
+  // APERTURA INMEDIATA DE PESTAÑA
+  // ================================================
+
+  function prepareTab() {
+    /*
+     La pestaña se crea directamente
+     durante el clic del usuario.
+
+     No se espera a Supabase para crearla.
+     Esto evita bloqueos de ventanas emergentes.
+    */
+
+    let tab = null;
+
+    try {
+      tab = window.open(
+        "about:blank",
+        "_blank"
+      );
+
+      if (tab) {
+        tab.opener = null;
+
+        tab.document.title =
+          "Preparando recibo · Grupo Gutierrez";
+
+        tab.document.body.style.cssText =
+          "background:#0c1520;" +
+          "color:#eaf7ff;" +
+          "font:16px system-ui;" +
+          "padding:50px;";
+
+        tab.document.body.textContent =
+          "Preparando tu PDF privado de nomina...";
+      }
+
+    } catch (error) {
+      console.warn(
+        "[NOMINA YO] No se pudo preparar pestaña",
+        error
+      );
+    }
+
+    return tab;
+  }
+
+  // ================================================
+  // ERRORES REALES DEL SERVIDOR
+  // ================================================
+
+  async function readableError(error) {
+    const response = error && error.context;
+
+    const status = Number(
+      response?.status || 0
     );
 
-    button.type = "button";
-    button.className = "gg-payroll-yo-item";
+    let description = "";
 
-    button.innerHTML =
-      "<strong>" +
-      esc(item.title) +
-      "</strong><small>" +
-      esc(item.file_name) +
-      " · " +
-      new Date(item.sent_at).toLocaleDateString(
-        "es-MX"
-      ) +
-      "</small><span>" +
-      (
-        item.read_at
-          ? "Ver nuevamente ↗"
-          : "● Nuevo · Abrir PDF ↗"
-      ) +
-      "</span>";
+    try {
+      const result =
+        await response.clone().json();
 
-    button.onclick = async () => {
-      button.disabled = true;
+      description =
+        result?.error ||
+        result?.message ||
+        "";
+    } catch (_) {
+      // La respuesta puede no ser JSON.
+    }
 
-      button.querySelector("span").textContent =
-        "Abriendo PDF privado...";
+    if (status === 401) {
+      return (
+        "Error 401: la funcion de Supabase " +
+        "necesita desplegarse con " +
+        "--no-verify-jwt para YO."
+      );
+    }
 
-      try {
-        const result = await db.functions.invoke(
+    if (status === 404) {
+      return (
+        "Error 404: la funcion " +
+        "gg-payroll-download no esta " +
+        "desplegada en este proyecto."
+      );
+    }
+
+    if (status === 403) {
+      return (
+        "Error 403: documento no autorizado " +
+        "para esta sesion de YO. " +
+        "Cierra sesion, vuelve a entrar " +
+        "y comprueba la asignacion."
+      );
+    }
+
+    if (status >= 500) {
+      return (
+        "Error " + status +
+        ": fallo del servidor de nomina. " +
+        "Revisa Edge Functions > Logs en Supabase."
+      );
+    }
+
+    return description ||
+      error?.message ||
+      "No se pudo conectar con el servicio privado.";
+  }
+
+  // ================================================
+  // VALIDAR URL PRIVADA
+  // ================================================
+
+  function authorizedUrl(input) {
+    if (
+      !input ||
+      typeof input !== "string"
+    ) {
+      throw new Error(
+        "El servidor no devolvio un enlace PDF."
+      );
+    }
+
+    const url = new URL(input);
+    const expected = new URL(db.supabaseUrl);
+
+    if (
+      url.protocol !== "https:" ||
+      url.origin !== expected.origin ||
+      !url.pathname.startsWith(
+        "/storage/v1/object/sign/gg-payroll-private/"
+      )
+    ) {
+      throw new Error(
+        "El servidor devolvio un enlace " +
+        "inesperado. No se abrira."
+      );
+    }
+
+    return url.href;
+  }
+
+  // ================================================
+  // ABRIR RECIBO DE NÓMINA
+  // ================================================
+
+  async function openReceipt(receipt, button) {
+    if (!token()) {
+      showNotice(
+        "Tu sesion de YO termino. " +
+        "Vuelve a iniciar sesion."
+      );
+      return;
+    }
+
+    if (button.disabled) return;
+
+    // Abrimos la pestaña ANTES de cualquier await.
+    const tab = prepareTab();
+
+    button.disabled = true;
+    button.classList.add(
+      "gg-payroll-yo-loading"
+    );
+
+    const action = button.querySelector(
+      ".gg-payroll-yo-action"
+    );
+
+    const oldText =
+      action?.textContent || "Abrir PDF";
+
+    if (action) {
+      action.textContent =
+        "Autorizando PDF...";
+    }
+
+    showNotice("");
+
+    try {
+      if (!db?.functions?.invoke) {
+        throw new Error(
+          "Supabase no esta disponible en YO."
+        );
+      }
+
+      
+      /* GG_PAYROLL_INPUT_FIX_V4 */
+
+      const currentToken = token();
+
+      const currentDocumentId = receipt?.id;
+
+      const uuidPattern =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+      // Verificar sesion antes de solicitar.
+      if (
+        typeof currentToken !== "string" ||
+        currentToken.length < 16
+      ) {
+        throw Error(
+          "La sesion de YO esta ausente o incompleta. " +
+          "Cierra sesion y vuelve a entrar."
+        );
+      }
+
+      // Verificar identificador del documento.
+      if (
+        typeof currentDocumentId !== "string" ||
+        !uuidPattern.test(currentDocumentId)
+      ) {
+        throw Error(
+          "La notificacion no contiene un ID " +
+          "de PDF valido. Actualiza YO e intenta de nuevo."
+        );
+      }
+
+      // Enviar JSON explicito a Supabase.
+      const {data, error} =
+        await db.functions.invoke(
           "gg-payroll-download",
           {
-            body: {
-              session_token: token(),
-              document_id: item.id
-            }
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              session_token: currentToken,
+              document_id: currentDocumentId
+            })
           }
         );
 
-        if (result.error) throw result.error;
 
-        if (!result.data?.url) {
-          throw Error(
-            "No se autorizó la lectura del PDF."
+      if (error) {
+        throw new Error(
+          await readableError(error)
+        );
+      }
+
+      const url = authorizedUrl(
+        data?.url
+      );
+
+      /*
+       Ya tenemos la URL autorizada.
+
+       Si la pestaña se abrió correctamente,
+       cargamos ahí el PDF.
+
+       Si el navegador bloqueó la pestaña,
+       navegamos en la ventana actual.
+      */
+
+      if (tab && !tab.closed) {
+        tab.location.replace(url);
+      } else {
+        window.location.assign(url);
+      }
+
+      receipt.read_at =
+        receipt.read_at ||
+        new Date().toISOString();
+
+      setBadge();
+
+      void refresh();
+
+    } catch (error) {
+      const message =
+        error?.message || "Error inesperado";
+
+      showNotice(
+        "No se pudo abrir el PDF. " +
+        message
+      );
+
+      if (tab && !tab.closed) {
+        try {
+          tab.document.body.textContent =
+            "No se pudo abrir el PDF. " +
+            message;
+        } catch (_) {
+          // La pestaña puede haberse cerrado.
+        }
+      }
+
+      console.error(
+        "[NOMINA YO]",
+        message
+      );
+
+    } finally {
+      button.disabled = false;
+
+      button.classList.remove(
+        "gg-payroll-yo-loading"
+      );
+
+      if (action) {
+        action.textContent = oldText;
+      }
+    }
+  }
+
+  // ================================================
+  // RENDERIZAR NOTIFICACIONES
+  // ================================================
+
+  function render() {
+    const holder = ensureHolder();
+    const list = $("yoNotificationsList");
+
+    if (!holder || !list) return;
+
+    holder.replaceChildren();
+
+    if (receipts.length === 0) {
+      setBadge();
+      return;
+    }
+
+    list.querySelector(
+      ".yo-notifications-empty"
+    )?.remove();
+
+    const head =
+      document.createElement("p");
+
+    head.className =
+      "gg-payroll-yo-title";
+
+    head.textContent =
+      "RECIBOS DE NOMINA";
+
+    holder.append(head);
+
+    for (const receipt of receipts) {
+      const button =
+        document.createElement("button");
+
+      button.type = "button";
+      button.className =
+        "gg-payroll-yo-item";
+
+      button.setAttribute(
+        "aria-label",
+        "Abrir recibo: " +
+        (receipt.title || "Nomina")
+      );
+
+      if (!receipt.read_at) {
+        button.classList.add("unread");
+      }
+
+      const title =
+        document.createElement("strong");
+
+      title.textContent =
+        receipt.title ||
+        "Recibo de nomina";
+
+      const detail =
+        document.createElement("small");
+
+      detail.textContent =
+        (receipt.file_name || "Recibo.pdf") +
+        " · " +
+        labelDate(receipt.sent_at);
+
+      const action =
+        document.createElement("span");
+
+      action.className =
+        "gg-payroll-yo-action";
+
+      action.textContent =
+        receipt.read_at
+          ? "Ver PDF nuevamente ↗"
+          : "● Nuevo · Abrir PDF ↗";
+
+      button.append(
+        title,
+        detail,
+        action
+      );
+
+      button.addEventListener(
+        "click",
+        event => {
+          event.preventDefault();
+          event.stopPropagation();
+
+          void openReceipt(
+            receipt,
+            button
           );
         }
+      );
 
-        window.open(
-          result.data.url,
-          "_blank",
-          "noopener,noreferrer"
+      holder.append(button);
+    }
+
+    setBadge();
+  }
+
+  // ================================================
+  // ACTUALIZAR RECIBOS
+  // ================================================
+
+  async function refresh() {
+    if (
+      loading ||
+      !token() ||
+      !db
+    ) {
+      return;
+    }
+
+    loading = true;
+
+    try {
+      const {data, error} =
+        await db.rpc(
+          "gg_payroll_yo_list",
+          {
+            p_session_token: token()
+          }
         );
 
-        await refresh();
-      } catch (error) {
-        alert(
-          "No se pudo abrir la nómina: " +
-          error.message
-        );
-      } finally {
-        button.disabled = false;
-      }
-    };
+      if (error) throw error;
 
-    holder.append(button);
+      receipts =
+        Array.isArray(data) ? data : [];
+
+      render();
+
+    } catch (error) {
+      showNotice(
+        "No se pudieron actualizar los recibos. " +
+        (error.message || "")
+      );
+
+      console.warn(
+        "[NOMINA YO]",
+        error?.message
+      );
+
+    } finally {
+      loading = false;
+    }
   }
 
-  const badge = document.getElementById(
-    "yoNotificationBadge"
-  );
+  // ================================================
+  // INICIAR
+  // ================================================
 
-  if (badge) {
-    const unread = items.filter(
-      item => !item.read_at
-    ).length;
+  function start() {
+    if (
+      !$("yoNotificationsList") ||
+      !$("yoNotificationButton")
+    ) {
+      return;
+    }
 
-    badge.textContent = String(unread);
+    $("yoNotificationButton")
+      .addEventListener(
+        "click",
+        () => {
+          window.setTimeout(
+            refresh,
+            50
+          );
+        }
+      );
 
-    badge.classList.toggle(
-      "empty",unread === 0
-    );
-  }
-}
-
-async function refresh() {
-  if (loading || !token()) return;
-
-  loading = true;
-
-  try {
-    const result = await db.rpc(
-      "gg_payroll_yo_list",
-      {p_session_token:token()}
-    );
-
-    if (result.error) throw result.error;
-
-    items = result.data || [];
-    render();
-  } catch (error) {
-    console.warn(
-      "[YO NÓMINA]",error.message
-    );
-  } finally {
-    loading = false;
-  }
-}
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-    const style = document.createElement(
-      "style"
+    window.setTimeout(
+      refresh,
+      850
     );
 
-    style.textContent =
-      ".gg-payroll-yo{padding:6px}" +
-      ".gg-payroll-yo-title{margin:8px 12px;" +
-      "color:#66bce6;font-size:11px;" +
-      "font-weight:800;letter-spacing:.12em}" +
-      ".gg-payroll-yo-item{display:block;" +
-      "width:100%;text-align:left;cursor:pointer;" +
-      "border:1px solid #8ac7f033;" +
-      "border-radius:14px;background:#568fbd12;" +
-      "color:inherit;padding:13px;margin:8px 0}" +
-      ".gg-payroll-yo-item strong," +
-      ".gg-payroll-yo-item small," +
-      ".gg-payroll-yo-item span{" +
-      "display:block;margin:5px 0}" +
-      ".gg-payroll-yo-item small{" +
-      "font-size:11px;opacity:.75}" +
-      ".gg-payroll-yo-item span{" +
-      "font-size:11px;color:#70c8ff}" +
-      ".gg-payroll-yo-item:disabled{" +
-      "opacity:.55}";
-
-    document.head.append(style);
-
-    setTimeout(refresh,1200);
-
-    document.getElementById(
-      "yoNotificationButton"
-    )?.addEventListener(
-      "click",
-      () => setTimeout(refresh,50)
-    );
-
-    setInterval(
+    window.setInterval(
       () => {
-        if (!document.hidden) refresh();
+        if (!document.hidden) {
+          void refresh();
+        }
       },
       90000
     );
   }
-);
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      start,
+      {once:true}
+    );
+  } else {
+    start();
+  }
 
 })();
