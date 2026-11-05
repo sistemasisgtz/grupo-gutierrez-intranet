@@ -310,6 +310,47 @@ function render() {
         render();
       };
 
+    /* GG_NOMINA_REMOVE_V1 */
+
+    if (!state.sent && !state.batchId) {
+
+      const remove =
+        document.createElement('button');
+
+      remove.type = 'button';
+      remove.className = 'gg-payroll-remove';
+      remove.textContent = '✕ Quitar';
+
+      remove.setAttribute(
+        'aria-label',
+        'Quitar ' + row.file.name + ' de la carga'
+      );
+
+      remove.disabled = state.busy;
+
+      remove.onclick = event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (
+          state.busy ||
+          state.batchId ||
+          state.sent
+        ) return;
+
+        state.rows.splice(index, 1);
+
+        render();
+
+        note(
+          'PDF retirado de la selección. ' +
+          'No se enviará.'
+        );
+      };
+
+      item.append(remove);
+    }
+
     root.append(item);
   });
 }

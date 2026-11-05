@@ -1,0 +1,266 @@
+/* GG NÓMINA: QUITAR PDF */
+
+.n-row {
+  grid-template-columns:
+    minmax(145px,1fr)
+    minmax(175px,1fr)
+    112px auto;
+}
+
+.n-row .gg-payroll-remove {
+  border: 1px solid #d7878d65;
+  background: #b4374212;
+  color: #e38c92;
+  padding: 9px 12px;
+  border-radius: 11px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.n-row .gg-payroll-remove:hover {
+  background: #b4374226;
+}
+
+.n-row .gg-payroll-remove:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+@media(max-width:850px) {
+  .n-row {
+    grid-template-columns:
+      minmax(0,1fr)
+      minmax(0,1fr);
+  }
+
+  .n-row .gg-payroll-remove {
+    justify-self: start;
+  }
+}
+
+/* ARCHIVO PERSONAL DE YO */
+
+.gg-payroll-archive {
+  margin-top: 48px;
+  padding: 28px;
+  border: 1px solid #344c64;
+  border-radius: 25px;
+  background: #111c2ae8;
+  box-shadow: 0 20px 65px #0005;
+  color: #e9f5ff;
+  animation: ggArchiveIn .55s ease both;
+}
+
+.gg-payroll-archive-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.gg-payroll-archive-head span {
+  font-size: 10px;
+  letter-spacing: .15em;
+  font-weight: 800;
+  color: #77bfe8;
+}
+
+.gg-payroll-archive-head h2 {
+  margin: 9px 0;
+  font-size: clamp(26px,3.4vw,42px);
+  letter-spacing: -.055em;
+  font-weight: 850;
+
+  background: linear-gradient(
+    100deg,
+    #ecf7ff,
+    #70c9f1,
+    #c5baff,
+    #ecf7ff
+  );
+
+  background-size: 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+
+  animation:
+    ggArchiveLiquid 11s ease-in-out
+    infinite alternate;
+}
+
+.gg-payroll-archive-head p {
+  margin: 0;
+  font-size: 12px;
+  color: #acbfd0;
+}
+
+.gg-archive-dot {
+  color: #6bc7fb !important;
+}
+
+#yoPayrollArchiveRefresh {
+  padding: 10px 15px;
+  color: #9bdfff;
+  background: #21354a;
+  border: 1px solid #405e78;
+  border-radius: 40px;
+  cursor: pointer;
+  font: 700 12px system-ui;
+}
+
+.gg-payroll-archive-status {
+  color: #adc4d8;
+  font-size: 12px;
+  margin: 16px 0;
+  min-height: 18px;
+}
+
+.gg-payroll-archive-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+/* GRUPOS POR TÍTULO DE NOTIFICACIÓN */
+
+.gg-archive-group {
+  border: 1px solid #38516a;
+  border-radius: 17px;
+  background: #1c2e42;
+  overflow: hidden;
+}
+
+.gg-archive-group summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 17px 19px;
+}
+
+.gg-archive-group summary::-webkit-details-marker {
+  display: none;
+}
+
+.gg-archive-group summary:after {
+  content: '⌄';
+  color: #80d1fa;
+  font-size: 20px;
+}
+
+.gg-archive-group[open] summary:after {
+  content: '⌃';
+}
+
+.gg-archive-group strong {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.gg-archive-group small {
+  display: block;
+  color: #a8bfd4;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.gg-archive-group-body {
+  display: grid;
+  gap: 8px;
+  padding: 0 13px 13px;
+}
+
+/* ARCHIVO INDIVIDUAL */
+
+.gg-archive-file {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  padding: 14px;
+
+  background: #152538;
+  border: 1px solid #3c526b;
+  border-radius: 12px;
+  color: #f1f8ff;
+  cursor: pointer;
+  font: inherit;
+}
+
+.gg-archive-file:hover {
+  border-color: #83cffe;
+  background: #203950;
+}
+
+.gg-archive-file span {
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+
+.gg-archive-file em {
+  color: #8bd8ff;
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.gg-archive-file:disabled {
+  opacity: .65;
+  cursor: progress;
+}
+
+.gg-archive-empty {
+  border: 1px dashed #476075;
+  border-radius: 15px;
+  padding: 24px;
+  color: #b3c9d7;
+  font-size: 12px;
+}
+
+/* ANIMACIONES */
+
+@keyframes ggArchiveIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ggArchiveLiquid {
+  to {
+    background-position: 100% 0;
+  }
+}
+
+@media(max-width:620px) {
+  .gg-payroll-archive {
+    padding: 18px;
+  }
+
+  .gg-archive-file {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .gg-payroll-archive,
+  .gg-payroll-archive-head h2 {
+    animation: none !important;
+  }
+}

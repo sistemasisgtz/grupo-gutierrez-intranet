@@ -42,6 +42,20 @@ const fmt = date => date
  : "—";
 
 const $ = selector => document.querySelector(selector);
+/* GG_LD_WORKSPACE_BRIDGE_V1 */
+function ggStatus(t){
+ return t.workspace_status||
+  (t.status==="hecho"?"terminado":"pendiente");
+}
+function ggStatusLabel(t){
+ return ({
+  pendiente:"Pendiente",
+  programado:"Programado",
+  ejecucion:"En Ejecución",
+  terminado:"Terminado"
+ })[ggStatus(t)]||"Pendiente";
+}
+
 
 function toast(message) {
  const el = document.createElement("div");
@@ -116,6 +130,23 @@ async function refresh(quiet=false) {
  const {data:result,error} = await db.rpc("gg_ld_get");
  if(error) throw error;
  data = result;
+ if(GG){
+  const {data:shared,error:metaError}=
+   await db.rpc("gg_ld_workspace_snapshot",{p_mode:"gg"});
+  if(metaError)throw metaError;
+
+  for(const a of data.assets){
+   a.workspace_folio=
+    (shared.folios||[])
+    .find(f=>f.asset_id===a.id)?.folio||"";
+  }
+
+  for(const t of data.tasks){
+   t.workspace_status=
+    (shared.statuses||[])
+    .find(w=>w.task_id===t.id)?.status||"";
+  }
+ }
  render();
  if(!quiet) toast("Datos actualizados");
 }
@@ -159,12 +190,15 @@ function renderGG() {
   '</div><div class="ld-grid">' +
   (visible.map(a => {
    const tasks = data.tasks.filter(t => t.asset_id === a.id);
-   const count = tasks.filter(t => t.status === "pendiente").length;
+   const count = tasks.filter(t => ggStatus(t) !== "terminado").length;
 
    return '<article class="ld-card">' +
     '<div class="ld-art">' + art(a.icon) + '</div>' +
     '<span class="ld-pill">' + esc(a.type) + '</span>' +
     '<h2 style="margin-top:12px">' + esc(a.name) + '</h2>' +
+    '<small class="gg-ld-folio">FOLIO · ' +
+    esc(a.workspace_folio||"Sin registrar") +
+    '</small>' +
     '<p class="ld-address">📍 ' + esc(a.address) + '</p>' +
     contact(a) +
     '<label style="font-size:12px;font-weight:750">' +
@@ -368,10 +402,10 @@ function taskPanel(assetId,taskId=null) {
 
  const list = tasks.map(t =>
   '<div class="ld-task-line ' +
-  (t.status==="hecho"?"done":"") + '">' +
+  (ggStatus(t)==="terminado"?"done":"") + '">' +
   '<strong>' + esc(t.title) + '</strong>' +
   '<p><span class="ld-pill">' +
-  (t.status==="hecho"?"✓ Hecho":"Pendiente") +
+  ggStatusLabel(t) +
   '</span> ' +
   (t.sent_at?'<small>Enviado a LO</small>':
    '<small>Solo Dirección</small>') + '</p>' +
@@ -407,16 +441,16 @@ function taskPanel(assetId,taskId=null) {
    '<input type="hidden" name="asset_id" value="' + a.id + '">' +
    '<label>Nuevo pendiente<textarea name="title" required ' +
    'placeholder="Describe lo que se necesita hacer..."></textarea></label>' +
-   '<label>Estatus<select name="status">' +
-   '<option value="pendiente">Pendiente</option>' +
-   '<option value="hecho">Hecho</option>' +
-   '</select></label>' +
+   '<p class="gg-ld-hint">Se crea como Pendiente. Los cambios de estatus y su motivo se registran en LO.</p>' +
+   '<input type="hidden" name="status" value="pendiente">' +
    '<button class="ld-btn ld-primary">Agregar pendiente</button>' +
    '</form>':"") +
   '</div><div class="ld-panel">' +
   '<h3>💬 Actualizaciones</h3>' +
   (selected?'<p><strong>' + esc(selected.title) + '</strong></p>' +
-   '<span class="ld-pill">' + esc(selected.status) + '</span>' +
+   '<span class="ld-pill gg-ld-state" data-status="' +
+       ggStatus(selected) + '">' +
+       esc(ggStatusLabel(selected)) + '</span>' +
    (GG?"":'<form id="ldStatusForm" class="ld-form" ' +
     'style="margin-top:15px">' +
     '<input type="hidden" name="id" value="' +
@@ -470,12 +504,11 @@ function taskEditor(id) {
   '<input type="hidden" name="id" value="' + t.id + '">' +
   '<label>Pendiente<textarea name="title" required>' +
   esc(t.title) + '</textarea></label>' +
-  '<label>Estatus<select name="status">' +
-  '<option value="pendiente"' +
-  (t.status==="pendiente"?" selected":"") +
-  '>Pendiente</option><option value="hecho"' +
-  (t.status==="hecho"?" selected":"") +
-  '>Hecho</option></select></label>' +
+  '<p class="gg-ld-hint">Estatus actual: ' +
+  esc(ggStatusLabel(t)) +
+  '. Los estados detallados se modifican en LO con comentario obligatorio.</p>' +
+  '<input type="hidden" name="status" value="' +
+  esc(t.status) + '">' +
   '<button class="ld-btn ld-primary">Guardar cambios</button>' +
   '</form><p><button class="ld-btn" data-action="deleteTask" ' +
   'data-id="' + t.id + '">Eliminar pendiente</button></p>'
