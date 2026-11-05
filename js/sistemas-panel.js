@@ -40,6 +40,25 @@
     render();
   }
 
+
+  /* GG_PAYROLL_SYSTEMS_V1 */
+  async function loadPayrollRoles() {
+    const {data,error} = await db.rpc(
+      "gg_payroll_roles_snapshot"
+    );
+
+    if (error) {
+      note("Nómina: " + error.message);
+      return;
+    }
+
+    snapshot.roles = snapshot.roles.filter(
+      role => role.module !== "nomina"
+    ).concat(data || []);
+
+    render();
+  }
+
   function render() {
     if (!loaded) return;
 
@@ -235,7 +254,8 @@
     edited = false;
     $("sysSave").disabled = false;
 
-    if ($("sysModule").value === "tecnologias") await loadTechRoles();
+    if ($("sysModule").value === "nomina") await loadPayrollRoles();
+    else if ($("sysModule").value === "tecnologias") await loadTechRoles();
     else render();
     renderRequests();
     note("Permisos sincronizados.");
@@ -256,7 +276,8 @@
     }
 
     active = next;
-    if (next === "tecnologias") loadTechRoles(); else render();
+    if (next === "nomina") loadPayrollRoles();
+    else if (next === "tecnologias") loadTechRoles(); else render();
   };
 
   $("sysSearch").oninput = render;
@@ -274,7 +295,7 @@
     $("sysSave").disabled = true;
 
     const {error} = await db.rpc(
-      module === "tecnologias" ? "gg_tec_save_roles" : "gg_sistemas_save_roles",
+      module === "nomina" ? "gg_payroll_save_roles" : module === "tecnologias" ? "gg_tec_save_roles" : "gg_sistemas_save_roles",
       {
         p_module:module,
         p_roles:payload

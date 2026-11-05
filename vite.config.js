@@ -9,6 +9,7 @@ export default defineConfig({
         rollupOptions: {
 
             input: {
+                nomina: resolve(__dirname,"nomina.html"),
 
                 main:
                     resolve(

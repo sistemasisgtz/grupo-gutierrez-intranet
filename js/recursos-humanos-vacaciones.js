@@ -35,14 +35,8 @@
     // new Set([1,2,3,4,5,6])
     // =====================================================
 
-    const WORKING_DAYS =
-        new Set([
-            1,
-            2,
-            3,
-            4,
-            5
-        ]);
+    /* GG_PAYROLL_VAC_WEEKEND_V1 */
+    const WORKING_DAYS = new Set([1,2,3,4,5,6]);
 
 
     // =====================================================
@@ -2117,7 +2111,7 @@
 
         const selectedDays =
             new Set(
-                getSelectedVacationDates()
+                getCalendarRangeDates()
             );
 
 
@@ -2238,14 +2232,7 @@
                     "";
 
 
-            const disabled =
-                selectable
-                &&
-                weekend
-                    ?
-                    "disabled"
-                    :
-                    "";
+            const disabled = "";
 
 
             daysHtml.push(`
@@ -2513,6 +2500,27 @@
 
     }
 
+
+
+    // Ilumina sábados y domingos del rango.
+    // El cálculo descontable sigue siendo
+    // lunes a sábado (nunca domingos).
+    function getCalendarRangeDates() {
+      if (!selectedStartDate) return [];
+
+      const end =
+        selectedEndDate || selectedStartDate;
+
+      const result = [];
+      let cursor = selectedStartDate;
+
+      while (cursor <= end) {
+        result.push(cursor);
+        cursor = addDaysISO(cursor,1);
+      }
+
+      return result;
+    }
 
     function getSelectedVacationDates() {
 

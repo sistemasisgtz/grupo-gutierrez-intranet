@@ -5,6 +5,7 @@
   const db = window.ggSupabase;
 
   const paths = {
+    nomina: "nomina.html",
     tecnologias: "tecnologias.html",
     ventas: "ventas.html",
     "recursos-humanos": "recursos-humanos.html",
@@ -103,7 +104,9 @@
         throw Error("Inicia sesión nuevamente.");
       }
 
-      const {data,error} = module === "tecnologias"
+      const {data,error} = module === "nomina"
+        ? await db.rpc("gg_payroll_can_manage")
+        : module === "tecnologias"
         ? await db.rpc("gg_tec_has_access")
         : await db.rpc("gg_module_access",{p_module:module});
 

@@ -1,0 +1,24 @@
+body .workspace .slot-nomina .module-card {
+  background:
+    linear-gradient(130deg,#6e71ff27,#55dbff18),
+    #111a29 !important;
+  border-color: #8bbfff66 !important;
+}
+body .workspace .slot-nomina .card-title {
+  background:
+    linear-gradient(95deg,#fff,#96deff,#baa3ff,#fff);
+  background-size: 240% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent !important;
+  animation: gg-n-liquid 8s ease-in-out
+    infinite alternate;
+}
+@keyframes gg-n-liquid {
+  to { background-position: 100%; }
+}
+@media(prefers-reduced-motion:reduce) {
+  body .workspace .slot-nomina .card-title {
+    animation: none;
+  }
+}

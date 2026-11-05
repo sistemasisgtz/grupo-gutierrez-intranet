@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+ content="width=device-width,initial-scale=1">
+<title>Nómina · Grupo Gutiérrez</title>
+<link rel="stylesheet" href="css/gg-payroll.css">
+</head>
+<body>
+<div class="n-halo"></div>
+
+<header class="n-top">
+  <a href="sistema.html">
+    GG ✳ <span>Grupo Gutiérrez</span>
+  </a>
+  <div>
+    <button id="nTheme" type="button">
+      ◐ Apariencia
+    </button>
+    <a href="sistema.html">← Sistema</a>
+  </div>
+</header>
+
+<main id="nApp" hidden>
+  <section class="n-hero">
+    <small>
+      RECURSOS HUMANOS / DISTRIBUCIÓN PRIVADA
+    </small>
+    <h1>Nómina<span>.</span></h1>
+    <p>
+      Documentos correctos.
+      Personas correctas.
+    </p>
+  </section>
+
+  <div class="n-tabs">
+    <button type="button"
+      data-tab="new" class="active">
+      ＋ Nuevo envío
+    </button>
+    <button type="button" data-tab="history">
+      ◷ Historial de envíos
+    </button>
+  </div>
+
+  <section id="nNew" class="n-layout">
+    <div class="n-panel n-config">
+      <span class="n-over">
+        01 / PREPARACIÓN
+      </span>
+      <h2>Preparar lote</h2>
+
+      <label>
+        Título de notificación
+        <input id="nTitle" maxlength="160"
+          placeholder="Ej. Recibos de nómina · Semana 45">
+      </label>
+
+      <label class="n-drop" for="nFiles">
+        <span>⇧</span>
+        <strong>
+          Arrastra o selecciona tus PDF
+        </strong>
+        <small>
+          Hasta 15 MB cada uno · Múltiples archivos
+        </small>
+        <input id="nFiles" type="file"
+          accept=".pdf,application/pdf"
+          multiple>
+      </label>
+
+      <p class="n-tip">
+        La coincidencia exacta requiere
+        todas las palabras del nombre
+        y un único empleado activo.
+      </p>
+
+      <div class="n-stats">
+        <div>
+          <strong id="nExact">0</strong>
+          <small>Encontrados</small>
+        </div>
+        <div>
+          <strong id="nReview">0</strong>
+          <small>Por revisar</small>
+        </div>
+        <div>
+          <strong id="nMissing">0</strong>
+          <small>No encontrados</small>
+        </div>
+      </div>
+
+      <button id="nSendExact" type="button"
+        class="n-btn n-primary">
+        Enviar solo encontrados
+      </button>
+
+      <button id="nSendReview" type="button"
+        class="n-btn">
+        Enviar encontrados y por revisar
+      </button>
+
+      <p id="nStatus" class="n-status"
+        role="status"></p>
+    </div>
+
+    <div class="n-panel n-results">
+      <div class="n-result-head">
+        <div>
+          <span class="n-over">
+            02 / CONCILIACIÓN
+          </span>
+          <h2>Coincidencias</h2>
+        </div>
+        <span id="nCount">0 archivos</span>
+      </div>
+      <div id="nRows" class="n-rows">
+        <p class="n-empty">
+          Tu mesa de trabajo está lista.
+          Selecciona varios PDF para comenzar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="nHistory" class="n-panel" hidden>
+    <div class="n-result-head">
+      <div>
+        <span class="n-over">
+          AUDITORÍA / ENVÍOS
+        </span>
+        <h2>Historial</h2>
+      </div>
+      <button id="nRefresh"
+        class="n-btn" type="button">
+        Actualizar ↻
+      </button>
+    </div>
+    <div id="nHistoryRows"></div>
+  </section>
+</main>
+
+<div id="nDenied" class="n-denied" hidden>
+  <h2>Acceso restringido</h2>
+  <p id="nDeniedText">
+    Necesitas permiso desde Sistemas.
+  </p>
+  <a href="sistema.html">Volver a Sistema</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="js/gg-payroll.js"></script>
+</body>
+</html>
