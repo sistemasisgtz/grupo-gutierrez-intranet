@@ -1,0 +1,565 @@
+/* GG_PAYROLL_YO_CARDS_V8 */
+
+.yo-shell #yoPayrollArchive {
+  margin-top:46px;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  color:#e4e9ec;
+  backdrop-filter:none;
+  animation:none;
+}
+
+.yo-shell #yoPayrollArchive
+.gg-payroll-archive-head {
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:18px;
+}
+
+.yo-shell #yoPayrollArchive
+.gg-payroll-archive-head > div > span {
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.15em;
+  color:#718ba0;
+}
+
+.yo-shell #yoPayrollArchive
+.gg-payroll-archive-head h2 {
+  margin:6px 0 0;
+  font:800 24px/1.3 Manrope,Inter,sans-serif;
+  letter-spacing:-.045em;
+  color:#e5edf4;
+
+  background:linear-gradient(
+    105deg,
+    #e4edf5,
+    #77b8df,
+    #e4edf5
+  );
+
+  background-size:240% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:
+    ggReceiptInk 12s ease-in-out
+    infinite alternate;
+}
+
+.yo-shell #yoPayrollArchive
+.gg-archive-dot {
+  -webkit-text-fill-color:#78bce6;
+}
+
+.yo-shell #yoPayrollArchive
+.gg-payroll-archive-head p {
+  margin:8px 0 0;
+  font-size:11px;
+  color:#788c9e;
+  line-height:1.6;
+}
+
+.yo-shell #yoPayrollArchive
+#yoPayrollArchiveRefresh {
+  flex:none;
+  border-radius:11px;
+  padding:11px 14px;
+
+  background:rgba(255,255,255,.035);
+  color:#b7c9d8;
+
+  border:1px solid rgba(255,255,255,.09);
+
+  font:750 11px Inter,sans-serif;
+}
+
+.yo-shell #yoPayrollArchive
+#yoPayrollArchiveRefresh:hover {
+  background:rgba(88,153,204,.12);
+  border-color:rgba(111,176,228,.30);
+}
+
+/* FILTROS */
+
+.gg-receipts-filters {
+  display:flex;
+  align-items:flex-end;
+  flex-wrap:wrap;
+  gap:10px;
+
+  padding:16px;
+
+  border:1px solid rgba(255,255,255,.075);
+  background:rgba(255,255,255,.018);
+
+  border-radius:16px;
+}
+
+.gg-receipts-field {
+  display:grid;
+  gap:8px;
+  flex:1 1 170px;
+  min-width:0;
+}
+
+.gg-receipts-field span {
+  font:850 9px Inter,sans-serif;
+  letter-spacing:.12em;
+  color:#8194a4;
+}
+
+.gg-receipts-field input,
+.gg-receipts-field select {
+  width:100%;
+  min-height:43px;
+  padding:0 13px;
+
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:11px;
+
+  background:#111a22;
+  color:#dcebf5;
+
+  font:600 12px Inter,sans-serif;
+  outline:none;
+  color-scheme:dark;
+}
+
+.gg-receipts-field input:focus,
+.gg-receipts-field select:focus {
+  border-color:#579ecb;
+  box-shadow:0 0 0 3px rgba(87,158,203,.13);
+}
+
+.gg-receipts-field input::placeholder {
+  color:#65798b;
+  opacity:1;
+}
+
+.gg-receipts-clear {
+  flex:0 0 auto;
+  min-height:43px;
+
+  border:1px solid rgba(110,164,205,.24);
+  border-radius:11px;
+
+  padding:0 14px;
+
+  color:#9fc6e0;
+  background:rgba(63,120,164,.12);
+
+  font:750 11px Inter,sans-serif;
+  cursor:pointer;
+
+  transition:
+    background .2s,
+    border-color .2s;
+}
+
+.gg-receipts-clear:hover {
+  background:rgba(63,120,164,.24);
+  border-color:#6098be;
+}
+
+/* CONTADOR */
+
+.yo-shell #yoPayrollArchive
+#yoPayrollArchiveStatus {
+  margin:17px 2px 13px;
+  min-height:15px;
+
+  font:600 11px Inter,sans-serif;
+  color:#7891a4;
+}
+
+/* CUADRÍCULA DE RECIBOS */
+
+.yo-shell #yoPayrollArchive
+#yoPayrollArchiveList {
+  display:grid;
+  grid-template-columns:
+    repeat(3,minmax(0,1fr));
+
+  gap:11px;
+  margin:0;
+}
+
+/* TARJETAS */
+
+.gg-receipt-card {
+  position:relative;
+  min-width:0;
+  overflow:hidden;
+
+  text-align:left;
+  padding:0;
+
+  display:flex;
+  flex-direction:column;
+
+  min-height:292px;
+
+  border-radius:17px;
+  border:1px solid rgba(255,255,255,.075);
+
+  background:rgba(255,255,255,.027);
+  color:#e7edf3;
+
+  cursor:pointer;
+  font-family:Inter,sans-serif;
+
+  transition:
+    transform .25s,
+    border-color .25s,
+    background .25s,
+    box-shadow .25s;
+
+  animation:ggReceiptEnter .45s both;
+
+  animation-delay:
+    calc(var(--card-order,0) * 32ms);
+}
+
+.gg-receipt-card::before {
+  content:'';
+
+  position:absolute;
+  top:-45%;
+  left:-35%;
+
+  width:95%;
+  height:110%;
+
+  pointer-events:none;
+
+  background:radial-gradient(
+    circle,
+    rgba(97,169,216,.11),
+    transparent 72%
+  );
+
+  transition:transform .6s ease;
+}
+
+.gg-receipt-card:hover,
+.gg-receipt-card:focus-visible {
+  transform:translateY(-4px);
+  background:rgba(96,147,189,.065);
+
+  border-color:rgba(110,178,224,.34);
+
+  box-shadow:
+    0 18px 36px rgba(0,0,0,.14);
+
+  outline:none;
+}
+
+.gg-receipt-card:hover::before {
+  transform:translate(22%,22%);
+}
+
+.gg-receipt-card:disabled {
+  opacity:.65;
+  cursor:wait;
+  transform:none;
+}
+
+/* ILUSTRACIÓN DEL DOCUMENTO */
+
+.gg-receipt-card-top {
+  height:125px;
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  padding:18px 18px 10px;
+  position:relative;
+}
+
+.gg-receipt-illustration {
+  position:relative;
+  width:84px;
+  height:100px;
+
+  display:grid;
+  place-items:center;
+}
+
+.gg-receipt-sheet {
+  position:relative;
+
+  width:68px;
+  height:92px;
+
+  border-radius:6px 13px 6px 6px;
+
+  background:linear-gradient(
+    150deg,
+    #edf7ff,
+    #bed5e4
+  );
+
+  box-shadow:
+    0 8px 23px rgba(0,0,0,.3),
+    inset 0 1px 0 #fff;
+
+  transform:rotate(-5deg);
+
+  transition:transform .27s ease;
+
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+
+  padding:13px 9px;
+}
+
+.gg-receipt-sheet::before {
+  content:'';
+
+  position:absolute;
+  right:0;
+  top:0;
+
+  width:19px;
+  height:19px;
+
+  background:linear-gradient(
+    225deg,
+    #89adc6 50%,
+    transparent 51%
+  );
+
+  border-radius:0 11px 0 3px;
+}
+
+.gg-receipt-card:hover
+.gg-receipt-sheet {
+  transform:
+    rotate(0deg) translateY(-3px);
+}
+
+.gg-sheet-mark {
+  font:900 14px Manrope,Inter,sans-serif;
+  color:#3a739a;
+  letter-spacing:-.07em;
+}
+
+.gg-sheet-line {
+  height:4px;
+  border-radius:3px;
+
+  background:#94b7d1;
+  opacity:.9;
+}
+
+.gg-line-wide {width:90%}
+.gg-line-med {width:73%}
+.gg-line-small {width:47%}
+
+.gg-sheet-stamp {
+  position:absolute;
+  bottom:9px;
+  right:7px;
+
+  padding:3px 5px;
+  border-radius:4px;
+
+  background:#4f97bf;
+  color:#fff;
+
+  font:900 8px Inter,sans-serif;
+}
+
+/* NÚMERO DE SEMANA */
+
+.gg-receipt-week {
+  align-self:flex-start;
+  margin-top:4px;
+
+  padding:7px 9px;
+
+  border:1px solid rgba(109,173,217,.21);
+  border-radius:9px;
+
+  background:rgba(62,126,172,.10);
+  color:#8ebcd9;
+
+  font:850 9px Inter,sans-serif;
+  letter-spacing:.06em;
+
+  white-space:nowrap;
+}
+
+/* TEXTOS */
+
+.gg-receipt-copy {
+  padding:9px 18px 14px;
+
+  display:flex;
+  flex:1;
+  flex-direction:column;
+
+  gap:6px;
+  min-width:0;
+}
+
+.gg-receipt-label {
+  font:850 8px Inter,sans-serif;
+  letter-spacing:.12em;
+  color:#627b8e;
+}
+
+.gg-receipt-name {
+  font:800 15px/1.4 Manrope,Inter,sans-serif;
+
+  letter-spacing:-.025em;
+  color:#dce8f3;
+
+  overflow-wrap:anywhere;
+}
+
+.gg-receipt-file {
+  font:500 11px/1.5 Inter,sans-serif;
+  color:#7b91a4;
+
+  overflow-wrap:anywhere;
+}
+
+.gg-receipt-date {
+  font:500 10px Inter,sans-serif;
+  color:#5f798b;
+
+  margin-top:auto;
+  padding-top:5px;
+}
+
+/* PIE DE TARJETA */
+
+.gg-receipt-foot {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  gap:10px;
+  padding:13px 18px;
+
+  border-top:1px solid rgba(255,255,255,.055);
+  background:rgba(0,0,0,.10);
+}
+
+.gg-receipt-unread,
+.gg-receipt-read {
+  font:750 10px Inter,sans-serif;
+  color:#7f9baf;
+}
+
+.gg-receipt-unread {
+  color:#70c8ee;
+}
+
+.gg-receipt-open {
+  font:800 11px Inter,sans-serif;
+  color:#9bd6fa;
+}
+
+/* SIN RESULTADOS */
+
+.yo-shell #yoPayrollArchive
+.gg-receipts-empty {
+  grid-column:1/-1;
+
+  text-align:center;
+  padding:42px 20px;
+
+  border:1px dashed rgba(255,255,255,.12);
+  border-radius:16px;
+
+  background:rgba(255,255,255,.017);
+  color:#8198aa;
+
+  font:500 12px/1.7 Inter,sans-serif;
+}
+
+/* ANIMACIONES */
+
+@keyframes ggReceiptInk {
+  to {
+    background-position:100% 0;
+  }
+}
+
+@keyframes ggReceiptEnter {
+  from {
+    opacity:0;
+    transform:translateY(12px);
+  }
+
+  to {
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* TABLET */
+
+@media(max-width:920px) {
+  .yo-shell #yoPayrollArchive
+  #yoPayrollArchiveList {
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+  }
+}
+
+/* CELULAR */
+
+@media(max-width:620px) {
+  .yo-shell #yoPayrollArchive
+  .gg-payroll-archive-head {
+    align-items:flex-start;
+  }
+
+  .yo-shell #yoPayrollArchive
+  #yoPayrollArchiveList {
+    grid-template-columns:1fr;
+  }
+
+  .gg-receipt-card {
+    min-height:274px;
+  }
+
+  .gg-receipt-card-top {
+    height:120px;
+  }
+
+  .gg-receipts-filters {
+    padding:12px;
+  }
+
+  .gg-receipts-field {
+    flex-basis:100%;
+  }
+
+  .gg-receipts-clear {
+    width:100%;
+  }
+}
+
+/* ACCESIBILIDAD */
+
+@media(prefers-reduced-motion:reduce) {
+  .gg-receipt-card,
+  .yo-shell #yoPayrollArchive
+  .gg-payroll-archive-head h2 {
+    animation:none !important;
+    transition:none !important;
+  }
+}

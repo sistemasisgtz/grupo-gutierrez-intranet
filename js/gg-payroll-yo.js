@@ -606,4 +606,24 @@
     start();
   }
 
+
+/* GG_PAYROLL_YO_SHARED_BRIDGE_V7 */
+
+// La sección inferior utilizará exactamente
+// la misma lista y el mismo abridor de PDF.
+
+window.ggPayrollYoBridge = Object.freeze({
+
+  list: () =>
+    Array.isArray(receipts)
+      ? receipts.slice()
+      : [],
+
+  refresh: () => refresh(),
+
+  open: (receipt, button) =>
+    openReceipt(receipt, button)
+
+});
+
 })();

@@ -1,57 +1,108 @@
-/*
- GG_NOMINA_ARCHIVE_V1
-
- Historial personal en YO.
- Complementa la campanita existente.
-*/
+/* GG_PAYROLL_YO_ARCHIVE_UNIFIED_V7 */
 
 (() => {
   'use strict';
 
-  const db = window.ggSupabase;
+  if (window.__ggPayrollArchiveUnifiedV7) {
+    return;
+  }
+
+  window.__ggPayrollArchiveUnifiedV7 = true;
 
   const $ = id =>
     document.getElementById(id);
 
-  const session = () =>
-    sessionStorage.getItem(
-      'gg_intranet_token'
+  const bridge = () =>
+    window.ggPayrollYoBridge;
+
+  let lastSignature = null;
+  let fetching = false;
+
+  function status(message) {
+    const element = $(
+      'yoPayrollArchiveStatus'
     );
 
-  let busy = false;
-  let receipts = [];
+    if (element) {
+      element.textContent = message;
+    }
+  }
 
-  const uuid =
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  function date(value) {
+    if (!value) return 'Sin fecha';
 
-  const fmt = value =>
-    value
-      ? new Date(value).toLocaleDateString(
+    const d = new Date(value);
+
+    return Number.isNaN(d.getTime())
+      ? 'Sin fecha'
+      : d.toLocaleDateString(
           'es-MX',
           {
             day: '2-digit',
             month: 'short',
             year: 'numeric'
           }
-        )
-      : '—';
-
-  function notice(message) {
-    if ($('yoPayrollArchiveStatus')) {
-      $('yoPayrollArchiveStatus').textContent =
-        message;
-    }
+        );
   }
 
-  // ================================================
-  // MOSTRAR RECIBOS AGRUPADOS POR NOTIFICACIÓN
-  // ================================================
+  // =========================================
+  // MISMA LISTA DE LA CAMPANITA
+  // =========================================
 
-  function paint() {
+  function items() {
+    const api = bridge();
 
-    const root = $('yoPayrollArchiveList');
+    return (
+      api &&
+      typeof api.list === 'function'
+    )
+      ? api.list()
+      : [];
+  }
+
+  // =========================================
+  // DIBUJAR HISTORIAL PERMANENTE
+  // =========================================
+
+  function paint(force = false) {
+
+    const root = $(
+      'yoPayrollArchiveList'
+    );
 
     if (!root) return;
+
+    // Recordar qué grupos están desplegados.
+    const expanded = new Set(
+      [
+        ...root.querySelectorAll(
+          'details[open]'
+        )
+      ].map(
+        node => node.dataset.groupKey
+      )
+    );
+
+    const receipts = items();
+
+    const signature = JSON.stringify(
+      receipts.map(
+        r => [
+          r.id,
+          r.title,
+          r.file_name,
+          r.sent_at,
+          r.read_at
+        ]
+      )
+    );
+
+    if (
+      !force &&
+      signature === lastSignature
+    ) return;
+
+    lastSignature = signature;
 
     root.replaceChildren();
 
@@ -60,27 +111,42 @@
       const empty =
         document.createElement('div');
 
-      empty.className = 'gg-archive-empty';
+      empty.className =
+        'gg-archive-empty';
 
       empty.textContent =
         'Todavía no tienes recibos ' +
         'de nómina enviados.';
 
       root.append(empty);
+
+      status('0 recibos disponibles.');
+
       return;
     }
 
+    status(
+      receipts.length +
+      (
+        receipts.length === 1
+          ? ' recibo disponible.'
+          : ' recibos disponibles.'
+      )
+    );
+
+    // Agrupar por título y fecha de envío.
     const groups = new Map();
 
     for (const receipt of receipts) {
 
-      const day =
-        (receipt.sent_at || '').slice(0,10);
-
       const key =
-        String(receipt.title || 'Nómina') +
+        String(
+          receipt.title || 'Nómina'
+        ) +
         '|' +
-        day;
+        String(
+          receipt.sent_at || ''
+        ).slice(0, 10);
 
       if (!groups.has(key)) {
         groups.set(key, []);
@@ -89,42 +155,51 @@
       groups.get(key).push(receipt);
     }
 
-    // Crear tarjetas desplegables.
+    // =======================================
+    // TARJETAS DESPLEGABLES
+    // =======================================
 
-    for (const items of groups.values()) {
+    for (
+      const [key, groupItems] of groups
+    ) {
 
       const group =
         document.createElement('details');
 
-      group.className = 'gg-archive-group';
+      group.className =
+        'gg-archive-group';
 
-      const top =
+      group.dataset.groupKey = key;
+      group.open = expanded.has(key);
+
+      const header =
         document.createElement('summary');
 
-      const titleBox =
+      const left =
         document.createElement('div');
 
       const title =
         document.createElement('strong');
 
       title.textContent =
-        items[0].title || 'Recibos de nómina';
+        groupItems[0].title ||
+        'Recibos de nómina';
 
-      const caption =
+      const info =
         document.createElement('small');
 
-      caption.textContent =
-        fmt(items[0].sent_at) +
+      info.textContent =
+        date(groupItems[0].sent_at) +
         ' · ' +
-        items.length +
+        groupItems.length +
         (
-          items.length === 1
+          groupItems.length === 1
             ? ' documento'
             : ' documentos'
         );
 
-      titleBox.append(title, caption);
-      top.append(titleBox);
+      left.append(title, info);
+      header.append(left);
 
       const body =
         document.createElement('div');
@@ -132,314 +207,233 @@
       body.className =
         'gg-archive-group-body';
 
-      // Cada documento se abre con autorización.
+      // =====================================
+      // RECIBOS INDIVIDUALES
+      // =====================================
 
-      for (const receipt of items) {
+      for (const receipt of groupItems) {
 
         const button =
           document.createElement('button');
 
         button.type = 'button';
-        button.className = 'gg-archive-file';
+        button.className =
+          'gg-archive-file';
 
         const file =
           document.createElement('span');
 
         file.textContent =
           '▤ ' +
-          (receipt.file_name || 'Recibo.pdf');
+          (
+            receipt.file_name ||
+            'Recibo.pdf'
+          );
 
         const action =
           document.createElement('em');
 
+        // Clase utilizada por el abridor
+        // original de la campanita.
+        action.className =
+          'gg-payroll-yo-action';
+
         action.textContent =
           receipt.read_at
             ? 'Abrir PDF ↗'
-            : '● Nuevo · Abrir ↗';
+            : '● Nuevo · Abrir PDF ↗';
 
-        button.append(file, action);
+        button.append(
+          file,
+          action
+        );
+
+        // ===================================
+        // MISMA APERTURA QUE LA CAMPANITA
+        // ===================================
 
         button.addEventListener(
           'click',
-          event => {
-            event.preventDefault();
+          async () => {
 
-            void openPDF(
+            const api = bridge();
+
+            if (
+              !api ||
+              typeof api.open !== 'function'
+            ) {
+
+              status(
+                'La campanita de nómina ' +
+                'no está disponible. Recarga YO.'
+              );
+
+              return;
+            }
+
+            // No se genera otra URL.
+            // No se hace una nueva validación
+            // de UUID diferente.
+            //
+            // Se ejecuta EXACTAMENTE el
+            // abridor que usa la campanita.
+
+            await api.open(
               receipt,
               button
             );
+
+            const errorText = $(
+              'ggPayrollYoFeedback'
+            )?.textContent?.trim();
+
+            if (errorText) {
+              status(errorText);
+            }
+
+            paint(true);
           }
         );
 
         body.append(button);
       }
 
-      group.append(top, body);
+      group.append(
+        header,
+        body
+      );
+
       root.append(group);
     }
   }
 
-  // ================================================
-  // CONSULTAR RECIBOS DESDE SUPABASE
-  // ================================================
+  // =========================================
+  // ACTUALIZAR USANDO LA CAMPANITA
+  // =========================================
 
-  async function fetchList() {
+  async function refresh() {
 
-    if (
-      busy ||
-      !session() ||
-      !db
-    ) return;
-
-    busy = true;
-
-    try {
-
-      const {data, error} =
-        await db.rpc(
-          'gg_payroll_yo_list',
-          {
-            p_session_token: session()
-          }
-        );
-
-      if (error) throw error;
-
-      receipts =
-        Array.isArray(data) ? data : [];
-
-      paint();
-
-      notice(
-        receipts.length +
-        (
-          receipts.length === 1
-            ? ' recibo disponible.'
-            : ' recibos disponibles.'
-        ) +
-        (
-          receipts.length >= 200
-            ? ' Se muestran los 200 más recientes.'
-            : ''
-        )
-      );
-
-    } catch (error) {
-
-      notice(
-        'No se pudo actualizar el historial. ' +
-        (error.message || '')
-      );
-
-    } finally {
-      busy = false;
-    }
-  }
-
-  // ================================================
-  // LEER ERRORES DE LA EDGE FUNCTION
-  // ================================================
-
-  async function explain(error) {
-
-    try {
-
-      const body =
-        await error?.context
-          ?.clone?.()
-          .json();
-
-      return (
-        body?.error ||
-        body?.message ||
-        error.message
-      );
-
-    } catch {
-
-      return (
-        error?.message ||
-        'No se pudo abrir el recibo.'
-      );
-    }
-  }
-
-  // ================================================
-  // ABRIR PDF PRIVADO
-  // ================================================
-
-  async function openPDF(receipt, button) {
-
-    if (button.disabled) return;
-
-    const token = session();
+    const api = bridge();
 
     if (
-      !token ||
-      token.length < 16 ||
-      !uuid.test(
-        String(receipt.id || '')
-      )
+      !api ||
+      typeof api.refresh !== 'function'
     ) {
 
-      notice(
-        'Sesión o recibo inválido. ' +
-        'Cierra sesión y vuelve a entrar.'
+      status(
+        'No se encontró la campanita ' +
+        'de nómina. Recarga YO.'
       );
 
       return;
     }
 
-    // Abrir pestaña desde el clic del usuario.
+    if (fetching) return;
 
-    const tab = window.open(
-      'about:blank',
-      '_blank'
-    );
-
-    if (tab) {
-
-      tab.opener = null;
-
-      tab.document.title =
-        'Preparando recibo';
-
-      tab.document.body.textContent =
-        'Preparando PDF privado…';
-    }
-
-    button.disabled = true;
-
-    notice('Autorizando PDF privado…');
+    fetching = true;
 
     try {
 
-      const {data,error} =
-        await db.functions.invoke(
-          'gg-payroll-download',
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            },
+      // Esta función ejecuta la consulta
+      // que YA usa la campanita:
+      //
+      // gg_payroll_yo_list
+      //
+      // No utiliza la RPC adicional V6.
 
-            body: JSON.stringify({
-              session_token: token,
-              document_id: receipt.id
-            })
-          }
-        );
+      await api.refresh();
 
-      if (error) throw error;
-
-      if (!data?.url) {
-        throw Error(
-          data?.error ||
-          'No recibimos el enlace privado.'
-        );
-      }
-
-      // Validar URL antes de abrirla.
-
-      const url = new URL(data.url);
-      const base = new URL(db.supabaseUrl);
-
-      if (
-        url.protocol !== 'https:' ||
-        url.origin !== base.origin ||
-        !url.pathname.startsWith(
-          '/storage/v1/object/sign/gg-payroll-private/'
-        )
-      ) {
-        throw Error(
-          'URL inesperada; se bloqueó por seguridad.'
-        );
-      }
-
-      if (tab && !tab.closed) {
-
-        tab.location.replace(url.href);
-
-      } else {
-
-        window.location.assign(url.href);
-      }
-
-      receipt.read_at =
-        receipt.read_at ||
-        new Date().toISOString();
-
-      notice('Recibo autorizado.');
-
-      paint();
-
-      void fetchList();
+      paint(true);
 
     } catch (error) {
 
-      const message = await explain(error);
-
-      notice(
-        'No se pudo abrir el PDF: ' +
-        message
+      status(
+        'No pudimos actualizar recibos: ' +
+        (
+          error.message ||
+          'Error de conexión'
+        )
       );
-
-      if (tab && !tab.closed) {
-
-        tab.document.body.textContent =
-          'No se pudo abrir el PDF: ' +
-          message;
-      }
 
     } finally {
 
-      button.disabled = false;
+      fetching = false;
     }
   }
 
-  // ================================================
-  // INICIAR ARCHIVO DE YO
-  // ================================================
+  // =========================================
+  // MANTENER AMBAS VISTAS SINCRONIZADAS
+  // =========================================
 
   function start() {
 
-    if (
-      !$('yoPayrollArchive') ||
-      !$('yoPayrollArchiveList')
-    ) return;
+    if (!$('yoPayrollArchiveList')) {
+      return;
+    }
 
     $('yoPayrollArchiveRefresh')
       ?.addEventListener(
         'click',
-        () => void fetchList()
+        () => void refresh()
       );
 
-    void fetchList();
+    // Cuando la campanita actualiza sus
+    // tarjetas, se actualiza también
+    // el historial inferior.
+
+    const bellList = $(
+      'yoNotificationsList'
+    );
+
+    if (
+      bellList &&
+      typeof MutationObserver !==
+        'undefined'
+    ) {
+
+      const observer =
+        new MutationObserver(
+          () => paint()
+        );
+
+      observer.observe(
+        bellList,
+        {
+          childList: true,
+          subtree: true
+        }
+      );
+    }
+
+    window.setTimeout(
+      () => void refresh(),
+      500
+    );
+
+    window.setTimeout(
+      () => paint(),
+      2000
+    );
 
     document.addEventListener(
       'visibilitychange',
       () => {
+
         if (!document.hidden) {
-          void fetchList();
+          paint();
         }
       }
     );
-
-    setInterval(
-      () => {
-        if (!document.hidden) {
-          void fetchList();
-        }
-      },
-      120000
-    );
   }
 
-  if (document.readyState === 'loading') {
+  if (
+    document.readyState === 'loading'
+  ) {
 
     document.addEventListener(
       'DOMContentLoaded',
       start,
-      {once:true}
+      {once: true}
     );
 
   } else {
