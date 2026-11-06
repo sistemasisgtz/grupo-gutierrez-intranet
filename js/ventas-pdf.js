@@ -3284,6 +3284,20 @@
                     );
 
 
+                // GG_QUOTE_PDF_DELIVERY_V1
+                // Solo cotizaciones.
+
+                const deliveryDays=
+                    data.kind==="COTIZACIÓN" &&
+                    item.delivery_days!=null &&
+                    Number.isInteger(
+                        Number(item.delivery_days)
+                    ) &&
+                    Number(item.delivery_days)>=1
+
+                    ?Number(item.delivery_days)
+                    :null;
+
                 const rowHeight =
                     Math.max(
 
@@ -3295,7 +3309,7 @@
                         +
                         2
 
-                    );
+                    )+(deliveryDays!==null?4.5:0);
 
 
                 if (
@@ -3459,6 +3473,32 @@
 
                 );
 
+
+                if(deliveryDays!==null){
+
+                    doc.setTextColor(...C.muted);
+
+                    doc.setFont(
+                        "helvetica",
+                        "normal"
+                    );
+
+                    doc.setFontSize(5.4);
+
+                    doc.text(
+                        "Tiempo de entrega: " +
+                        deliveryDays +
+                        (
+                            deliveryDays===1
+                                ?" día"
+                                :" días"
+                        ),
+
+                        l.margin+2,
+
+                        y+rowHeight-1.7
+                    );
+                }
 
                 doc.setDrawColor(
                     ...C.line

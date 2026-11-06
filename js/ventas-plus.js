@@ -154,7 +154,18 @@
       code: field("code"),
       description: field("desc"),
       unit_price: Number(field("price") || 0),
-      currency: field("currency") || "M.N."
+      currency: field("currency") || "M.N.",
+
+      // GG_QUOTE_DRAFT_DELIVERY_V1
+      // Recuperar los días SOLO en cotizaciones.
+      ...(prefix==="q"?{
+
+        delivery_days:
+            field("delivery")===""
+                ?null
+                :Number(field("delivery"))
+
+      }:{})
     };
   }
 

@@ -786,6 +786,31 @@ function openQuoteForm(base=null,items=[],copy=false){
                 </div>
 
 
+                <!-- GG_QUOTE_DELIVERY_V1 -->
+
+                <div class="gg-q-default-delivery sales-field">
+                    <label for="salesQDefaultDelivery">
+                        Tiempo de entrega por default
+                        <small>(opcional · días)</small>
+                    </label>
+
+                    <input
+                        id="salesQDefaultDelivery"
+                        type="number"
+                        min="1"
+                        max="3650"
+                        step="1"
+                        inputmode="numeric"
+                        placeholder="Ej. 5"
+                        value="${base?.delivery_default_days??''}"
+                    >
+
+                    <small>
+                        Se aplica a las partidas nuevas
+                        y a las que no hayas personalizado.
+                    </small>
+                </div>
+
                 <div class="sales-lines-head">
 
                     <div>
@@ -849,6 +874,27 @@ function openQuoteForm(base=null,items=[],copy=false){
             };
 
             root.querySelector("#salesQAddLine").onclick=()=>addLine();
+
+            root.querySelector("#salesQDefaultDelivery")
+                .addEventListener("input", e => {
+
+                    const days = e.target.value.trim();
+
+                    root.querySelectorAll(
+                        "#salesQItems .sales-line"
+                    ).forEach(row => {
+
+                        if (
+                            row.dataset.deliveryManual !== "1"
+                        ) {
+                            row.querySelector(
+                                "[data-q-delivery]"
+                            ).value = days;
+                        }
+
+                    });
+
+                });
 
             root.querySelector("#salesQItems").onclick=lineClick;
 
@@ -1009,6 +1055,23 @@ function addLine(item={}){
     const unit=item.unit_text||"";
     const currency=item.currency||"M.N.";
 
+    const generalDays=document
+        .getElementById("salesQDefaultDelivery")
+        ?.value.trim()||"";
+
+    const savedDays=Object.prototype
+        .hasOwnProperty.call(item,"delivery_days");
+
+    const initialDays=savedDays
+        ?(item.delivery_days??"")
+        :generalDays;
+
+    const manualDays=
+        savedDays &&
+        String(initialDays)!==generalDays
+            ?"1"
+            :"0";
+
     host.insertAdjacentHTML(
         "beforeend",
         `
@@ -1016,6 +1079,7 @@ function addLine(item={}){
                 class="sales-line"
                 data-item-id="${item.id||""}"
                 data-product-id="${item.product_id||""}"
+                data-delivery-manual="${manualDays}"
             >
 
                 <button
@@ -1104,6 +1168,34 @@ function addLine(item={}){
                     −
                 </button>
 
+                <div class="gg-q-line-delivery">
+
+                    <label>
+                        Tiempo de entrega
+                        <small>(días · opcional)</small>
+
+                        <input
+                            data-q-delivery
+                            type="number"
+                            min="1"
+                            max="3650"
+                            step="1"
+                            inputmode="numeric"
+                            placeholder="Sin especificar"
+                            value="${s.escapeHtml(String(initialDays))}"
+                        >
+                    </label>
+
+                    <button
+                        type="button"
+                        class="gg-q-inherit"
+                        data-q-use-default
+                    >
+                        ↺ Usar default
+                    </button>
+
+                </div>
+
             </div>
         `
     );
@@ -1119,6 +1211,18 @@ function lineClick(event){
     const row=event.target.closest(".sales-line");
 
     if(!row)return;
+
+    if(event.target.closest("[data-q-use-default]")){
+
+        row.dataset.deliveryManual="0";
+
+        row.querySelector("[data-q-delivery]").value=
+            document.getElementById(
+                "salesQDefaultDelivery"
+            )?.value.trim()||"";
+
+        return;
+    }
 
     if(event.target.closest("[data-remove-line]")){
         if(
@@ -1152,6 +1256,12 @@ function lineInput(event){
     const row=event.target.closest(".sales-line");
 
     if(row){
+
+        if(event.target.matches("[data-q-delivery]")){
+            row.dataset.deliveryManual="1";
+            return;
+        }
+
         calcLine(row);
         renderTotals();
     }
@@ -1646,6 +1756,23 @@ function clearLinesProducts(){
     renderTotals();
 }
 
+function ggQuoteDays(raw){
+
+    const value=String(raw??"").trim();
+
+    if(value==="")return null;
+
+    if(!/^[0-9]+$/.test(value))return NaN;
+
+    const n=Number(value);
+
+    return Number.isSafeInteger(n)
+        && n>=1
+        && n<=3650
+            ?n
+            :NaN;
+}
+
 async function saveQuote(event,id){
     event.preventDefault();
 
@@ -1681,6 +1808,40 @@ async function saveQuote(event,id){
         return;
     }
 
+    const defaultDays=ggQuoteDays(
+        value("salesQDefaultDelivery")
+    );
+
+    const deliveryLines=[
+        ...document.querySelectorAll(
+            "#salesQItems .sales-line"
+        )
+    ].map((row,index)=>({
+
+        position:index+1,
+
+        delivery_days:ggQuoteDays(
+            row.querySelector(
+                "[data-q-delivery]"
+            ).value
+        )
+
+    }));
+
+    if(
+        Number.isNaN(defaultDays)
+        ||
+        deliveryLines.some(
+            line=>Number.isNaN(line.delivery_days)
+        )
+    ){
+        message.textContent=
+            "Tiempo de entrega: escribe días enteros " +
+            "del 1 al 3650 o deja el campo vacío.";
+
+        return;
+    }
+
     try{
         const beganAt = new Date().toISOString();
         const {data,error}=await s.db.rpc("sales_save_quote",
@@ -1702,12 +1863,39 @@ async function saveQuote(event,id){
 
         if(error)throw error;
 
-        await GGSalesPlus.saved(
+        // GGSalesPlus devuelve el ID exacto
+        // de la cotización que acaba de guardar.
+
+        const savedQuoteId=await GGSalesPlus.saved(
             "quote",
             data,
             id,
             beganAt
         );
+
+        const deliveryResult=await s.db.rpc(
+            "sales_quote_delivery_save",
+            {
+                p_quote_id:savedQuoteId,
+                p_default_days:defaultDays,
+                p_lines:deliveryLines
+            }
+        );
+
+        if(deliveryResult.error){
+
+            message.textContent=
+                "ATENCIÓN: la cotización principal " +
+                "YA SE GUARDÓ, pero falló el plazo: " +
+                deliveryResult.error.message +
+                ". NO la crees otra vez. Actualiza " +
+                "el listado y edita esa cotización " +
+                "para completar los días.";
+
+            await loadQuotes();
+
+            return;
+        }
 
         s.closeModal();
 

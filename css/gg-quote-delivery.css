@@ -1,0 +1,93 @@
+
+/* Grupo Gutiérrez
+   Tiempo de entrega SOLO cotizaciones */
+
+.gg-q-default-delivery {
+    display:grid;
+    gap:7px;
+    max-width:360px;
+    margin:18px 0 16px;
+    padding:14px 17px;
+    border:1px solid var(--line);
+    background:color-mix(
+        in srgb,
+        var(--surface2) 88%,
+        var(--blue) 12%
+    );
+    border-radius:13px;
+}
+
+.gg-q-default-delivery label {
+    font-size:12px;
+    font-weight:750;
+    color:var(--text);
+}
+
+.gg-q-default-delivery input {
+    width:100%;
+    min-height:39px;
+    max-width:170px;
+    border:1px solid var(--line);
+    border-radius:9px;
+    background:var(--surface2);
+    color:var(--text);
+    padding:9px 12px;
+}
+
+.gg-q-default-delivery small,
+.gg-q-line-delivery small {
+    color:var(--muted);
+    font-size:10px;
+    font-weight:500;
+}
+
+#salesQItems .sales-line .gg-q-line-delivery {
+    grid-column:1/-1;
+    display:flex;
+    gap:12px;
+    align-items:flex-end;
+    justify-content:flex-start;
+    padding:8px 13px 10px;
+    border-radius:9px;
+    background:rgba(80,151,205,.055);
+    border:1px solid rgba(125,157,187,.12);
+}
+
+#salesQItems .gg-q-line-delivery label {
+    display:grid;
+    gap:6px;
+    font-size:11px;
+    font-weight:750;
+    color:var(--text);
+}
+
+#salesQItems .gg-q-line-delivery input {
+    width:150px;
+    min-height:34px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:var(--surface2);
+    color:var(--text);
+    padding:6px 9px;
+}
+
+#salesQItems .gg-q-inherit {
+    min-height:34px;
+    border:1px solid rgba(112,177,222,.3);
+    border-radius:9px;
+    padding:7px 11px;
+    background:rgba(90,154,207,.10);
+    color:var(--blue);
+    font-size:11px;
+    cursor:pointer;
+}
+
+#salesQItems .gg-q-inherit:hover {
+    background:rgba(90,154,207,.20);
+}
+
+@media(max-width:700px) {
+    .gg-q-default-delivery {
+        max-width:none;
+    }
+}
