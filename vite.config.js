@@ -9,6 +9,7 @@ export default defineConfig({
         rollupOptions: {
 
             input: {
+    organigramaEmpleados: resolve(__dirname, "organigrama-empleados.html"),
                 nomina: resolve(__dirname,"nomina.html"),
 
                 main:

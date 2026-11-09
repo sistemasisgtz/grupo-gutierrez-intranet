@@ -14,6 +14,7 @@
   // ========================================
 
   const ROUTES = Object.freeze({
+    "organigrama-empleados": {name:"Organigrama y Empleados",url:"organigrama-empleados.html"},
     "nomina": {name:"Nómina",url:"nomina.html"},
     "tecnologias": { name:"Tecnologías", url:"tecnologias.html" },
 

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+ content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1420">
+<title>
+  Organigrama y Empleados · Grupo Gutiérrez
+</title>
+<link
+ href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;700;800&display=swap"
+ rel="stylesheet">
+<link rel="stylesheet" href="css/gg-social.css">
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ min-height:100vh;
+ color:#edf5ff;
+ background:
+ radial-gradient(ellipse at 9% 12%,#1b3d5d,transparent 42%),
+ radial-gradient(ellipse at 91% 82%,#282b56,transparent 40%),
+ #09121d;
+ font-family:Manrope,system-ui,sans-serif;
+}
+.ggs-site-top{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:12px;
+ padding:22px max(20px,calc((100vw - 1480px)/2));
+ border-bottom:1px solid #273e54;
+ background:#111f2dcc;
+}
+.ggs-site-top a{
+ color:#dff1ff;
+ text-decoration:none;
+ font-size:13px;
+ font-weight:750;
+}
+.ggs-site-top strong{
+ font-size:24px;
+ letter-spacing:-.06em;
+}
+.ggs-site-main{
+ max-width:1500px;
+ margin:auto;
+ padding:38px 22px 90px;
+}
+</style>
+</head>
+<body>
+<header class="ggs-site-top">
+ <a href="sistema.html">
+  <strong>GG ✳</strong> Grupo Gutiérrez
+ </a>
+ <a href="sistema.html">← Sistema Central</a>
+</header>
+<main class="ggs-site-main">
+ <div id="ggSocialStandalone" class="ggs-app">
+  Cargando organigrama…
+ </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/gg-social.js"></script>
+</body>
+</html>
