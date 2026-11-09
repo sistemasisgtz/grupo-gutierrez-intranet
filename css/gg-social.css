@@ -956,3 +956,214 @@
     transition:none!important;
   }
 }
+
+
+/* GG_SOCIAL_FOCUS_GESTURE_V4 */
+
+/* EMPLEADO ACTUAL */
+
+.ggs-app .ggs-node.ggs-own-employee {
+  border-color:#a8e7ff;
+
+  box-shadow:
+    0 0 0 2px rgba(126,208,255,.32),
+    0 14px 35px rgba(46,132,190,.25);
+}
+
+.ggs-app .ggs-node.ggs-own-employee::after {
+  content:'TÚ';
+
+  position:absolute;
+
+  right:8px;
+  top:-12px;
+
+  background:#c3eeff;
+  color:#163248;
+
+  padding:3px 8px;
+
+  border-radius:999px;
+
+  font:800 9px Manrope,system-ui,sans-serif;
+
+  letter-spacing:.06em;
+}
+
+/* GUÍA DE GESTOS */
+
+.ggs-app .ggs-gesture-tip {
+  position:absolute;
+  z-index:40;
+
+  left:50%;
+  top:50%;
+
+  width:min(
+    300px,
+    calc(100% - 34px)
+  );
+
+  padding:19px 19px 20px;
+
+  transform:translate(-50%,-50%);
+
+  border:1px solid rgba(170,222,249,.33);
+
+  border-radius:21px;
+
+  background:rgba(18,31,46,.88);
+
+  box-shadow:
+    0 18px 65px rgba(0,0,0,.38);
+
+  backdrop-filter:blur(18px);
+
+  color:#eff8ff;
+  text-align:center;
+
+  pointer-events:none;
+
+  animation:
+    ggsTipEntrance 3.35s ease both;
+}
+
+.ggs-app .ggs-gesture-tip strong,
+.ggs-app .ggs-gesture-tip small {
+  display:block;
+}
+
+.ggs-app .ggs-gesture-tip strong {
+  font:800 15px/1.4
+    Manrope,system-ui,sans-serif;
+
+  margin:5px 0 8px;
+}
+
+.ggs-app .ggs-gesture-tip small {
+  font:500 11px/1.55
+    Manrope,system-ui,sans-serif;
+
+  color:#adc6db;
+}
+
+/* MANO Y CÍRCULO ANIMADOS */
+
+.ggs-app .ggs-pinch-hand {
+  position:relative;
+  height:76px;
+}
+
+.ggs-app .ggs-pinch-hand span {
+  display:inline-block;
+
+  font-size:50px;
+  line-height:1.2;
+
+  transform-origin:50% 70%;
+
+  animation:
+    ggsPinchDemonstration
+    1.1s ease-in-out
+    infinite alternate;
+}
+
+.ggs-app .ggs-pinch-ring {
+  position:absolute;
+
+  left:50%;
+  top:45%;
+
+  width:48px;
+  height:48px;
+
+  border:1px dashed #9fdfff;
+  border-radius:50%;
+
+  transform:translate(-50%,-50%);
+
+  animation:
+    ggsPinchRing
+    1.1s ease-in-out
+    infinite alternate;
+
+  opacity:.8;
+}
+
+/* ANIMACIONES */
+
+@keyframes ggsPinchDemonstration {
+
+  from {
+    transform:
+      scale(.80)
+      rotate(-10deg);
+  }
+
+  to {
+    transform:
+      scale(1.17)
+      rotate(4deg);
+  }
+
+}
+
+@keyframes ggsPinchRing {
+
+  from {
+    transform:
+      translate(-50%,-50%)
+      scale(.65);
+
+    opacity:.9;
+  }
+
+  to {
+    transform:
+      translate(-50%,-50%)
+      scale(1.45);
+
+    opacity:.2;
+  }
+
+}
+
+@keyframes ggsTipEntrance {
+
+  0% {
+    opacity:0;
+
+    transform:
+      translate(-50%,-43%)
+      scale(.93);
+  }
+
+  12%,70% {
+    opacity:1;
+
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+  }
+
+  100% {
+    opacity:0;
+
+    transform:
+      translate(-50%,-53%)
+      scale(.98);
+  }
+
+}
+
+/* ACCESIBILIDAD */
+
+@media(prefers-reduced-motion:reduce) {
+
+  .ggs-app .ggs-gesture-tip,
+  .ggs-app .ggs-pinch-hand span,
+  .ggs-app .ggs-pinch-ring {
+
+    animation:none!important;
+  }
+}

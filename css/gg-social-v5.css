@@ -1,0 +1,436 @@
+
+/* GG_SOCIAL_V5_REAL_INTEGRATION */
+
+/* No seleccionar texto al mover el organigrama */
+
+.ggs-org-viewport,
+.ggs-org-viewport * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none;
+}
+
+.ggs-org-viewport img {
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* Módulo independiente fullscreen */
+
+body.ggv5-module {
+  overflow: hidden;
+}
+
+.ggv5-module .ggs-site-top {
+  display: none !important;
+}
+
+.ggv5-module .ggs-site-main {
+  width: 100vw !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.ggv5-module #ggsModuleOrg {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.ggv5-module #ggsModuleOrg > .ggs-heading,
+.ggv5-module #ggsModuleOrg > .ggs-help {
+  display: none !important;
+}
+
+/* Controles de zoom flotantes */
+
+.ggv5-module #ggsModuleOrg > .ggs-bar,
+#ggsYoPopup.ggv5-org-open
+#ggsYoPanelContent > .ggs-bar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 60;
+  margin: 0 !important;
+  padding: 6px;
+
+  border: 1px solid #4b667f;
+  border-radius: 13px;
+  background: #122337e8;
+  backdrop-filter: blur(14px);
+}
+
+.ggv5-module
+#ggsModuleOrg > .ggs-bar > *:not(.ggs-controls),
+
+#ggsYoPopup.ggv5-org-open
+#ggsYoPanelContent > .ggs-bar > *:not(.ggs-controls) {
+  display: none !important;
+}
+
+/* Lienzo completo */
+
+.ggv5-module #ggsModuleOrg .ggs-org-viewport,
+#ggsYoPopup.ggv5-org-open .ggs-org-viewport {
+  height: 100dvh !important;
+  min-height: 0 !important;
+  width: 100vw !important;
+
+  border: 0;
+  border-radius: 0;
+}
+
+/* Volver */
+
+.ggv5-back {
+  position: fixed;
+  left: 14px;
+  top: 14px;
+  z-index: 100;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 11px 15px;
+
+  background: #122a3fe8;
+  backdrop-filter: blur(13px);
+  border: 1px solid #557995;
+  color: #e7f7ff;
+  border-radius: 13px;
+
+  text-decoration: none;
+  font: 800 12px Manrope, sans-serif;
+  cursor: pointer;
+}
+
+.ggv5-back:hover {
+  background: #295374;
+}
+
+/* Organigrama fullscreen dentro de YO */
+
+#ggsYoPopup.ggv5-org-open .ggs-yo-window {
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-height: none !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  overflow: hidden !important;
+  background: #091523;
+  animation: none !important;
+}
+
+#ggsYoPopup.ggv5-org-open #ggsYoPanelContent {
+  width: 100vw;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
+
+#ggsYoPopup.ggv5-org-open .ggs-heading,
+#ggsYoPopup.ggv5-org-open .ggs-help {
+  display: none !important;
+}
+
+/* Carrusel del Foro */
+
+.ggv5-gallery {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.ggv5-photo {
+  display: block;
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.ggv5-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ggv5-magnify {
+  position: absolute;
+  bottom: 15px;
+  left: 14px;
+
+  border-radius: 999px;
+  background: #071b2ad9;
+  color: white;
+
+  padding: 8px 11px;
+  border: 1px solid #ffffff44;
+
+  font: 650 11px Manrope, sans-serif;
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.ggv5-photo:hover .ggv5-magnify,
+.ggv5-photo:focus-visible .ggv5-magnify {
+  opacity: 1;
+}
+
+/* Flechas */
+
+.ggv5-arrow {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  height: 39px;
+  width: 39px;
+
+  background: #091b29cc;
+  color: white;
+
+  border: 1px solid #ffffff75;
+  border-radius: 50%;
+
+  font: 500 29px/1 Manrope, sans-serif;
+
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.ggv5-arrow.prev {
+  left: 11px;
+}
+
+.ggv5-arrow.next {
+  right: 11px;
+}
+
+/* Contador */
+
+.ggv5-count {
+  position: absolute;
+  z-index: 4;
+
+  right: 12px;
+  bottom: 12px;
+
+  padding: 7px 10px;
+  border-radius: 999px;
+
+  background: #091b29cc;
+  color: white;
+
+  font: 700 11px Manrope, sans-serif;
+  pointer-events: none;
+}
+
+/* PDF adjuntos */
+
+.ggv5-docs {
+  display: grid;
+  gap: 9px;
+  margin: 16px 0;
+}
+
+.ggv5-docs > small {
+  font-size: 9px;
+  color: #91c9e8;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.ggv5-pdf {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  padding: 12px;
+  border: 1px solid #40647f;
+  border-radius: 12px;
+
+  color: #e6f5ff;
+  text-decoration: none;
+  background: #1c3951a1;
+}
+
+.ggv5-pdf span {
+  font-size: 25px;
+  color: #9cddff;
+}
+
+.ggv5-pdf strong {
+  flex: 1;
+  min-width: 0;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.ggv5-pdf em {
+  font-style: normal;
+  font-size: 10px;
+  white-space: nowrap;
+  color: #99d8ff;
+}
+
+.ggv5-pdf:hover {
+  background: #2b506b;
+}
+
+/* Lista de archivos en el editor de RH */
+
+.ggv5-files {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 18px;
+}
+
+.ggv5-file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #172d40;
+  border: 1px solid #45637b;
+  border-radius: 11px;
+  padding: 9px;
+}
+
+.ggv5-file > span {
+  font-size: 21px;
+}
+
+.ggv5-file strong {
+  flex: 1;
+  min-width: 0;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.ggv5-file small {
+  font-size: 10px;
+  color: #a2c2d6;
+}
+
+.ggv5-file button {
+  padding: 7px 9px !important;
+  font-size: 10px !important;
+}
+
+/* Visor de fotografía grande */
+
+.ggv5-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 30010;
+  color: #f3faff;
+}
+
+.ggv5-light-shade {
+  position: absolute;
+  inset: 0;
+
+  background: #02070bef;
+  backdrop-filter: blur(15px);
+}
+
+.ggv5-light-body {
+  position: absolute;
+  inset: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 9px;
+}
+
+.ggv5-light-body img {
+  max-height: 85dvh;
+  max-width: 95vw;
+  object-fit: contain;
+
+  border-radius: 9px;
+  box-shadow: 0 12px 70px #000b;
+}
+
+.ggv5-light-body small {
+  font: 600 11px Manrope, sans-serif;
+  color: #a9c8dc;
+}
+
+.ggv5-lightbox button {
+  color: white;
+  border: 1px solid #ffffff55;
+  border-radius: 11px;
+
+  background: #17334acd;
+  padding: 9px 13px;
+  cursor: pointer;
+}
+
+.ggv5-light-close {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  z-index: 3;
+}
+
+.ggv5-light-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  font-size: 32px !important;
+  z-index: 2;
+}
+
+.ggv5-light-nav.prev {
+  left: 8px;
+}
+
+.ggv5-light-nav.next {
+  right: 8px;
+}
+
+@media(max-width: 620px) {
+  .ggv5-back {
+    top: 8px;
+    left: 8px;
+    padding: 9px 11px;
+    font-size: 11px;
+  }
+
+  .ggv5-module #ggsModuleOrg > .ggs-bar,
+  #ggsYoPopup.ggv5-org-open
+  #ggsYoPanelContent > .ggs-bar {
+    top: 8px;
+    right: 8px;
+    padding: 4px;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  .ggv5-magnify {
+    transition: none;
+  }
+}
