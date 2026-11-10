@@ -91,7 +91,7 @@
   function menuCards(compact) {
     const sizes=compact?' ggc-options-small':'';
     return '<div class="ggc-options'+sizes+'">'+
-      '<button class="ggc-option" type="button" data-ggc="org"><span class="ggc-option-number">01 / ESTRUCTURA</span><span class="ggc-option-icon">⌘</span><strong>Organigrama</strong><small>Encuentra tu lugar en el equipo y explora nuestras conexiones.</small><span class="ggc-option-arrow">↗</span></button>'+
+      '<button class="ggc-option" type="button" data-ggc="org"><span class="ggc-option-number">01 / ESTRUCTURA</span><span class="ggc-option-icon">⌘</span><strong>Organigrama</strong><small>Encuentra tu lugar en el equipo y explora.</small><span class="ggc-option-arrow">↗</span></button>'+
       '<button class="ggc-option" type="button" data-ggc="people"><span class="ggc-option-number">02 / PERSONAS</span><span class="ggc-option-icon">✳</span><strong>Empleados y reconocimientos</strong><small>Conoce a tus compañeros y celebra sus logros.</small><span class="ggc-option-arrow">↗</span></button>'+
       '<button class="ggc-option" type="button" data-ggc="forum"><span class="ggc-option-number">03 / COMUNIDAD</span><span class="ggc-option-icon">◈</span><strong>Foro Gutiérrez</strong><small>Momentos, historias, noticias y comunicados.</small><span class="ggc-option-arrow">↗</span></button>'+
     '</div>';
@@ -99,7 +99,7 @@
   function menu() {
     return '<div class="ggc-landing"><span class="ggc-eyebrow">GRUPO GUTIÉRREZ / NUESTRO EQUIPO</span>'+ 
       '<h1>La cultura la <em>hacemos</em> todos<span>.</span></h1>'+ 
-      '<p>Un espacio para conectar con las personas, reconocer sus logros y compartir lo que nos une.</p>'+ 
+      '<p>Portal de empleados de Grupo Gutierrez.</p>'+ 
       '<div class="ggc-landing-orb" aria-hidden="true"></div>'+menuCards(isYO)+
       '<div class="ggc-landing-foot">PERSONAS · CONEXIONES · RECONOCIMIENTOS</div></div>';
   }
@@ -156,7 +156,7 @@
 
   function forumShell() {
     return toolbar('Foro Gutiérrez','Las historias y momentos que nos unen.')+
-      '<div class="ggc-forum-layout"><aside class="ggc-forum-side"><span class="ggc-eyebrow">COMUNIDAD</span><h3>Lo que nos une.</h3><p>Cada historia suma a nuestra cultura. Comparte el orgullo de pertenecer.</p><div class="ggc-forum-stat"><strong>'+state.posts.length+'</strong><span>Publicaciones</span></div></aside><div class="ggc-feed">'+
+      '<div class="ggc-forum-layout"><aside class="ggc-forum-side"><span class="ggc-eyebrow">COMUNIDAD</span><h3>:).</h3><p>Conoce el orgullo de pertenecer a grupo gutierrez.</p><div class="ggc-forum-stat"><strong>'+state.posts.length+'</strong><span>Publicaciones</span></div></aside><div class="ggc-feed">'+
       (state.posts.length?state.posts.map(postHTML).join(''):'<div class="ggc-empty">Recursos Humanos aún no ha publicado novedades.</div>')+
       '</div></div>';
   }
