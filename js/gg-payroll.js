@@ -29,9 +29,11 @@ function note(message) {
   $("nStatus").textContent = message;
 }
 
+/* GG_NOMINA_MATCH_EXACTO_V2 */
+
 function normalize(value) {
   return String(value ?? "")
-    .normalize("NFD")
+    .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
     .toUpperCase()
     .replace(/[^A-Z0-9]+/g, " ")
@@ -48,98 +50,349 @@ function signature(tokens) {
   return tokens.slice().sort().join("|");
 }
 
+// Etiquetas de campos que no son nombres.
+
+const PAYROLL_LABELS = new Set([
+  "NOMBRE",
+  "NOMBRES",
+  "APELLIDO",
+  "APELLIDOS",
+  "PATERNO",
+  "MATERNO",
+  "TRABAJADOR",
+  "TRABAJADORA",
+  "EMPLEADO",
+  "EMPLEADA",
+  "COLABORADOR",
+  "COLABORADORA",
+  "PRIMER",
+  "SEGUNDO",
+  "DATOS",
+  "PERSONALES",
+  "COMPLETO"
+]);
+
 /*
-  Coincidencia por las mismas palabras,
-  independientemente del acomodo.
+ Coincidencia exacta:
 
-  Para evitar falsos positivos, el nombre
-  debe aparecer completo en una línea
-  o un campo de texto consecutivo.
+ - Todas las palabras son obligatorias.
+ - Se consideran palabras repetidas.
+ - No importa el orden.
+ - No importan los acentos.
+ - Se buscan campos consecutivos del PDF.
+ - Dos empleados coincidentes: revisión.
 */
-function match(lines) {
-  const found = new Map();
-  const signatures = new Map();
 
-  for (const employee of state.employees) {
-    const tokens = words(employee.full_name);
 
-    if (tokens.length < 2 || tokens.length > 12)
-      continue;
 
-    const key = signature(tokens);
+/* GG_NOMINA_RECEPTOR_V3 */
 
-    if (!signatures.has(key))
-      signatures.set(key, []);
+// Solo buscar el RECEPTOR del recibo:
+// "037 - NOMBRE DEL EMPLEADO".
 
-    signatures.get(key).push(employee);
-  }
+function recipientHeader(value) {
+  const s = String(value ?? '')
+    .replace(/\s+/g, ' ')
+    .trim();
 
-  const segments = lines.concat(
-    lines.slice(0, -1).map(
-      (line, i) => line + " " + lines[i+1]
-    )
+  const hit = s.match(
+    /(?:^|\s)(\d{1,6})\s*[-–—]\s*([A-ZÁÉÍÓÚÜÑ][^\r\n]*)/i
   );
 
-  for (const line of segments) {
-    const tokens = words(line);
+  if (!hit) return null;
 
-    if (tokens.length > 60) continue;
+  const name = hit[2]
+    .replace(
+      /\b(?:EJERCICIO|PERIODO|RFC|CURP|FECHA|JORNADA|PUESTO|DEPTO|NSS|SALARIO|DOMICILIO|REGIMEN|RÉGIMEN|D[IÍ]AS)\s*:?\s*[\s\S]*$/i,
+      ''
+    )
+    .replace(
+      /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s'.-]/g,
+      ' '
+    )
+    .replace(/\s+/g, ' ')
+    .trim();
 
-    for (const [key, employees] of signatures) {
-      const size = key.split("|").length;
+  const parts = words(name);
 
-      if (tokens.length < size) continue;
+  if (
+    parts.length < 2 ||
+    parts.length > 12
+  ) return null;
 
-      for (
-        let i = 0;
-        i <= tokens.length - size;
-        i++
-      ) {
-        if (
-          signature(tokens.slice(i, i+size))
-          !== key
-        ) continue;
+  return {
+    number: hit[1],
+    name,
+    key: signature(parts)
+  };
+}
 
-        for (const employee of employees) {
-          found.set(employee.id, {
-            employee,
-            line
-          });
-        }
+function match(candidates) {
+  const recipients = [];
+  const seen = new Set();
 
-        break;
-      }
+  for (const row of candidates) {
+    const candidate =
+      typeof row === 'string'
+        ? recipientHeader(row)
+        : row;
+
+    if (
+      !candidate ||
+      !candidate.key
+    ) continue;
+
+    const uniqueness =
+      candidate.number + ':' +
+      candidate.key;
+
+    if (!seen.has(uniqueness)) {
+      seen.add(uniqueness);
+      recipients.push(candidate);
     }
   }
 
-  const hits = [...found.values()];
-
-  if (hits.length === 1) {
+  if (!recipients.length) {
     return {
-      status: "exact",
-      employee: hits[0].employee,
-      extracted: hits[0].line.slice(0,240),
-      detail: "Nombre completo: mismas palabras sin importar orden."
+      status: 'missing',
+      employee: null,
+      extracted: '',
+      detail:
+        'No pude leer el nombre del receptor ' +
+        '(número - nombre) en el encabezado del PDF.'
     };
   }
 
-  if (hits.length > 1) {
+  // Más de un receptor distinto:
+  // nunca asignar automáticamente.
+
+  const signatures = new Set(
+    recipients.map(x => x.key)
+  );
+
+  if (signatures.size !== 1) {
     return {
-      status: "review",
+      status: 'review',
       employee: null,
-      extracted: hits.map(
-        h => h.employee.full_name
-      ).join(" / ").slice(0,240),
-      detail: "Varios empleados posibles. Selecciona el destinatario."
+
+      extracted: recipients
+        .map(x => x.name)
+        .join(' / ')
+        .slice(0, 240),
+
+      detail:
+        'El PDF contiene más de un nombre ' +
+        'de receptor; revisar manualmente.'
+    };
+  }
+
+  const recipient = recipients[0];
+
+  // Únicamente empleados activos.
+  // Mismas palabras, cualquier orden.
+  // Mayúsculas y acentos normalizados.
+
+  const matches = state.employees.filter(
+    employee => {
+      if (
+        employee.active === false ||
+        employee.active === 0 ||
+        employee.active === 'false'
+      ) return false;
+
+      const tokens = words(
+        employee.full_name
+      );
+
+      return (
+        tokens.length >= 2 &&
+        tokens.length <= 12 &&
+        signature(tokens) === recipient.key
+      );
+    }
+  );
+
+  if (matches.length === 1) {
+    return {
+      status: 'exact',
+      employee: matches[0],
+      extracted: recipient.name,
+
+      detail:
+        'Receptor: ' +
+        recipient.name +
+        '. Coincidencia exacta ' +
+        '(palabras, orden libre y sin acentos).'
+    };
+  }
+
+  // Dos empleados con el mismo nombre:
+  // no asignar por intuición.
+
+  if (matches.length > 1) {
+    return {
+      status: 'review',
+      employee: null,
+      extracted: recipient.name,
+
+      detail:
+        'Receptor: ' +
+        recipient.name +
+        '. Hay ' +
+        matches.length +
+        ' empleados activos con ese mismo nombre.'
     };
   }
 
   return {
-    status: "missing",
+    status: 'missing',
     employee: null,
-    extracted: "",
-    detail: "No se encontró el nombre completo en el texto extraíble."
+    extracted: recipient.name,
+
+    detail:
+      'Receptor identificado: ' +
+      recipient.name +
+      '. No existe una coincidencia ' +
+      'exacta única en el catálogo activo de RH.'
   };
+}
+
+// Reconstruir renglones según sus coordenadas.
+// Esto evita mezclar campos del PDF.
+
+function recipientLines(items, pageHeight) {
+  const groups = [];
+
+  for (const item of items || []) {
+    const x = Number(
+      item.transform?.[4]
+    );
+
+    const y = Number(
+      item.transform?.[5]
+    );
+
+    if (
+      !Number.isFinite(x) ||
+      !Number.isFinite(y)
+    ) continue;
+
+    // Zona superior del recibo.
+    // No analizar sellos ni firmas.
+
+    if (
+      pageHeight &&
+      y < pageHeight * 0.45
+    ) continue;
+
+    const str = String(
+      item.str ?? ''
+    );
+
+    if (!str.trim()) continue;
+
+    let group = groups.find(
+      g => Math.abs(g.y - y) <= 3.5
+    );
+
+    if (!group) {
+      group = {
+        y,
+        parts: []
+      };
+
+      groups.push(group);
+    }
+
+    group.parts.push({
+      x,
+      str,
+      width: Number(item.width) || 0
+    });
+  }
+
+  groups.sort(
+    (a, b) => b.y - a.y
+  );
+
+  const rows = groups.map(group => {
+    group.parts.sort(
+      (a, b) => a.x - b.x
+    );
+
+    let smart = '';
+    let prior = null;
+
+    for (const part of group.parts) {
+      if (prior) {
+        const gap =
+          part.x -
+          (prior.x + prior.width);
+
+        const avgWidth =
+          prior.width /
+          Math.max(
+            1,
+            prior.str.trim().length
+          );
+
+        const contiguous =
+          prior.width > 0 &&
+          gap <= Math.max(
+            1.2,
+            Math.min(
+              3.0,
+              avgWidth * 0.3
+            )
+          );
+
+        if (
+          !contiguous &&
+          !/\s$/.test(prior.str) &&
+          !/^\s/.test(part.str)
+        ) {
+          smart += ' ';
+        }
+      }
+
+      smart += part.str;
+      prior = part;
+    }
+
+    return {
+      smart,
+      plain: group.parts
+        .map(p => p.str)
+        .join(' ')
+    };
+  });
+
+  const candidates = [];
+
+  for (let i = 0; i < rows.length; i++) {
+    let hit =
+      recipientHeader(rows[i].smart) ||
+      recipientHeader(rows[i].plain);
+
+    if (
+      !hit &&
+      /^\s*\d{1,6}\s*[-–—]\s*$/
+        .test(rows[i].smart)
+    ) {
+      const joined =
+        rows[i].smart +
+        ' ' +
+        (rows[i+1]?.smart || '');
+
+      hit = recipientHeader(joined);
+    }
+
+    if (hit) {
+      candidates.push(hit);
+    }
+  }
+
+  return candidates;
 }
 
 async function readPdf(file) {
@@ -147,55 +400,61 @@ async function readPdf(file) {
     await file.arrayBuffer()
   );
 
-  const header = String.fromCharCode(
-    ...raw.slice(0,5)
-  );
-
-  if (header !== "%PDF-")
-    throw Error("El archivo no tiene cabecera PDF.");
-
-  if (!window.pdfjsLib)
-    throw Error("No cargó PDF.js.");
-
-  const pdf = await pdfjsLib.getDocument({
-    data: raw
-  }).promise;
-
-  const lines = [];
-
-  for (
-    let pageNumber = 1;
-    pageNumber <= pdf.numPages;
-    pageNumber++
+  if (
+    String.fromCharCode(
+      ...raw.slice(0, 5)
+    ) !== '%PDF-'
   ) {
-    const page = await pdf.getPage(pageNumber);
-    const content = await page.getTextContent();
-    const groups = new Map();
-
-    for (const item of content.items) {
-      const y = Math.round(
-        (item.transform?.[5] || 0) / 3
-      ) * 3;
-
-      if (!groups.has(y)) groups.set(y, []);
-
-      groups.get(y).push({
-        x: item.transform?.[4] || 0,
-        s: item.str || ""
-      });
-    }
-
-    for (const group of groups.values()) {
-      group.sort((a,b) => a.x - b.x);
-
-      lines.push(
-        group.map(item => item.s).join(" ")
-      );
-    }
+    throw Error(
+      'El archivo no tiene cabecera PDF.'
+    );
   }
 
-  return match(lines);
+  if (!window.pdfjsLib) {
+    throw Error(
+      'No cargó PDF.js.'
+    );
+  }
+
+  const pdf = await pdfjsLib
+    .getDocument({data: raw})
+    .promise;
+
+  const candidates = [];
+
+  for (
+    let n = 1;
+    n <= pdf.numPages;
+    n++
+  ) {
+    const page = await pdf.getPage(n);
+
+    const content =
+      await page.getTextContent();
+
+    const height =
+      page.getViewport?.({
+        scale: 1
+      })?.height ||
+
+      (
+        Array.isArray(page.view)
+          ? page.view[3] - page.view[1]
+          : 0
+      );
+
+    candidates.push(
+      ...recipientLines(
+        content.items,
+        height
+      )
+    );
+  }
+
+  return match(candidates);
 }
+
+
 
 function label(status) {
   return {
