@@ -14,7 +14,20 @@
   // ========================================
 
   const ROUTES = Object.freeze({
-    "cultura-organizacional": {name:"Cultura Organizacional",url:"cultura-organizacional.html"},
+    
+    "presupuesto-semanal": {
+      name:"Presupuesto semanal / Finanzas",
+      url:"presupuesto-semanal.html"
+    },
+    "autorizacion-presupuesto": {
+      name:"Autorización Presupuesto",
+      url:"autorizacion-presupuesto.html"
+    },
+    "relacion-facturas": {
+      name:"Relación de facturas",
+      url:"relacion-facturas.html"
+    },
+  "cultura-organizacional": {name:"Cultura Organizacional",url:"cultura-organizacional.html"},
     "organigrama-empleados": {name:"Organigrama y Empleados",url:"organigrama-empleados.html"},
     "nomina": {name:"Nómina",url:"nomina.html"},
     "tecnologias": { name:"Tecnologías", url:"tecnologias.html" },
